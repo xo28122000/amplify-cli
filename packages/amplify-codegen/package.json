@@ -8,7 +8,8 @@
     "lint-fix": "eslint src/** tests/** --fix",
     "test": "jest",
     "test-watch": "jest --watch",
-    "format": "prettier --write ./src/**/*.js ./__tests__/**/*.js"
+    "format": "prettier --write ./src/**/*.js ./__tests__/**/*.js",
+    "prepublish": "npm run build"
   },
   "author": "Amazon Web Services",
   "license": "Apache-2.0",

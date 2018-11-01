@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "build": "tsc",
-    "clean": "rm -rf ./lib"
+    "clean": "rm -rf ./lib",
+    "prepublish": "npm run build"
   },
   "keywords": [
     "graphql",
