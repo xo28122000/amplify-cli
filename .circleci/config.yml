@@ -15,9 +15,8 @@ jobs:
       - checkout
       - run: yarn cache clean
       - run: cd packages && rm -rf */yarn.lock && rm -rf */node_modules
-      - run: yarn
       - run: yarn config set workspaces-experimental true
-      - run: yarn run production-build
+      - run: yarn
       - save_cache:
           key: amplify-cli-npm-deps-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
