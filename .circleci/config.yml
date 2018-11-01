@@ -17,6 +17,7 @@ jobs:
       - run: cd packages && rm -rf */yarn.lock && rm -rf */node_modules
       - run: yarn config set workspaces-experimental true
       - run: yarn
+      - run : yarn setup-dev
       - save_cache:
           key: amplify-cli-npm-deps-{{ .Branch }}-{{ .Revision }}
           paths:
