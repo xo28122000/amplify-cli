@@ -35,6 +35,7 @@ jobs:
           at: ./
       - restore_cache:
           key: amplify-cli-npm-deps-{{ .Branch }}-{{ checksum "yarn.lock" }}
+      - run: yarn
       - run:
           name: Run tests
           command: yarn run test
