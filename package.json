@@ -58,7 +58,7 @@
     "amplify-provider-awscloudformation": "file:packages/amplify-provider-awscloudformation",
     "graphql-http-transformer": "file:packages/graphql-http-transformer",
     "graphql-mapping-template": "file:packages/graphql-mapping-template",
-    "graphql-transformers-e2e-tests": "file:packages/graphql-transformers-e2e-tests",
+    "graphql-transformers-e2e-tests": "file:packages/graphql-transformers-e2e-tests"
   },
   "devDependencies": {
     "@commitlint/cli": "^7.1.2",
