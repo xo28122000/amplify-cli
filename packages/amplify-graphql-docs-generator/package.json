@@ -23,7 +23,7 @@
     "clean": "rm -rf ./lib",
     "lint": "tslint -p ./tslint.json",
     "format": "prettier --write ./src/**/*.ts ./__tests__/**/*.ts",
-    "prepublish": "yarn run build"
+    "prepublish": "yarn run build && cd ../.. && rm -f yarn.lock && yarn"
   },
   "dependencies": {
     "camel-case": "^3.0.0",
