@@ -7,7 +7,7 @@
     "test": "jest",
     "build": "tsc",
     "clean": "rm -rf ./lib",
-    "prepublish": "yarn run build && cd ../.. && rm -f yarn.lock && yarn"
+    "prepublish": "yarn run build"
   },
   "keywords": [
     "graphql",
