@@ -93,6 +93,7 @@ jobs:
             command: |
               cd aws-amplify-cypress-auth
               pwd
+              echo "SKIP_PREFLIGHT_CHECK=true" > .env
               yarn start
             background: true
         - run: cat $(find . -type f -name 'auth_spec*')
