@@ -183,6 +183,7 @@ workflows:
             branches:
               only:
                 - master
+                - e2e-test-fix
           requires:
             - build
       - integration_test:
