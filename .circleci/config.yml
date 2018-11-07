@@ -42,10 +42,11 @@ jobs:
   graphql_e2e_tests:
     <<: *defaults
     steps:
-      - attach_workspace:
-          at: ./
-      - restore_cache:
-          key: amplify-cli-npm-deps-{{ .Branch }}-{{ checksum "package-lock.json" }}
+      - checkout
+      - run: npm cache clean --force
+      - run: cd packages && rm -rf */package-lock.json && rm -rf */node_modules
+      - run: npm install
+      - run: sudo npm run setup-dev
       - run:
           name: Run GraphQL end-to-end tests
           command: npm run e2e
