@@ -193,7 +193,6 @@ workflows:
               only:
                 - master
                 - graphql_e2e_testing
-                - graphql-code-generator
           requires:
             - build
       - integration_test:
@@ -203,7 +202,6 @@ workflows:
                 - release
                 - master
                 - beta
-                - graphql-code-generator
           requires:
             - build
       - amplify_e2e_tests:
@@ -211,7 +209,6 @@ workflows:
             branches:
               only:
                 - master
-                - graphql-code-generator
           requires:
             - build
 
