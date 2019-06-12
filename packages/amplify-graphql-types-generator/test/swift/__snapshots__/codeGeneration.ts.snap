@@ -642,7 +642,7 @@ exports[`Swift code generation #initializerDeclarationForProperties() should gen
 }"
 `;
 
-exports[`Swift code generation #structDeclarationForFragment() should generate a struct declaration for a fragment that includes a fragment spread 1`] = `
+exports[`Swift code generation #propertyAssignmentForField() #structDeclarationForFragment() should generate a struct declaration for a fragment that includes a fragment spread 1`] = `
 "public struct HeroDetails: GraphQLFragment {
   public static let fragmentString =
     \\"fragment HeroDetails on Character {\\\\n  name\\\\n  ...MoreHeroDetails\\\\n}\\"
@@ -712,7 +712,7 @@ exports[`Swift code generation #structDeclarationForFragment() should generate a
 }"
 `;
 
-exports[`Swift code generation #structDeclarationForFragment() should generate a struct declaration for a fragment with a concrete type condition 1`] = `
+exports[`Swift code generation #propertyAssignmentForField() #structDeclarationForFragment() should generate a struct declaration for a fragment with a concrete type condition 1`] = `
 "public struct DroidDetails: GraphQLFragment {
   public static let fragmentString =
     \\"fragment DroidDetails on Droid {\\\\n  name\\\\n  primaryFunction\\\\n}\\"
@@ -756,7 +756,7 @@ exports[`Swift code generation #structDeclarationForFragment() should generate a
 }"
 `;
 
-exports[`Swift code generation #structDeclarationForFragment() should generate a struct declaration for a fragment with a subselection 1`] = `
+exports[`Swift code generation #propertyAssignmentForField() #structDeclarationForFragment() should generate a struct declaration for a fragment with a subselection 1`] = `
 "public struct HeroDetails: GraphQLFragment {
   public static let fragmentString =
     \\"fragment HeroDetails on Character {\\\\n  name\\\\n  friends {\\\\n    name\\\\n  }\\\\n}\\"
@@ -836,7 +836,7 @@ exports[`Swift code generation #structDeclarationForFragment() should generate a
 }"
 `;
 
-exports[`Swift code generation #structDeclarationForFragment() should generate a struct declaration for a fragment with an abstract type condition 1`] = `
+exports[`Swift code generation #propertyAssignmentForField() #structDeclarationForFragment() should generate a struct declaration for a fragment with an abstract type condition 1`] = `
 "public struct HeroDetails: GraphQLFragment {
   public static let fragmentString =
     \\"fragment HeroDetails on Character {\\\\n  name\\\\n  appearsIn\\\\n}\\"
@@ -884,7 +884,7 @@ exports[`Swift code generation #structDeclarationForFragment() should generate a
 }"
 `;
 
-exports[`Swift code generation #structDeclarationForSelectionSet() should escape reserved keywords in a struct declaration for a selection set 1`] = `
+exports[`Swift code generation #propertyAssignmentForField() #structDeclarationForSelectionSet() should escape reserved keywords in a struct declaration for a selection set 1`] = `
 "public struct Hero: GraphQLSelectionSet {
   public static let possibleTypes = [\\"Human\\", \\"Droid\\"]
 
@@ -918,7 +918,7 @@ exports[`Swift code generation #structDeclarationForSelectionSet() should escape
 }"
 `;
 
-exports[`Swift code generation #structDeclarationForSelectionSet() should generate a nested struct declaration for a selection set with subselections 1`] = `
+exports[`Swift code generation #propertyAssignmentForField() #structDeclarationForSelectionSet() should generate a nested struct declaration for a selection set with subselections 1`] = `
 "public struct Hero: GraphQLSelectionSet {
   public static let possibleTypes = [\\"Human\\", \\"Droid\\"]
 
@@ -984,7 +984,7 @@ exports[`Swift code generation #structDeclarationForSelectionSet() should genera
 }"
 `;
 
-exports[`Swift code generation #structDeclarationForSelectionSet() should generate a struct declaration for a fragment spread nested in an inline fragment 1`] = `
+exports[`Swift code generation #propertyAssignmentForField() #structDeclarationForSelectionSet() should generate a struct declaration for a fragment spread nested in an inline fragment 1`] = `
 "public struct Hero: GraphQLSelectionSet {
   public static let possibleTypes = [\\"Human\\", \\"Droid\\"]
 
@@ -1085,7 +1085,7 @@ exports[`Swift code generation #structDeclarationForSelectionSet() should genera
 }"
 `;
 
-exports[`Swift code generation #structDeclarationForSelectionSet() should generate a struct declaration for a selection set 1`] = `
+exports[`Swift code generation #propertyAssignmentForField() #structDeclarationForSelectionSet() should generate a struct declaration for a selection set 1`] = `
 "public struct Hero: GraphQLSelectionSet {
   public static let possibleTypes = [\\"Human\\", \\"Droid\\"]
 
@@ -1119,7 +1119,7 @@ exports[`Swift code generation #structDeclarationForSelectionSet() should genera
 }"
 `;
 
-exports[`Swift code generation #structDeclarationForSelectionSet() should generate a struct declaration for a selection set with a conditional field 1`] = `
+exports[`Swift code generation #propertyAssignmentForField() #structDeclarationForSelectionSet() should generate a struct declaration for a selection set with a conditional field 1`] = `
 "public struct Hero: GraphQLSelectionSet {
   public static let possibleTypes = [\\"Human\\", \\"Droid\\"]
 
@@ -1155,7 +1155,7 @@ exports[`Swift code generation #structDeclarationForSelectionSet() should genera
 }"
 `;
 
-exports[`Swift code generation #structDeclarationForSelectionSet() should generate a struct declaration for a selection set with a fragment spread that matches the parent type 1`] = `
+exports[`Swift code generation #propertyAssignmentForField() #structDeclarationForSelectionSet() should generate a struct declaration for a selection set with a fragment spread that matches the parent type 1`] = `
 "public struct Hero: GraphQLSelectionSet {
   public static let possibleTypes = [\\"Human\\", \\"Droid\\"]
 
@@ -1212,7 +1212,7 @@ exports[`Swift code generation #structDeclarationForSelectionSet() should genera
 }"
 `;
 
-exports[`Swift code generation #structDeclarationForSelectionSet() should generate a struct declaration for a selection set with a fragment spread with a more specific type condition 1`] = `
+exports[`Swift code generation #propertyAssignmentForField() #structDeclarationForSelectionSet() should generate a struct declaration for a selection set with a fragment spread with a more specific type condition 1`] = `
 "public struct Hero: GraphQLSelectionSet {
   public static let possibleTypes = [\\"Human\\", \\"Droid\\"]
 
@@ -1337,7 +1337,7 @@ exports[`Swift code generation #structDeclarationForSelectionSet() should genera
 }"
 `;
 
-exports[`Swift code generation #structDeclarationForSelectionSet() should generate a struct declaration for a selection set with an inline fragment 1`] = `
+exports[`Swift code generation #propertyAssignmentForField() #structDeclarationForSelectionSet() should generate a struct declaration for a selection set with an inline fragment 1`] = `
 "public struct Hero: GraphQLSelectionSet {
   public static let possibleTypes = [\\"Human\\", \\"Droid\\"]
 
@@ -1426,7 +1426,7 @@ exports[`Swift code generation #structDeclarationForSelectionSet() should genera
 }"
 `;
 
-exports[`Swift code generation #typeDeclarationForGraphQLType() should escape identifiers in cases of enum declaration for a GraphQLEnumType 1`] = `
+exports[`Swift code generation #propertyAssignmentForField() #typeDeclarationForGraphQLType() should escape identifiers in cases of enum declaration for a GraphQLEnumType 1`] = `
 "public enum AlbumPrivacies: RawRepresentable, Equatable, JSONDecodable, JSONEncodable {
   public typealias RawValue = String
   case \`public\`
@@ -1461,7 +1461,7 @@ exports[`Swift code generation #typeDeclarationForGraphQLType() should escape id
 }"
 `;
 
-exports[`Swift code generation #typeDeclarationForGraphQLType() should generate a struct declaration for a GraphQLInputObjectType 1`] = `
+exports[`Swift code generation #propertyAssignmentForField() #typeDeclarationForGraphQLType() should generate a struct declaration for a GraphQLInputObjectType 1`] = `
 "/// The input object sent when someone is creating a new review
 public struct ReviewInput: GraphQLMapConvertible {
   public var graphQLMap: GraphQLMap
@@ -1502,7 +1502,7 @@ public struct ReviewInput: GraphQLMapConvertible {
 }"
 `;
 
-exports[`Swift code generation #typeDeclarationForGraphQLType() should generate an enum declaration for a GraphQLEnumType 1`] = `
+exports[`Swift code generation #propertyAssignmentForField() #typeDeclarationForGraphQLType() should generate an enum declaration for a GraphQLEnumType 1`] = `
 "/// The episodes in the Star Wars trilogy
 public enum Episode: RawRepresentable, Equatable, JSONDecodable, JSONEncodable {
   public typealias RawValue = String

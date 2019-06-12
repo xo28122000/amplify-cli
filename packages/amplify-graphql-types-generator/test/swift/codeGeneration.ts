@@ -18,7 +18,7 @@ describe('Swift code generation', () => {
   let generator: SwiftAPIGenerator;
 
   beforeEach(() => {
-    generator = new SwiftAPIGenerator({});
+    generator = new SwiftAPIGenerator({} as CompilerContext);
   });
 
   function compile(
@@ -280,9 +280,9 @@ describe('Swift code generation', () => {
           responseKey: 'response_key',
           propertyName: 'propertyName',
           type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(schema.getType('Droid')))
-        })
+      )
+    })
       ).toBe('"response_key": propertyName.map { $0.snapshot }');
-    });
   });
 
   describe('#structDeclarationForFragment()', () => {

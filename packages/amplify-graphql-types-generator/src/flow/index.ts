@@ -4,11 +4,14 @@ import { LegacyCompilerContext } from '../compiler/legacyIR';
 import { parse, printSchema } from 'graphql';
 import { codegen } from '@graphql-codegen/core';
 import * as addPlugin from '@graphql-codegen/add';
-import * as angularPlugin from 'amplify-codegen-plugin-angular';
-import * as typescriptPlugin from '@graphql-codegen/typescript';
+import * as flowOperations from '@graphql-codegen/flow-operations';
+import * as flow from '@graphql-codegen/flow';
 
+const SCALARS = {
+  AWSTimestamp: 'number'
+};
 export async function generateSource(context: LegacyCompilerContext) {
-  const filename = 'codegen.ts';
+  const filename = 'codegen.js';
   const schema = parse(printSchema(context.schema));
   const fragments = Object.keys(context.fragments).map(name => {
     return {
@@ -31,20 +34,32 @@ export async function generateSource(context: LegacyCompilerContext) {
     plugins: [
       {
         add: [
-          '/* tslint:disable */',
+          '// @flow',
           '//  This file was automatically generated and should not be edited.'
         ].join('\n')
       },
-      { typescriptPlugin: {}},
-      { 'z-amplify-codegen-plugin-angular': {} } // prefixed with z- to put the serice at the end of file
+      {
+        flow: {
+          scalars: {
+            ...SCALARS
+          }
+        }
+      },
+      {
+        flowOperations: {
+          scalars: {
+            ...SCALARS
+          }
+        }
+      }
     ],
     config: {},
     pluginMap: {
       add: addPlugin,
-      typescriptPlugin,
-      'z-amplify-codegen-plugin-angular': angularPlugin // prefixed with z- to put the serice at the end of file
+      flow,
+      flowOperations
     }
   });
 
-  return prettier.format(output, { parser: 'typescript' });
+  return prettier.format(output, { parser: 'flow' });
 }

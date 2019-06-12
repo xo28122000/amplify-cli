@@ -11,14 +11,13 @@ import { BasicGeneratedFile } from './utilities/CodeGenerator'
 import { generateSource as generateSwiftSource } from './swift';
 import { generateSource as generateTypescriptSource } from './typescript';
 import { generateSource as generateFlowSource } from './flow';
-import { generateSource as generateFlowModernSource } from './flow-modern';
 import { generateSource as generateScalaSource } from './scala';
 import { generateSource as generateAngularSource } from './angular';
 import { hasS3Fields } from './utilities/complextypes';
 
 type TargetType = 'json' | 'swift' | 'ts' | 'typescript' | 'flow' | 'scala' | 'flow-modern' | 'angular';
 
-export default function generate(
+export default async function generate(
   inputPaths: string[],
   schemaPath: string,
   outputPath: string,
@@ -53,39 +52,7 @@ export default function generate(
     } else {
       fs.writeFileSync(outputPath, generator.output);
     }
-  }
-  else if (target === 'flow-modern') {
-    const context = compileToIR(schema, document, options);
-    const generatedFiles = generateFlowModernSource(context);
-
-    // Group by output directory
-    const filesByOutputDirectory: {
-      [outputDirectory: string]: {
-        [fileName: string]: BasicGeneratedFile
-      }
-    } = {};
-
-    Object.keys(generatedFiles)
-      .forEach((filePath: string) => {
-        const outputDirectory = path.dirname(filePath);
-        if (!filesByOutputDirectory[outputDirectory]) {
-          filesByOutputDirectory[outputDirectory] = {
-            [path.basename(filePath)]: generatedFiles[filePath]
-          };
-        } else {
-          filesByOutputDirectory[outputDirectory][path.basename(filePath)] = generatedFiles[filePath];
-        }
-      })
-
-    Object.keys(filesByOutputDirectory)
-      .forEach((outputDirectory) => {
-        writeGeneratedFiles(
-          filesByOutputDirectory[outputDirectory],
-          outputDirectory
-        );
-      });
-  }
-  else {
+  } else {
     let output;
     const context = compileToLegacyIR(schema, document, options);
     switch (target) {
@@ -94,7 +61,7 @@ export default function generate(
         break;
       case 'ts':
       case 'typescript':
-        output = generateTypescriptSource(context);
+        output = await generateTypescriptSource(context);
         break;
       case 'flow':
         output = generateFlowSource(context);
@@ -103,7 +70,7 @@ export default function generate(
         output = generateScalaSource(context, options);
         break;
       case 'angular':
-        output = generateAngularSource(context);
+        output = await generateAngularSource(context);
     }
 
     if (outputPath) {

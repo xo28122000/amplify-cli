@@ -1,18 +1,10 @@
-import { stripIndent } from 'common-tags';
-
 import {
-  parse,
-  isType,
-  GraphQLID,
-  GraphQLString,
-  GraphQLInt,
-  GraphQLList,
-  GraphQLNonNull
+  parse
 } from 'graphql';
 
 import {
   generateSource
-} from '../../src/typescript/codeGeneration';
+} from '../../src/typescript/index';
 
 import { loadSchema } from '../../src/loading';
 const starWarsSchema = loadSchema(require.resolve('../fixtures/starwars/schema.json'));
@@ -22,7 +14,7 @@ import CodeGenerator from '../../src/utilities/CodeGenerator';
 
 import { compileToLegacyIR } from '../../src/compiler/legacyIR';
 
-describe('TypeScript code generation', function() {
+describe('TypeScript code generation', async () => {
   let generator;
   let compileFromSource;
   let addFragment;
@@ -54,8 +46,8 @@ describe('TypeScript code generation', function() {
     return { generator, compileFromSource, addFragment };
   }
 
-  describe('#generateSource()', function() {
-    test(`should generate simple query operations`, function() {
+  describe('#generateSource()', async () => {
+    test(`should generate simple query operations`, async () => {
       const { compileFromSource } = setup(starWarsSchema);
       const context = compileFromSource(`
         query HeroName {
@@ -65,11 +57,11 @@ describe('TypeScript code generation', function() {
         }
       `);
 
-      const source = generateSource(context);
+      const source = await generateSource(context);
       expect(source).toMatchSnapshot();
     });
 
-    test(`should generate simple query operations including input variables`, function() {
+    test(`should generate simple query operations including input variables`, async () => {
       const { compileFromSource } = setup(starWarsSchema);
       const context = compileFromSource(`
         query HeroName($episode: Episode) {
@@ -79,11 +71,11 @@ describe('TypeScript code generation', function() {
         }
       `);
 
-      const source = generateSource(context);
+      const source = await generateSource(context);
       expect(source).toMatchSnapshot();
     });
 
-    test(`should generate simple nested query operations including input variables`, function() {
+    test(`should generate simple nested query operations including input variables`, async () => {
       const { compileFromSource } = setup(starWarsSchema);
       const context = compileFromSource(`
         query HeroAndFriendsNames($episode: Episode) {
@@ -96,25 +88,25 @@ describe('TypeScript code generation', function() {
         }
       `);
 
-      const source = generateSource(context);
+      const source = await generateSource(context);
       expect(source).toMatchSnapshot();
     });
 
-    test(`should generate simple nested with required elements in lists`, function() {
+    test(`should generate simple nested with required elements in lists`, async () => {
       const { compileFromSource } = setup(starWarsSchema);
       const context = compileFromSource(`
-        query StarshipCoords {
-          starship {
+        query StarshipCoords($id:ID! ) {
+          starship(id:$id) {
             coordinates
           }
         }
       `);
 
-      const source = generateSource(context);
+      const source = await generateSource(context);
       expect(source).toMatchSnapshot();
     });
 
-    test(`should generate fragmented query operations`, function() {
+    test(`should generate fragmented query operations`, async () => {
       const { compileFromSource } = setup(starWarsSchema);
       const context = compileFromSource(`
         query HeroAndFriendsNames {
@@ -131,11 +123,11 @@ describe('TypeScript code generation', function() {
         }
       `);
 
-      const source = generateSource(context);
+      const source = await generateSource(context);
       expect(source).toMatchSnapshot();
     });
 
-    test(`should generate query operations with inline fragments`, function() {
+    test(`should generate query operations with inline fragments`, async () => {
       const { compileFromSource } = setup(starWarsSchema);
       const context = compileFromSource(`
         query HeroAndDetails {
@@ -155,14 +147,14 @@ describe('TypeScript code generation', function() {
         }
       `);
 
-      const source = generateSource(context);
+      const source = await generateSource(context);
       expect(source).toMatchSnapshot();
     });
 
-    test(`should generate mutation operations with complex input types`, function() {
+    test(`should generate mutation operations with complex input types`, async () => {
       const { compileFromSource } = setup(starWarsSchema);
       const context = compileFromSource(`
-        mutation ReviewMovie($episode: Episode, $review: ReviewInput) {
+        mutation ReviewMovie($episode: Episode, $review: ReviewInput!) {
           createReview(episode: $episode, review: $review) {
             stars
             commentary
@@ -170,11 +162,11 @@ describe('TypeScript code generation', function() {
         }
       `);
 
-      const source = generateSource(context);
+      const source = await generateSource(context);
       expect(source).toMatchSnapshot();
     });
 
-    test(`should generate correct list with custom fragment`, function() {
+    test(`should generate correct list with custom fragment`, async () => {
       const { compileFromSource } = setup(starWarsSchema);
       const context = compileFromSource(`
         fragment Friend on Character {
@@ -191,11 +183,11 @@ describe('TypeScript code generation', function() {
         }
       `);
 
-      const source = generateSource(context);
+      const source = await generateSource(context);
       expect(source).toMatchSnapshot();
     });
 
-    test('should handle single line comments', () => {
+    test('should handle single line comments', async () => {
       const { compileFromSource } = setup(miscSchema);
       const context = compileFromSource(`
         query CustomScalar {
@@ -205,11 +197,11 @@ describe('TypeScript code generation', function() {
         }
       `);
 
-      const source = generateSource(context);
+      const source = await generateSource(context);
       expect(source).toMatchSnapshot();
     });
 
-    test('should handle multi-line comments', () => {
+    test('should handle multi-line comments', async () => {
       const { compileFromSource } = setup(miscSchema);
       const context = compileFromSource(`
         query CustomScalar {
@@ -219,11 +211,11 @@ describe('TypeScript code generation', function() {
         }
       `);
 
-      const source = generateSource(context);
+      const source = await generateSource(context);
       expect(source).toMatchSnapshot();
     });
 
-    test('should handle comments in enums', () => {
+    test('should handle comments in enums', async () => {
       const { compileFromSource } = setup(miscSchema);
       const context = compileFromSource(`
         query CustomScalar {
@@ -233,11 +225,11 @@ describe('TypeScript code generation', function() {
         }
       `);
 
-      const source = generateSource(context);
+      const source = await generateSource(context);
       expect(source).toMatchSnapshot();
     });
 
-    test('should handle interfaces at root', () => {
+    test('should handle interfaces at root', async () => {
       const { compileFromSource } = setup(miscSchema);
       const context = compileFromSource(`
         query CustomScalar {
@@ -253,11 +245,11 @@ describe('TypeScript code generation', function() {
         }
       `);
 
-      const source = generateSource(context);
+      const source = await generateSource(context);
       expect(source).toMatchSnapshot();
     });
 
-    test('should handle unions at root', () => {
+    test('should handle unions at root', async () => {
       const { compileFromSource } = setup(miscSchema);
       const context = compileFromSource(`
         query CustomScalar {
@@ -272,11 +264,11 @@ describe('TypeScript code generation', function() {
         }
       `);
 
-      const source = generateSource(context);
+      const source = await generateSource(context);
       expect(source).toMatchSnapshot();
     });
 
-    test('should have __typename value matching fragment type on generic type', () => {
+    test('should have __typename value matching fragment type on generic type', async () => {
       const { compileFromSource } = setup(starWarsSchema);
       const context = compileFromSource(`
         query HeroName {
@@ -291,15 +283,15 @@ describe('TypeScript code generation', function() {
         }
       `);
 
-      const source = generateSource(context);
+      const source = await generateSource(context);
       expect(source).toMatchSnapshot();
     });
 
-    test('should have __typename value matching fragment type on specific type', () => {
+    test('should have __typename value matching fragment type on specific type', async () => {
       const { compileFromSource } = setup(starWarsSchema);
       const context = compileFromSource(`
-        query DroidName {
-          droid {
+        query DroidName($id: ID!) {
+          droid(id: $id) {
             ...DroidWithName
           }
         }
@@ -310,7 +302,7 @@ describe('TypeScript code generation', function() {
         }
       `);
 
-      const source = generateSource(context);
+      const source = await generateSource(context);
       expect(source).toMatchSnapshot();
     });
   });

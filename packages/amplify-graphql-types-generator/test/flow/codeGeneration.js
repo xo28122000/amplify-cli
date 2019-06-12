@@ -10,7 +10,7 @@ import {
 
 import {
   generateSource
-} from '../../src/flow/codeGeneration';
+} from '../../src/flow';
 
 import { loadSchema } from '../../src/loading';
 const starWarsSchema = loadSchema(require.resolve('../fixtures/starwars/schema.json'));
@@ -60,7 +60,7 @@ describe('Flow code generation', function() {
       expect(source).toMatchSnapshot();
     });
 
-    test(`should generate simple query operations including input variables`, function() {
+    test(`should generate simple query operations including input variables`, async function() {
       const { compileFromSource } = setup(starWarsSchema);
       const context = compileFromSource(`
         query HeroName($episode: Episode) {
@@ -70,11 +70,11 @@ describe('Flow code generation', function() {
         }
       `);
 
-      const source = generateSource(context);
+      const source = await generateSource(context);
       expect(source).toMatchSnapshot();
     });
 
-    test(`should generate simple nested query operations including input variables`, function() {
+    test(`should generate simple nested query operations including input variables`, async function() {
       const { compileFromSource } = setup(starWarsSchema);
       const context = compileFromSource(`
         query HeroAndFriendsNames($episode: Episode) {
@@ -87,39 +87,39 @@ describe('Flow code generation', function() {
         }
       `);
 
-      const source = generateSource(context);
+      const source = await generateSource(context);
       expect(source).toMatchSnapshot();
     });
 
-    test(`should generate array query operations`, function() {
+    test(`should generate array query operations`, async function() {
       const { compileFromSource } = setup(starWarsSchema);
       const context = compileFromSource(`
-        query ReviewsStars {
-          reviews {
+        query ReviewsStars($episode: Episode!) {
+          reviews(episode: $episode) {
             stars
           }
         }
       `);
 
-      const source = generateSource(context);
+      const source = await generateSource(context);
       expect(source).toMatchSnapshot();
     });
 
-    test(`should generate simple nested with required elements in lists`, function() {
+    test(`should generate simple nested with required elements in lists`, async function() {
       const { compileFromSource } = setup(starWarsSchema);
       const context = compileFromSource(`
-        query StarshipCoords {
-          starship {
+        query StarshipCoords($id: ID!) {
+          starship(id:$id) {
             coordinates
           }
         }
       `);
 
-      const source = generateSource(context);
+      const source = await generateSource(context);
       expect(source).toMatchSnapshot();
     });
 
-    test(`should generate fragmented query operations`, function() {
+    test(`should generate fragmented query operations`, async function() {
       const { compileFromSource } = setup(starWarsSchema);
       const context = compileFromSource(`
         query HeroAndFriendsNames {
@@ -136,11 +136,11 @@ describe('Flow code generation', function() {
         }
       `);
 
-      const source = generateSource(context);
+      const source = await generateSource(context);
       expect(source).toMatchSnapshot();
     });
 
-    test(`should generate query operations with inline fragments`, function() {
+    test(`should generate query operations with inline fragments`, async function() {
       const { compileFromSource } = setup(starWarsSchema);
       const context = compileFromSource(`
         query HeroAndDetails {
@@ -160,14 +160,14 @@ describe('Flow code generation', function() {
         }
       `);
 
-      const source = generateSource(context);
+      const source = await generateSource(context);
       expect(source).toMatchSnapshot();
     });
 
-    test(`should generate mutation operations with complex input types`, function() {
+    test(`should generate mutation operations with complex input types`, async function() {
       const { compileFromSource } = setup(starWarsSchema);
       const context = compileFromSource(`
-        mutation ReviewMovie($episode: Episode, $review: ReviewInput) {
+        mutation ReviewMovie($episode: Episode, $review: ReviewInput!) {
           createReview(episode: $episode, review: $review) {
             stars
             commentary
@@ -175,11 +175,11 @@ describe('Flow code generation', function() {
         }
       `);
 
-      const source = generateSource(context);
+      const source = await generateSource(context);
       expect(source).toMatchSnapshot();
     });
 
-    test(`should generate correct typedefs with a single custom fragment`, function() {
+    test(`should generate correct typedefs with a single custom fragment`, async function() {
       const { compileFromSource } = setup(starWarsSchema);
       const context = compileFromSource(`
         fragment Friend on Character {
@@ -196,11 +196,11 @@ describe('Flow code generation', function() {
         }
       `);
 
-      const source = generateSource(context);
+      const source = await generateSource(context);
       expect(source).toMatchSnapshot();
     });
 
-    test(`should generate correct typedefs with a multiple custom fragments`, function() {
+    test(`should generate correct typedefs with a multiple custom fragments`, async function() {
       const { compileFromSource } = setup(starWarsSchema);
       const context = compileFromSource(`
         fragment Friend on Character {
@@ -222,11 +222,11 @@ describe('Flow code generation', function() {
         }
       `);
 
-      const source = generateSource(context);
+      const source = await generateSource(context);
       expect(source).toMatchSnapshot();
     });
 
-    test(`should annotate custom scalars as string`, function() {
+    test(`should annotate custom scalars as string`, async function() {
       const { compileFromSource } = setup(miscSchema);
       const context = compileFromSource(`
         query CustomScalar {
@@ -236,13 +236,13 @@ describe('Flow code generation', function() {
         }
       `);
 
-      const source = generateSource(context);
+      const source = await generateSource(context);
       expect(source).toMatchSnapshot();
     });
 
-    test('should handle single line comments', () => {
+    test('should handle single line comments', async () => {
       const { compileFromSource } = setup(miscSchema);
-      const context = compileFromSource(`
+      const context = await compileFromSource(`
         query CustomScalar {
           commentTest {
             singleLine
@@ -254,7 +254,7 @@ describe('Flow code generation', function() {
       expect(source).toMatchSnapshot();
     });
 
-    test('should handle multi-line comments', () => {
+    test('should handle multi-line comments', async () => {
       const { compileFromSource } = setup(miscSchema);
       const context = compileFromSource(`
         query CustomScalar {
@@ -264,11 +264,11 @@ describe('Flow code generation', function() {
         }
       `);
 
-      const source = generateSource(context);
+      const source = await generateSource(context);
       expect(source).toMatchSnapshot();
     });
 
-    test('should handle comments in enums', () => {
+    test('should handle comments in enums', async () => {
       const { compileFromSource } = setup(miscSchema);
       const context = compileFromSource(`
         query CustomScalar {
@@ -278,11 +278,11 @@ describe('Flow code generation', function() {
         }
       `);
 
-      const source = generateSource(context);
+      const source = await generateSource(context);
       expect(source).toMatchSnapshot();
     });
 
-    test('should handle interfaces at root', () => {
+    test('should handle interfaces at root', async () => {
       const { compileFromSource } = setup(miscSchema);
       const context = compileFromSource(`
         query CustomScalar {
@@ -298,11 +298,11 @@ describe('Flow code generation', function() {
         }
       `);
 
-      const source = generateSource(context);
+      const source = await generateSource(context);
       expect(source).toMatchSnapshot();
     });
 
-    test('should handle unions at root', () => {
+    test('should handle unions at root', async () => {
       const { compileFromSource } = setup(miscSchema);
       const context = compileFromSource(`
         query CustomScalar {
@@ -317,11 +317,11 @@ describe('Flow code generation', function() {
         }
       `);
 
-      const source = generateSource(context);
+      const source = await generateSource(context);
       expect(source).toMatchSnapshot();
     });
 
-    test('should handle scalars at root', () => {
+    test('should handle scalars at root', async () => {
       const { compileFromSource } = setup(miscSchema);
       const context = compileFromSource(`
         query RootScalar {
@@ -329,11 +329,11 @@ describe('Flow code generation', function() {
         }
       `);
 
-      const source = generateSource(context);
+      const source = await generateSource(context);
       expect(source).toMatchSnapshot();
     });
-    
-    test('should have __typename value matching fragment type on generic type', () => {
+
+    test('should have __typename value matching fragment type on generic type', async () => {
       const { compileFromSource } = setup(starWarsSchema);
       const context = compileFromSource(`
         query HeroName {
@@ -348,15 +348,15 @@ describe('Flow code generation', function() {
         }
       `);
 
-      const source = generateSource(context);
+      const source = await generateSource(context);
       expect(source).toMatchSnapshot();
     });
 
-    test('should have __typename value matching fragment type on specific type', () => {
+    test('should have __typename value matching fragment type on specific type', async () => {
       const { compileFromSource } = setup(starWarsSchema);
       const context = compileFromSource(`
-        query DroidName {
-          droid {
+        query DroidName($id: ID!) {
+          droid(id:$id) {
             ...DroidWithName
           }
         }
@@ -367,7 +367,7 @@ describe('Flow code generation', function() {
         }
       `);
 
-      const source = generateSource(context);
+      const source = await generateSource(context);
       expect(source).toMatchSnapshot();
     });
   });

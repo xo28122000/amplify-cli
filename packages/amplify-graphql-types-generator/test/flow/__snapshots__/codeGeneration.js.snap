@@ -1,571 +1,3546 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Flow code generation #generateSource() should annotate custom scalars as string 1`] = `
-"/* @flow */
-/* eslint-disable */
+"// @flow
 //  This file was automatically generated and should not be edited.
+/* @flow */
 
-export type CustomScalarQuery = {|
-  misc: ? {|
-    __typename: \\"OddType\\",
-    date: ?any,
-  |},
-|};"
+/** All built-in and custom scalars, mapped to their actual values */
+export type Scalars = {
+  ID: string,
+  String: string,
+  Boolean: boolean,
+  Int: number,
+  Float: number,
+  Date: any,
+  AWSTimestamp: number
+};
+
+/** This is a type to test comments */
+export type CommentTest = {
+  __typename?: \\"CommentTest\\",
+  /** This is a single-line comment */
+  singleLine?: ?$ElementType<Scalars, \\"String\\">,
+  /** This is a multi-line
+   * comment.
+   */
+  multiLine?: ?$ElementType<Scalars, \\"String\\">,
+  enumCommentTest?: ?EnumCommentTestCase
+};
+
+export type DoubleHump = {
+  __typename?: \\"doubleHump\\",
+  humpOne?: ?$ElementType<Scalars, \\"String\\">,
+  humpTwo?: ?$ElementType<Scalars, \\"String\\">
+};
+
+export const EnumCommentTestCaseValues = Object.freeze({
+  /** This is a single-line comment */
+  First: \\"first\\",
+  /** This is a multi-line
+   * comment.
+   */
+  Second: \\"second\\"
+});
+
+export type EnumCommentTestCase = $Values<typeof EnumCommentTestCaseValues>;
+
+export type ImplA = InterfaceTestCase & {
+  __typename?: \\"ImplA\\",
+  prop: $ElementType<Scalars, \\"String\\">,
+  propA: $ElementType<Scalars, \\"String\\">
+};
+
+export type ImplB = InterfaceTestCase & {
+  __typename?: \\"ImplB\\",
+  prop: $ElementType<Scalars, \\"String\\">,
+  propB?: ?$ElementType<Scalars, \\"Int\\">
+};
+
+export type InterfaceTestCase = {
+  __typename?: \\"InterfaceTestCase\\",
+  prop: $ElementType<Scalars, \\"String\\">
+};
+
+export type OddType = {
+  __typename?: \\"OddType\\",
+  date?: ?$ElementType<Scalars, \\"Date\\">,
+  camel?: ?DoubleHump
+};
+
+export type PartialA = {
+  __typename?: \\"PartialA\\",
+  prop: $ElementType<Scalars, \\"String\\">
+};
+
+export type PartialB = {
+  __typename?: \\"PartialB\\",
+  prop: $ElementType<Scalars, \\"String\\">
+};
+
+export type Query = {
+  __typename?: \\"Query\\",
+  misc?: ?OddType,
+  commentTest?: ?CommentTest,
+  interfaceTest?: ?InterfaceTestCase,
+  unionTest?: ?UnionTestCase,
+  scalarTest: $ElementType<Scalars, \\"Boolean\\">
+};
+
+export type UnionTestCase = PartialA | PartialB;
+type $Pick<Origin: Object, Keys: Object> = $ObjMapi<
+  Keys,
+  <Key>(k: Key) => $ElementType<Origin, Key>
+>;
+
+export type CustomScalarQueryVariables = {};
+
+export type CustomScalarQuery = { __typename?: \\"Query\\" } & {
+  misc: ?({ __typename: \\"OddType\\" } & $Pick<OddType, { date: * }>)
+};
+"
 `;
 
 exports[`Flow code generation #generateSource() should generate array query operations 1`] = `
-"/* @flow */
-/* eslint-disable */
+"// @flow
 //  This file was automatically generated and should not be edited.
+/* @flow */
 
-export type ReviewsStarsQuery = {|
-  reviews: ? Array<? {|
-    __typename: \\"Review\\",
-    // The number of stars this review gave, 1-5
-    stars: number,
-  |} >,
-|};"
+/** All built-in and custom scalars, mapped to their actual values */
+export type Scalars = {
+  ID: string,
+  String: string,
+  Boolean: boolean,
+  Int: number,
+  Float: number,
+  AWSTimestamp: number
+};
+
+/** A character from the Star Wars universe */
+export type Character = {
+  __typename?: \\"Character\\",
+  /** The ID of the character */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** The name of the character */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** The friends of the character, or an empty list if they have none */
+  friends?: ?Array<?Character>,
+  /** The friends of the character exposed as a connection with edges */
+  friendsConnection: FriendsConnection,
+  /** The movies this character appears in */
+  appearsIn: Array<?Episode>
+};
+
+/** A character from the Star Wars universe */
+export type CharacterFriendsConnectionArgs = {
+  first?: ?$ElementType<Scalars, \\"Int\\">,
+  after?: ?$ElementType<Scalars, \\"ID\\">
+};
+
+/** The input object sent when passing in a color */
+export type ColorInput = {
+  red: $ElementType<Scalars, \\"Int\\">,
+  green: $ElementType<Scalars, \\"Int\\">,
+  blue: $ElementType<Scalars, \\"Int\\">
+};
+
+/** An autonomous mechanical character in the Star Wars universe */
+export type Droid = Character & {
+  __typename?: \\"Droid\\",
+  /** The ID of the droid */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** What others call this droid */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** This droid's friends, or an empty list if they have none */
+  friends?: ?Array<?Character>,
+  /** The friends of the droid exposed as a connection with edges */
+  friendsConnection: FriendsConnection,
+  /** The movies this droid appears in */
+  appearsIn: Array<?Episode>,
+  /** This droid's primary function */
+  primaryFunction?: ?$ElementType<Scalars, \\"String\\">
+};
+
+/** An autonomous mechanical character in the Star Wars universe */
+export type DroidFriendsConnectionArgs = {
+  first?: ?$ElementType<Scalars, \\"Int\\">,
+  after?: ?$ElementType<Scalars, \\"ID\\">
+};
+
+export const EpisodeValues = Object.freeze({
+  /** Star Wars Episode IV: A New Hope, released in 1977. */
+  Newhope: \\"NEWHOPE\\",
+  /** Star Wars Episode V: The Empire Strikes Back, released in 1980. */
+  Empire: \\"EMPIRE\\",
+  /** Star Wars Episode VI: Return of the Jedi, released in 1983. */
+  Jedi: \\"JEDI\\"
+});
+
+/** The episodes in the Star Wars trilogy */
+export type Episode = $Values<typeof EpisodeValues>;
+
+/** A connection object for a character's friends */
+export type FriendsConnection = {
+  __typename?: \\"FriendsConnection\\",
+  /** The total number of friends */
+  totalCount?: ?$ElementType<Scalars, \\"Int\\">,
+  /** The edges for each of the character's friends. */
+  edges?: ?Array<?FriendsEdge>,
+  /** A list of the friends, as a convenience when edges are not needed. */
+  friends?: ?Array<?Character>,
+  /** Information for paginating this connection */
+  pageInfo: PageInfo
+};
+
+/** An edge object for a character's friends */
+export type FriendsEdge = {
+  __typename?: \\"FriendsEdge\\",
+  /** A cursor used for pagination */
+  cursor: $ElementType<Scalars, \\"ID\\">,
+  /** The character represented by this friendship edge */
+  node?: ?Character
+};
+
+/** A humanoid creature from the Star Wars universe */
+export type Human = Character & {
+  __typename?: \\"Human\\",
+  /** The ID of the human */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** What this human calls themselves */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** The home planet of the human, or null if unknown */
+  homePlanet?: ?$ElementType<Scalars, \\"String\\">,
+  /** Height in the preferred unit, default is meters */
+  height?: ?$ElementType<Scalars, \\"Float\\">,
+  /** Mass in kilograms, or null if unknown */
+  mass?: ?$ElementType<Scalars, \\"Float\\">,
+  /** This human's friends, or an empty list if they have none */
+  friends?: ?Array<?Character>,
+  /** The friends of the human exposed as a connection with edges */
+  friendsConnection: FriendsConnection,
+  /** The movies this human appears in */
+  appearsIn: Array<?Episode>,
+  /** A list of starships this person has piloted, or an empty list if none */
+  starships?: ?Array<?Starship>
+};
+
+/** A humanoid creature from the Star Wars universe */
+export type HumanHeightArgs = {
+  unit: LengthUnit
+};
+
+/** A humanoid creature from the Star Wars universe */
+export type HumanFriendsConnectionArgs = {
+  first?: ?$ElementType<Scalars, \\"Int\\">,
+  after?: ?$ElementType<Scalars, \\"ID\\">
+};
+
+export const LengthUnitValues = Object.freeze({
+  /** The standard unit around the world */
+  Meter: \\"METER\\",
+  /** Primarily used in the United States */
+  Foot: \\"FOOT\\"
+});
+
+/** Units of height */
+export type LengthUnit = $Values<typeof LengthUnitValues>;
+
+/** The mutation type, represents all updates we can make to our data */
+export type Mutation = {
+  __typename?: \\"Mutation\\",
+  createReview?: ?Review
+};
+
+/** The mutation type, represents all updates we can make to our data */
+export type MutationCreateReviewArgs = {
+  episode?: ?Episode,
+  review: ReviewInput
+};
+
+/** Information for paginating this connection */
+export type PageInfo = {
+  __typename?: \\"PageInfo\\",
+  startCursor?: ?$ElementType<Scalars, \\"ID\\">,
+  endCursor?: ?$ElementType<Scalars, \\"ID\\">,
+  hasNextPage: $ElementType<Scalars, \\"Boolean\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type Query = {
+  __typename?: \\"Query\\",
+  hero?: ?Character,
+  reviews?: ?Array<?Review>,
+  search?: ?Array<?SearchResult>,
+  character?: ?Character,
+  droid?: ?Droid,
+  human?: ?Human,
+  starship?: ?Starship
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryHeroArgs = {
+  episode?: ?Episode
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryReviewsArgs = {
+  episode: Episode
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QuerySearchArgs = {
+  text?: ?$ElementType<Scalars, \\"String\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryCharacterArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryDroidArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryHumanArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryStarshipArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** Represents a review for a movie */
+export type Review = {
+  __typename?: \\"Review\\",
+  /** The number of stars this review gave, 1-5 */
+  stars: $ElementType<Scalars, \\"Int\\">,
+  /** Comment about the movie */
+  commentary?: ?$ElementType<Scalars, \\"String\\">
+};
+
+/** The input object sent when someone is creating a new review */
+export type ReviewInput = {
+  /** 0-5 stars */
+  stars: $ElementType<Scalars, \\"Int\\">,
+  /** Comment about the movie, optional */
+  commentary?: ?$ElementType<Scalars, \\"String\\">,
+  /** Favorite color, optional */
+  favorite_color?: ?ColorInput
+};
+
+export type SearchResult = Human | Droid | Starship;
+
+export type Starship = {
+  __typename?: \\"Starship\\",
+  /** The ID of the starship */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** The name of the starship */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** Length of the starship, along the longest axis */
+  length?: ?$ElementType<Scalars, \\"Float\\">,
+  coordinates?: ?Array<Array<$ElementType<Scalars, \\"Float\\">>>
+};
+
+export type StarshipLengthArgs = {
+  unit: LengthUnit
+};
+type $Pick<Origin: Object, Keys: Object> = $ObjMapi<
+  Keys,
+  <Key>(k: Key) => $ElementType<Origin, Key>
+>;
+
+export type ReviewsStarsQueryVariables = {
+  episode: Episode
+};
+
+export type ReviewsStarsQuery = { __typename?: \\"Query\\" } & {
+  reviews: ?Array<?({ __typename: \\"Review\\" } & $Pick<Review, { stars: * }>)>
+};
+"
 `;
 
 exports[`Flow code generation #generateSource() should generate correct typedefs with a multiple custom fragments 1`] = `
-"/* @flow */
-/* eslint-disable */
+"// @flow
 //  This file was automatically generated and should not be edited.
+/* @flow */
 
-// The episodes in the Star Wars trilogy
-export type Episode =
-  \\"NEWHOPE\\" | // Star Wars Episode IV: A New Hope, released in 1977.
-  \\"EMPIRE\\" | // Star Wars Episode V: The Empire Strikes Back, released in 1980.
-  \\"JEDI\\"; // Star Wars Episode VI: Return of the Jedi, released in 1983.
+/** All built-in and custom scalars, mapped to their actual values */
+export type Scalars = {
+  ID: string,
+  String: string,
+  Boolean: boolean,
+  Int: number,
+  Float: number,
+  AWSTimestamp: number
+};
 
+/** A character from the Star Wars universe */
+export type Character = {
+  __typename?: \\"Character\\",
+  /** The ID of the character */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** The name of the character */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** The friends of the character, or an empty list if they have none */
+  friends?: ?Array<?Character>,
+  /** The friends of the character exposed as a connection with edges */
+  friendsConnection: FriendsConnection,
+  /** The movies this character appears in */
+  appearsIn: Array<?Episode>
+};
 
-export type HeroAndFriendsNamesQueryVariables = {|
+/** A character from the Star Wars universe */
+export type CharacterFriendsConnectionArgs = {
+  first?: ?$ElementType<Scalars, \\"Int\\">,
+  after?: ?$ElementType<Scalars, \\"ID\\">
+};
+
+/** The input object sent when passing in a color */
+export type ColorInput = {
+  red: $ElementType<Scalars, \\"Int\\">,
+  green: $ElementType<Scalars, \\"Int\\">,
+  blue: $ElementType<Scalars, \\"Int\\">
+};
+
+/** An autonomous mechanical character in the Star Wars universe */
+export type Droid = Character & {
+  __typename?: \\"Droid\\",
+  /** The ID of the droid */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** What others call this droid */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** This droid's friends, or an empty list if they have none */
+  friends?: ?Array<?Character>,
+  /** The friends of the droid exposed as a connection with edges */
+  friendsConnection: FriendsConnection,
+  /** The movies this droid appears in */
+  appearsIn: Array<?Episode>,
+  /** This droid's primary function */
+  primaryFunction?: ?$ElementType<Scalars, \\"String\\">
+};
+
+/** An autonomous mechanical character in the Star Wars universe */
+export type DroidFriendsConnectionArgs = {
+  first?: ?$ElementType<Scalars, \\"Int\\">,
+  after?: ?$ElementType<Scalars, \\"ID\\">
+};
+
+export const EpisodeValues = Object.freeze({
+  /** Star Wars Episode IV: A New Hope, released in 1977. */
+  Newhope: \\"NEWHOPE\\",
+  /** Star Wars Episode V: The Empire Strikes Back, released in 1980. */
+  Empire: \\"EMPIRE\\",
+  /** Star Wars Episode VI: Return of the Jedi, released in 1983. */
+  Jedi: \\"JEDI\\"
+});
+
+/** The episodes in the Star Wars trilogy */
+export type Episode = $Values<typeof EpisodeValues>;
+
+/** A connection object for a character's friends */
+export type FriendsConnection = {
+  __typename?: \\"FriendsConnection\\",
+  /** The total number of friends */
+  totalCount?: ?$ElementType<Scalars, \\"Int\\">,
+  /** The edges for each of the character's friends. */
+  edges?: ?Array<?FriendsEdge>,
+  /** A list of the friends, as a convenience when edges are not needed. */
+  friends?: ?Array<?Character>,
+  /** Information for paginating this connection */
+  pageInfo: PageInfo
+};
+
+/** An edge object for a character's friends */
+export type FriendsEdge = {
+  __typename?: \\"FriendsEdge\\",
+  /** A cursor used for pagination */
+  cursor: $ElementType<Scalars, \\"ID\\">,
+  /** The character represented by this friendship edge */
+  node?: ?Character
+};
+
+/** A humanoid creature from the Star Wars universe */
+export type Human = Character & {
+  __typename?: \\"Human\\",
+  /** The ID of the human */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** What this human calls themselves */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** The home planet of the human, or null if unknown */
+  homePlanet?: ?$ElementType<Scalars, \\"String\\">,
+  /** Height in the preferred unit, default is meters */
+  height?: ?$ElementType<Scalars, \\"Float\\">,
+  /** Mass in kilograms, or null if unknown */
+  mass?: ?$ElementType<Scalars, \\"Float\\">,
+  /** This human's friends, or an empty list if they have none */
+  friends?: ?Array<?Character>,
+  /** The friends of the human exposed as a connection with edges */
+  friendsConnection: FriendsConnection,
+  /** The movies this human appears in */
+  appearsIn: Array<?Episode>,
+  /** A list of starships this person has piloted, or an empty list if none */
+  starships?: ?Array<?Starship>
+};
+
+/** A humanoid creature from the Star Wars universe */
+export type HumanHeightArgs = {
+  unit: LengthUnit
+};
+
+/** A humanoid creature from the Star Wars universe */
+export type HumanFriendsConnectionArgs = {
+  first?: ?$ElementType<Scalars, \\"Int\\">,
+  after?: ?$ElementType<Scalars, \\"ID\\">
+};
+
+export const LengthUnitValues = Object.freeze({
+  /** The standard unit around the world */
+  Meter: \\"METER\\",
+  /** Primarily used in the United States */
+  Foot: \\"FOOT\\"
+});
+
+/** Units of height */
+export type LengthUnit = $Values<typeof LengthUnitValues>;
+
+/** The mutation type, represents all updates we can make to our data */
+export type Mutation = {
+  __typename?: \\"Mutation\\",
+  createReview?: ?Review
+};
+
+/** The mutation type, represents all updates we can make to our data */
+export type MutationCreateReviewArgs = {
   episode?: ?Episode,
-|};
+  review: ReviewInput
+};
 
-export type HeroAndFriendsNamesQuery = {|
-  hero: ?( {
-      __typename: \\"Human\\",
-      // The name of the character
-      name: string,
-      // The friends of the character, or an empty list if they have none
-      friends: ?Array< ?( {
-          __typename: \\"Human\\",
-          // The name of the character
-          name: string,
-        } | {
-          __typename: \\"Droid\\",
-          // The name of the character
-          name: string,
-        }
-      ) >,
-    } | {
-      __typename: \\"Droid\\",
-      // The name of the character
-      name: string,
-      // The friends of the character, or an empty list if they have none
-      friends: ?Array< ?( {
-          __typename: \\"Human\\",
-          // The name of the character
-          name: string,
-        } | {
-          __typename: \\"Droid\\",
-          // The name of the character
-          name: string,
-        }
-      ) >,
-    }
-  ),
-|};
+/** Information for paginating this connection */
+export type PageInfo = {
+  __typename?: \\"PageInfo\\",
+  startCursor?: ?$ElementType<Scalars, \\"ID\\">,
+  endCursor?: ?$ElementType<Scalars, \\"ID\\">,
+  hasNextPage: $ElementType<Scalars, \\"Boolean\\">
+};
 
-export type FriendFragment = ( {
-      __typename: \\"Human\\",
-      // The name of the character
-      name: string,
-    } | {
-      __typename: \\"Droid\\",
-      // The name of the character
-      name: string,
-    }
-  );
+/** The query type, represents all of the entry points into our object graph */
+export type Query = {
+  __typename?: \\"Query\\",
+  hero?: ?Character,
+  reviews?: ?Array<?Review>,
+  search?: ?Array<?SearchResult>,
+  character?: ?Character,
+  droid?: ?Droid,
+  human?: ?Human,
+  starship?: ?Starship
+};
 
-export type PersonFragment = ( {
-      __typename: \\"Human\\",
-      // The name of the character
-      name: string,
-    } | {
-      __typename: \\"Droid\\",
-      // The name of the character
-      name: string,
-    }
-  );"
+/** The query type, represents all of the entry points into our object graph */
+export type QueryHeroArgs = {
+  episode?: ?Episode
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryReviewsArgs = {
+  episode: Episode
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QuerySearchArgs = {
+  text?: ?$ElementType<Scalars, \\"String\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryCharacterArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryDroidArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryHumanArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryStarshipArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** Represents a review for a movie */
+export type Review = {
+  __typename?: \\"Review\\",
+  /** The number of stars this review gave, 1-5 */
+  stars: $ElementType<Scalars, \\"Int\\">,
+  /** Comment about the movie */
+  commentary?: ?$ElementType<Scalars, \\"String\\">
+};
+
+/** The input object sent when someone is creating a new review */
+export type ReviewInput = {
+  /** 0-5 stars */
+  stars: $ElementType<Scalars, \\"Int\\">,
+  /** Comment about the movie, optional */
+  commentary?: ?$ElementType<Scalars, \\"String\\">,
+  /** Favorite color, optional */
+  favorite_color?: ?ColorInput
+};
+
+export type SearchResult = Human | Droid | Starship;
+
+export type Starship = {
+  __typename?: \\"Starship\\",
+  /** The ID of the starship */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** The name of the starship */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** Length of the starship, along the longest axis */
+  length?: ?$ElementType<Scalars, \\"Float\\">,
+  coordinates?: ?Array<Array<$ElementType<Scalars, \\"Float\\">>>
+};
+
+export type StarshipLengthArgs = {
+  unit: LengthUnit
+};
+type $Pick<Origin: Object, Keys: Object> = $ObjMapi<
+  Keys,
+  <Key>(k: Key) => $ElementType<Origin, Key>
+>;
+
+export type FriendFragment = { __typename: \\"Human\\" | \\"Droid\\" } & $Pick<
+  Character,
+  { name: * }
+>;
+
+export type PersonFragment = { __typename: \\"Human\\" | \\"Droid\\" } & $Pick<
+  Character,
+  { name: * }
+>;
+
+export type HeroAndFriendsNamesQueryVariables = {
+  episode?: ?Episode
+};
+
+export type HeroAndFriendsNamesQuery = { __typename?: \\"Query\\" } & {
+  hero: ?({ __typename: \\"Human\\" | \\"Droid\\" } & $Pick<Character, { name: * }> & {
+      friends: ?Array<?({ __typename: \\"Human\\" | \\"Droid\\" } & (FriendFragment &
+        PersonFragment))>
+    })
+};
+"
 `;
 
 exports[`Flow code generation #generateSource() should generate correct typedefs with a single custom fragment 1`] = `
-"/* @flow */
-/* eslint-disable */
+"// @flow
 //  This file was automatically generated and should not be edited.
+/* @flow */
 
-// The episodes in the Star Wars trilogy
-export type Episode =
-  \\"NEWHOPE\\" | // Star Wars Episode IV: A New Hope, released in 1977.
-  \\"EMPIRE\\" | // Star Wars Episode V: The Empire Strikes Back, released in 1980.
-  \\"JEDI\\"; // Star Wars Episode VI: Return of the Jedi, released in 1983.
+/** All built-in and custom scalars, mapped to their actual values */
+export type Scalars = {
+  ID: string,
+  String: string,
+  Boolean: boolean,
+  Int: number,
+  Float: number,
+  AWSTimestamp: number
+};
 
+/** A character from the Star Wars universe */
+export type Character = {
+  __typename?: \\"Character\\",
+  /** The ID of the character */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** The name of the character */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** The friends of the character, or an empty list if they have none */
+  friends?: ?Array<?Character>,
+  /** The friends of the character exposed as a connection with edges */
+  friendsConnection: FriendsConnection,
+  /** The movies this character appears in */
+  appearsIn: Array<?Episode>
+};
 
-export type HeroAndFriendsNamesQueryVariables = {|
+/** A character from the Star Wars universe */
+export type CharacterFriendsConnectionArgs = {
+  first?: ?$ElementType<Scalars, \\"Int\\">,
+  after?: ?$ElementType<Scalars, \\"ID\\">
+};
+
+/** The input object sent when passing in a color */
+export type ColorInput = {
+  red: $ElementType<Scalars, \\"Int\\">,
+  green: $ElementType<Scalars, \\"Int\\">,
+  blue: $ElementType<Scalars, \\"Int\\">
+};
+
+/** An autonomous mechanical character in the Star Wars universe */
+export type Droid = Character & {
+  __typename?: \\"Droid\\",
+  /** The ID of the droid */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** What others call this droid */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** This droid's friends, or an empty list if they have none */
+  friends?: ?Array<?Character>,
+  /** The friends of the droid exposed as a connection with edges */
+  friendsConnection: FriendsConnection,
+  /** The movies this droid appears in */
+  appearsIn: Array<?Episode>,
+  /** This droid's primary function */
+  primaryFunction?: ?$ElementType<Scalars, \\"String\\">
+};
+
+/** An autonomous mechanical character in the Star Wars universe */
+export type DroidFriendsConnectionArgs = {
+  first?: ?$ElementType<Scalars, \\"Int\\">,
+  after?: ?$ElementType<Scalars, \\"ID\\">
+};
+
+export const EpisodeValues = Object.freeze({
+  /** Star Wars Episode IV: A New Hope, released in 1977. */
+  Newhope: \\"NEWHOPE\\",
+  /** Star Wars Episode V: The Empire Strikes Back, released in 1980. */
+  Empire: \\"EMPIRE\\",
+  /** Star Wars Episode VI: Return of the Jedi, released in 1983. */
+  Jedi: \\"JEDI\\"
+});
+
+/** The episodes in the Star Wars trilogy */
+export type Episode = $Values<typeof EpisodeValues>;
+
+/** A connection object for a character's friends */
+export type FriendsConnection = {
+  __typename?: \\"FriendsConnection\\",
+  /** The total number of friends */
+  totalCount?: ?$ElementType<Scalars, \\"Int\\">,
+  /** The edges for each of the character's friends. */
+  edges?: ?Array<?FriendsEdge>,
+  /** A list of the friends, as a convenience when edges are not needed. */
+  friends?: ?Array<?Character>,
+  /** Information for paginating this connection */
+  pageInfo: PageInfo
+};
+
+/** An edge object for a character's friends */
+export type FriendsEdge = {
+  __typename?: \\"FriendsEdge\\",
+  /** A cursor used for pagination */
+  cursor: $ElementType<Scalars, \\"ID\\">,
+  /** The character represented by this friendship edge */
+  node?: ?Character
+};
+
+/** A humanoid creature from the Star Wars universe */
+export type Human = Character & {
+  __typename?: \\"Human\\",
+  /** The ID of the human */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** What this human calls themselves */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** The home planet of the human, or null if unknown */
+  homePlanet?: ?$ElementType<Scalars, \\"String\\">,
+  /** Height in the preferred unit, default is meters */
+  height?: ?$ElementType<Scalars, \\"Float\\">,
+  /** Mass in kilograms, or null if unknown */
+  mass?: ?$ElementType<Scalars, \\"Float\\">,
+  /** This human's friends, or an empty list if they have none */
+  friends?: ?Array<?Character>,
+  /** The friends of the human exposed as a connection with edges */
+  friendsConnection: FriendsConnection,
+  /** The movies this human appears in */
+  appearsIn: Array<?Episode>,
+  /** A list of starships this person has piloted, or an empty list if none */
+  starships?: ?Array<?Starship>
+};
+
+/** A humanoid creature from the Star Wars universe */
+export type HumanHeightArgs = {
+  unit: LengthUnit
+};
+
+/** A humanoid creature from the Star Wars universe */
+export type HumanFriendsConnectionArgs = {
+  first?: ?$ElementType<Scalars, \\"Int\\">,
+  after?: ?$ElementType<Scalars, \\"ID\\">
+};
+
+export const LengthUnitValues = Object.freeze({
+  /** The standard unit around the world */
+  Meter: \\"METER\\",
+  /** Primarily used in the United States */
+  Foot: \\"FOOT\\"
+});
+
+/** Units of height */
+export type LengthUnit = $Values<typeof LengthUnitValues>;
+
+/** The mutation type, represents all updates we can make to our data */
+export type Mutation = {
+  __typename?: \\"Mutation\\",
+  createReview?: ?Review
+};
+
+/** The mutation type, represents all updates we can make to our data */
+export type MutationCreateReviewArgs = {
   episode?: ?Episode,
-|};
+  review: ReviewInput
+};
 
-export type HeroAndFriendsNamesQuery = {|
-  hero: ?( {
-      __typename: \\"Human\\",
-      // The name of the character
-      name: string,
-      // The friends of the character, or an empty list if they have none
-      friends: ?Array< ?( {
-          __typename: \\"Human\\",
-          // The name of the character
-          name: string,
-        } | {
-          __typename: \\"Droid\\",
-          // The name of the character
-          name: string,
-        }
-      ) >,
-    } | {
-      __typename: \\"Droid\\",
-      // The name of the character
-      name: string,
-      // The friends of the character, or an empty list if they have none
-      friends: ?Array< ?( {
-          __typename: \\"Human\\",
-          // The name of the character
-          name: string,
-        } | {
-          __typename: \\"Droid\\",
-          // The name of the character
-          name: string,
-        }
-      ) >,
-    }
-  ),
-|};
+/** Information for paginating this connection */
+export type PageInfo = {
+  __typename?: \\"PageInfo\\",
+  startCursor?: ?$ElementType<Scalars, \\"ID\\">,
+  endCursor?: ?$ElementType<Scalars, \\"ID\\">,
+  hasNextPage: $ElementType<Scalars, \\"Boolean\\">
+};
 
-export type FriendFragment = ( {
-      __typename: \\"Human\\",
-      // The name of the character
-      name: string,
-    } | {
-      __typename: \\"Droid\\",
-      // The name of the character
-      name: string,
-    }
-  );"
+/** The query type, represents all of the entry points into our object graph */
+export type Query = {
+  __typename?: \\"Query\\",
+  hero?: ?Character,
+  reviews?: ?Array<?Review>,
+  search?: ?Array<?SearchResult>,
+  character?: ?Character,
+  droid?: ?Droid,
+  human?: ?Human,
+  starship?: ?Starship
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryHeroArgs = {
+  episode?: ?Episode
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryReviewsArgs = {
+  episode: Episode
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QuerySearchArgs = {
+  text?: ?$ElementType<Scalars, \\"String\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryCharacterArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryDroidArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryHumanArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryStarshipArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** Represents a review for a movie */
+export type Review = {
+  __typename?: \\"Review\\",
+  /** The number of stars this review gave, 1-5 */
+  stars: $ElementType<Scalars, \\"Int\\">,
+  /** Comment about the movie */
+  commentary?: ?$ElementType<Scalars, \\"String\\">
+};
+
+/** The input object sent when someone is creating a new review */
+export type ReviewInput = {
+  /** 0-5 stars */
+  stars: $ElementType<Scalars, \\"Int\\">,
+  /** Comment about the movie, optional */
+  commentary?: ?$ElementType<Scalars, \\"String\\">,
+  /** Favorite color, optional */
+  favorite_color?: ?ColorInput
+};
+
+export type SearchResult = Human | Droid | Starship;
+
+export type Starship = {
+  __typename?: \\"Starship\\",
+  /** The ID of the starship */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** The name of the starship */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** Length of the starship, along the longest axis */
+  length?: ?$ElementType<Scalars, \\"Float\\">,
+  coordinates?: ?Array<Array<$ElementType<Scalars, \\"Float\\">>>
+};
+
+export type StarshipLengthArgs = {
+  unit: LengthUnit
+};
+type $Pick<Origin: Object, Keys: Object> = $ObjMapi<
+  Keys,
+  <Key>(k: Key) => $ElementType<Origin, Key>
+>;
+
+export type FriendFragment = { __typename: \\"Human\\" | \\"Droid\\" } & $Pick<
+  Character,
+  { name: * }
+>;
+
+export type HeroAndFriendsNamesQueryVariables = {
+  episode?: ?Episode
+};
+
+export type HeroAndFriendsNamesQuery = { __typename?: \\"Query\\" } & {
+  hero: ?({ __typename: \\"Human\\" | \\"Droid\\" } & $Pick<Character, { name: * }> & {
+      friends: ?Array<?({ __typename: \\"Human\\" | \\"Droid\\" } & FriendFragment)>
+    })
+};
+"
 `;
 
 exports[`Flow code generation #generateSource() should generate fragmented query operations 1`] = `
-"/* @flow */
-/* eslint-disable */
+"// @flow
 //  This file was automatically generated and should not be edited.
+/* @flow */
 
-export type HeroAndFriendsNamesQuery = {|
-  hero: ?( {
-      __typename: \\"Human\\",
-      // The name of the character
-      name: string,
-      // The friends of the character, or an empty list if they have none
-      friends: ?Array< ?( {
-          __typename: \\"Human\\",
-          // The name of the character
-          name: string,
-        } | {
-          __typename: \\"Droid\\",
-          // The name of the character
-          name: string,
-        }
-      ) >,
-    } | {
-      __typename: \\"Droid\\",
-      // The name of the character
-      name: string,
-      // The friends of the character, or an empty list if they have none
-      friends: ?Array< ?( {
-          __typename: \\"Human\\",
-          // The name of the character
-          name: string,
-        } | {
-          __typename: \\"Droid\\",
-          // The name of the character
-          name: string,
-        }
-      ) >,
-    }
-  ),
-|};
+/** All built-in and custom scalars, mapped to their actual values */
+export type Scalars = {
+  ID: string,
+  String: string,
+  Boolean: boolean,
+  Int: number,
+  Float: number,
+  AWSTimestamp: number
+};
 
-export type heroFriendsFragment = ( {
-      __typename: \\"Human\\",
-      // The friends of the character, or an empty list if they have none
-      friends: ?Array< ?( {
-          __typename: \\"Human\\",
-          // The name of the character
-          name: string,
-        } | {
-          __typename: \\"Droid\\",
-          // The name of the character
-          name: string,
-        }
-      ) >,
-    } | {
-      __typename: \\"Droid\\",
-      // The friends of the character, or an empty list if they have none
-      friends: ?Array< ?( {
-          __typename: \\"Human\\",
-          // The name of the character
-          name: string,
-        } | {
-          __typename: \\"Droid\\",
-          // The name of the character
-          name: string,
-        }
-      ) >,
-    }
-  );"
+/** A character from the Star Wars universe */
+export type Character = {
+  __typename?: \\"Character\\",
+  /** The ID of the character */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** The name of the character */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** The friends of the character, or an empty list if they have none */
+  friends?: ?Array<?Character>,
+  /** The friends of the character exposed as a connection with edges */
+  friendsConnection: FriendsConnection,
+  /** The movies this character appears in */
+  appearsIn: Array<?Episode>
+};
+
+/** A character from the Star Wars universe */
+export type CharacterFriendsConnectionArgs = {
+  first?: ?$ElementType<Scalars, \\"Int\\">,
+  after?: ?$ElementType<Scalars, \\"ID\\">
+};
+
+/** The input object sent when passing in a color */
+export type ColorInput = {
+  red: $ElementType<Scalars, \\"Int\\">,
+  green: $ElementType<Scalars, \\"Int\\">,
+  blue: $ElementType<Scalars, \\"Int\\">
+};
+
+/** An autonomous mechanical character in the Star Wars universe */
+export type Droid = Character & {
+  __typename?: \\"Droid\\",
+  /** The ID of the droid */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** What others call this droid */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** This droid's friends, or an empty list if they have none */
+  friends?: ?Array<?Character>,
+  /** The friends of the droid exposed as a connection with edges */
+  friendsConnection: FriendsConnection,
+  /** The movies this droid appears in */
+  appearsIn: Array<?Episode>,
+  /** This droid's primary function */
+  primaryFunction?: ?$ElementType<Scalars, \\"String\\">
+};
+
+/** An autonomous mechanical character in the Star Wars universe */
+export type DroidFriendsConnectionArgs = {
+  first?: ?$ElementType<Scalars, \\"Int\\">,
+  after?: ?$ElementType<Scalars, \\"ID\\">
+};
+
+export const EpisodeValues = Object.freeze({
+  /** Star Wars Episode IV: A New Hope, released in 1977. */
+  Newhope: \\"NEWHOPE\\",
+  /** Star Wars Episode V: The Empire Strikes Back, released in 1980. */
+  Empire: \\"EMPIRE\\",
+  /** Star Wars Episode VI: Return of the Jedi, released in 1983. */
+  Jedi: \\"JEDI\\"
+});
+
+/** The episodes in the Star Wars trilogy */
+export type Episode = $Values<typeof EpisodeValues>;
+
+/** A connection object for a character's friends */
+export type FriendsConnection = {
+  __typename?: \\"FriendsConnection\\",
+  /** The total number of friends */
+  totalCount?: ?$ElementType<Scalars, \\"Int\\">,
+  /** The edges for each of the character's friends. */
+  edges?: ?Array<?FriendsEdge>,
+  /** A list of the friends, as a convenience when edges are not needed. */
+  friends?: ?Array<?Character>,
+  /** Information for paginating this connection */
+  pageInfo: PageInfo
+};
+
+/** An edge object for a character's friends */
+export type FriendsEdge = {
+  __typename?: \\"FriendsEdge\\",
+  /** A cursor used for pagination */
+  cursor: $ElementType<Scalars, \\"ID\\">,
+  /** The character represented by this friendship edge */
+  node?: ?Character
+};
+
+/** A humanoid creature from the Star Wars universe */
+export type Human = Character & {
+  __typename?: \\"Human\\",
+  /** The ID of the human */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** What this human calls themselves */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** The home planet of the human, or null if unknown */
+  homePlanet?: ?$ElementType<Scalars, \\"String\\">,
+  /** Height in the preferred unit, default is meters */
+  height?: ?$ElementType<Scalars, \\"Float\\">,
+  /** Mass in kilograms, or null if unknown */
+  mass?: ?$ElementType<Scalars, \\"Float\\">,
+  /** This human's friends, or an empty list if they have none */
+  friends?: ?Array<?Character>,
+  /** The friends of the human exposed as a connection with edges */
+  friendsConnection: FriendsConnection,
+  /** The movies this human appears in */
+  appearsIn: Array<?Episode>,
+  /** A list of starships this person has piloted, or an empty list if none */
+  starships?: ?Array<?Starship>
+};
+
+/** A humanoid creature from the Star Wars universe */
+export type HumanHeightArgs = {
+  unit: LengthUnit
+};
+
+/** A humanoid creature from the Star Wars universe */
+export type HumanFriendsConnectionArgs = {
+  first?: ?$ElementType<Scalars, \\"Int\\">,
+  after?: ?$ElementType<Scalars, \\"ID\\">
+};
+
+export const LengthUnitValues = Object.freeze({
+  /** The standard unit around the world */
+  Meter: \\"METER\\",
+  /** Primarily used in the United States */
+  Foot: \\"FOOT\\"
+});
+
+/** Units of height */
+export type LengthUnit = $Values<typeof LengthUnitValues>;
+
+/** The mutation type, represents all updates we can make to our data */
+export type Mutation = {
+  __typename?: \\"Mutation\\",
+  createReview?: ?Review
+};
+
+/** The mutation type, represents all updates we can make to our data */
+export type MutationCreateReviewArgs = {
+  episode?: ?Episode,
+  review: ReviewInput
+};
+
+/** Information for paginating this connection */
+export type PageInfo = {
+  __typename?: \\"PageInfo\\",
+  startCursor?: ?$ElementType<Scalars, \\"ID\\">,
+  endCursor?: ?$ElementType<Scalars, \\"ID\\">,
+  hasNextPage: $ElementType<Scalars, \\"Boolean\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type Query = {
+  __typename?: \\"Query\\",
+  hero?: ?Character,
+  reviews?: ?Array<?Review>,
+  search?: ?Array<?SearchResult>,
+  character?: ?Character,
+  droid?: ?Droid,
+  human?: ?Human,
+  starship?: ?Starship
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryHeroArgs = {
+  episode?: ?Episode
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryReviewsArgs = {
+  episode: Episode
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QuerySearchArgs = {
+  text?: ?$ElementType<Scalars, \\"String\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryCharacterArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryDroidArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryHumanArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryStarshipArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** Represents a review for a movie */
+export type Review = {
+  __typename?: \\"Review\\",
+  /** The number of stars this review gave, 1-5 */
+  stars: $ElementType<Scalars, \\"Int\\">,
+  /** Comment about the movie */
+  commentary?: ?$ElementType<Scalars, \\"String\\">
+};
+
+/** The input object sent when someone is creating a new review */
+export type ReviewInput = {
+  /** 0-5 stars */
+  stars: $ElementType<Scalars, \\"Int\\">,
+  /** Comment about the movie, optional */
+  commentary?: ?$ElementType<Scalars, \\"String\\">,
+  /** Favorite color, optional */
+  favorite_color?: ?ColorInput
+};
+
+export type SearchResult = Human | Droid | Starship;
+
+export type Starship = {
+  __typename?: \\"Starship\\",
+  /** The ID of the starship */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** The name of the starship */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** Length of the starship, along the longest axis */
+  length?: ?$ElementType<Scalars, \\"Float\\">,
+  coordinates?: ?Array<Array<$ElementType<Scalars, \\"Float\\">>>
+};
+
+export type StarshipLengthArgs = {
+  unit: LengthUnit
+};
+type $Pick<Origin: Object, Keys: Object> = $ObjMapi<
+  Keys,
+  <Key>(k: Key) => $ElementType<Origin, Key>
+>;
+
+export type HeroFriendsFragment = { __typename: \\"Human\\" | \\"Droid\\" } & {
+  friends: ?Array<?({ __typename: \\"Human\\" | \\"Droid\\" } & $Pick<
+    Character,
+    { name: * }
+  >)>
+};
+
+export type HeroAndFriendsNamesQueryVariables = {};
+
+export type HeroAndFriendsNamesQuery = { __typename?: \\"Query\\" } & {
+  hero: ?({ __typename: \\"Human\\" | \\"Droid\\" } & $Pick<Character, { name: * }> &
+    HeroFriendsFragment)
+};
+"
 `;
 
 exports[`Flow code generation #generateSource() should generate mutation operations with complex input types 1`] = `
-"/* @flow */
-/* eslint-disable */
+"// @flow
 //  This file was automatically generated and should not be edited.
+/* @flow */
 
-// The episodes in the Star Wars trilogy
-export type Episode =
-  \\"NEWHOPE\\" | // Star Wars Episode IV: A New Hope, released in 1977.
-  \\"EMPIRE\\" | // Star Wars Episode V: The Empire Strikes Back, released in 1980.
-  \\"JEDI\\"; // Star Wars Episode VI: Return of the Jedi, released in 1983.
+/** All built-in and custom scalars, mapped to their actual values */
+export type Scalars = {
+  ID: string,
+  String: string,
+  Boolean: boolean,
+  Int: number,
+  Float: number,
+  AWSTimestamp: number
+};
 
+/** A character from the Star Wars universe */
+export type Character = {
+  __typename?: \\"Character\\",
+  /** The ID of the character */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** The name of the character */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** The friends of the character, or an empty list if they have none */
+  friends?: ?Array<?Character>,
+  /** The friends of the character exposed as a connection with edges */
+  friendsConnection: FriendsConnection,
+  /** The movies this character appears in */
+  appearsIn: Array<?Episode>
+};
 
-export type ReviewInput = {|
-  // 0-5 stars
-  stars: number,
-  // Comment about the movie, optional
-  commentary?: ?string,
-  // Favorite color, optional
-  favorite_color?: ?ColorInput,
-|};
+/** A character from the Star Wars universe */
+export type CharacterFriendsConnectionArgs = {
+  first?: ?$ElementType<Scalars, \\"Int\\">,
+  after?: ?$ElementType<Scalars, \\"ID\\">
+};
 
-export type ColorInput = {|
-  red: number,
-  green: number,
-  blue: number,
-|};
+/** The input object sent when passing in a color */
+export type ColorInput = {
+  red: $ElementType<Scalars, \\"Int\\">,
+  green: $ElementType<Scalars, \\"Int\\">,
+  blue: $ElementType<Scalars, \\"Int\\">
+};
 
-export type ReviewMovieMutationVariables = {|
+/** An autonomous mechanical character in the Star Wars universe */
+export type Droid = Character & {
+  __typename?: \\"Droid\\",
+  /** The ID of the droid */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** What others call this droid */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** This droid's friends, or an empty list if they have none */
+  friends?: ?Array<?Character>,
+  /** The friends of the droid exposed as a connection with edges */
+  friendsConnection: FriendsConnection,
+  /** The movies this droid appears in */
+  appearsIn: Array<?Episode>,
+  /** This droid's primary function */
+  primaryFunction?: ?$ElementType<Scalars, \\"String\\">
+};
+
+/** An autonomous mechanical character in the Star Wars universe */
+export type DroidFriendsConnectionArgs = {
+  first?: ?$ElementType<Scalars, \\"Int\\">,
+  after?: ?$ElementType<Scalars, \\"ID\\">
+};
+
+export const EpisodeValues = Object.freeze({
+  /** Star Wars Episode IV: A New Hope, released in 1977. */
+  Newhope: \\"NEWHOPE\\",
+  /** Star Wars Episode V: The Empire Strikes Back, released in 1980. */
+  Empire: \\"EMPIRE\\",
+  /** Star Wars Episode VI: Return of the Jedi, released in 1983. */
+  Jedi: \\"JEDI\\"
+});
+
+/** The episodes in the Star Wars trilogy */
+export type Episode = $Values<typeof EpisodeValues>;
+
+/** A connection object for a character's friends */
+export type FriendsConnection = {
+  __typename?: \\"FriendsConnection\\",
+  /** The total number of friends */
+  totalCount?: ?$ElementType<Scalars, \\"Int\\">,
+  /** The edges for each of the character's friends. */
+  edges?: ?Array<?FriendsEdge>,
+  /** A list of the friends, as a convenience when edges are not needed. */
+  friends?: ?Array<?Character>,
+  /** Information for paginating this connection */
+  pageInfo: PageInfo
+};
+
+/** An edge object for a character's friends */
+export type FriendsEdge = {
+  __typename?: \\"FriendsEdge\\",
+  /** A cursor used for pagination */
+  cursor: $ElementType<Scalars, \\"ID\\">,
+  /** The character represented by this friendship edge */
+  node?: ?Character
+};
+
+/** A humanoid creature from the Star Wars universe */
+export type Human = Character & {
+  __typename?: \\"Human\\",
+  /** The ID of the human */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** What this human calls themselves */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** The home planet of the human, or null if unknown */
+  homePlanet?: ?$ElementType<Scalars, \\"String\\">,
+  /** Height in the preferred unit, default is meters */
+  height?: ?$ElementType<Scalars, \\"Float\\">,
+  /** Mass in kilograms, or null if unknown */
+  mass?: ?$ElementType<Scalars, \\"Float\\">,
+  /** This human's friends, or an empty list if they have none */
+  friends?: ?Array<?Character>,
+  /** The friends of the human exposed as a connection with edges */
+  friendsConnection: FriendsConnection,
+  /** The movies this human appears in */
+  appearsIn: Array<?Episode>,
+  /** A list of starships this person has piloted, or an empty list if none */
+  starships?: ?Array<?Starship>
+};
+
+/** A humanoid creature from the Star Wars universe */
+export type HumanHeightArgs = {
+  unit: LengthUnit
+};
+
+/** A humanoid creature from the Star Wars universe */
+export type HumanFriendsConnectionArgs = {
+  first?: ?$ElementType<Scalars, \\"Int\\">,
+  after?: ?$ElementType<Scalars, \\"ID\\">
+};
+
+export const LengthUnitValues = Object.freeze({
+  /** The standard unit around the world */
+  Meter: \\"METER\\",
+  /** Primarily used in the United States */
+  Foot: \\"FOOT\\"
+});
+
+/** Units of height */
+export type LengthUnit = $Values<typeof LengthUnitValues>;
+
+/** The mutation type, represents all updates we can make to our data */
+export type Mutation = {
+  __typename?: \\"Mutation\\",
+  createReview?: ?Review
+};
+
+/** The mutation type, represents all updates we can make to our data */
+export type MutationCreateReviewArgs = {
   episode?: ?Episode,
-  review?: ?ReviewInput,
-|};
+  review: ReviewInput
+};
 
-export type ReviewMovieMutation = {|
-  createReview: ? {|
-    __typename: \\"Review\\",
-    // The number of stars this review gave, 1-5
-    stars: number,
-    // Comment about the movie
-    commentary: ?string,
-  |},
-|};"
+/** Information for paginating this connection */
+export type PageInfo = {
+  __typename?: \\"PageInfo\\",
+  startCursor?: ?$ElementType<Scalars, \\"ID\\">,
+  endCursor?: ?$ElementType<Scalars, \\"ID\\">,
+  hasNextPage: $ElementType<Scalars, \\"Boolean\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type Query = {
+  __typename?: \\"Query\\",
+  hero?: ?Character,
+  reviews?: ?Array<?Review>,
+  search?: ?Array<?SearchResult>,
+  character?: ?Character,
+  droid?: ?Droid,
+  human?: ?Human,
+  starship?: ?Starship
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryHeroArgs = {
+  episode?: ?Episode
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryReviewsArgs = {
+  episode: Episode
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QuerySearchArgs = {
+  text?: ?$ElementType<Scalars, \\"String\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryCharacterArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryDroidArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryHumanArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryStarshipArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** Represents a review for a movie */
+export type Review = {
+  __typename?: \\"Review\\",
+  /** The number of stars this review gave, 1-5 */
+  stars: $ElementType<Scalars, \\"Int\\">,
+  /** Comment about the movie */
+  commentary?: ?$ElementType<Scalars, \\"String\\">
+};
+
+/** The input object sent when someone is creating a new review */
+export type ReviewInput = {
+  /** 0-5 stars */
+  stars: $ElementType<Scalars, \\"Int\\">,
+  /** Comment about the movie, optional */
+  commentary?: ?$ElementType<Scalars, \\"String\\">,
+  /** Favorite color, optional */
+  favorite_color?: ?ColorInput
+};
+
+export type SearchResult = Human | Droid | Starship;
+
+export type Starship = {
+  __typename?: \\"Starship\\",
+  /** The ID of the starship */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** The name of the starship */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** Length of the starship, along the longest axis */
+  length?: ?$ElementType<Scalars, \\"Float\\">,
+  coordinates?: ?Array<Array<$ElementType<Scalars, \\"Float\\">>>
+};
+
+export type StarshipLengthArgs = {
+  unit: LengthUnit
+};
+type $Pick<Origin: Object, Keys: Object> = $ObjMapi<
+  Keys,
+  <Key>(k: Key) => $ElementType<Origin, Key>
+>;
+
+export type ReviewMovieMutationVariables = {
+  episode?: ?Episode,
+  review: ReviewInput
+};
+
+export type ReviewMovieMutation = { __typename?: \\"Mutation\\" } & {
+  createReview: ?({ __typename: \\"Review\\" } & $Pick<
+    Review,
+    { stars: *, commentary: * }
+  >)
+};
+"
 `;
 
 exports[`Flow code generation #generateSource() should generate query operations with inline fragments 1`] = `
-"/* @flow */
-/* eslint-disable */
+"// @flow
 //  This file was automatically generated and should not be edited.
+/* @flow */
 
-export type HeroAndDetailsQuery = {|
-  hero: ?( {
-      __typename: \\"Human\\",
-      // What this human calls themselves
-      name: string,
-      // Height in the preferred unit, default is meters
-      height: ?number,
-    } | {
-      __typename: \\"Droid\\",
-      // What others call this droid
-      name: string,
-      // This droid's primary function
-      primaryFunction: ?string,
-    }
-  ),
-|};
+/** All built-in and custom scalars, mapped to their actual values */
+export type Scalars = {
+  ID: string,
+  String: string,
+  Boolean: boolean,
+  Int: number,
+  Float: number,
+  AWSTimestamp: number
+};
 
-export type HeroDetailsFragment = ( {
-      __typename: \\"Human\\",
-      // Height in the preferred unit, default is meters
-      height: ?number,
-    } | {
-      __typename: \\"Droid\\",
-      // This droid's primary function
-      primaryFunction: ?string,
-    }
-  );"
+/** A character from the Star Wars universe */
+export type Character = {
+  __typename?: \\"Character\\",
+  /** The ID of the character */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** The name of the character */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** The friends of the character, or an empty list if they have none */
+  friends?: ?Array<?Character>,
+  /** The friends of the character exposed as a connection with edges */
+  friendsConnection: FriendsConnection,
+  /** The movies this character appears in */
+  appearsIn: Array<?Episode>
+};
+
+/** A character from the Star Wars universe */
+export type CharacterFriendsConnectionArgs = {
+  first?: ?$ElementType<Scalars, \\"Int\\">,
+  after?: ?$ElementType<Scalars, \\"ID\\">
+};
+
+/** The input object sent when passing in a color */
+export type ColorInput = {
+  red: $ElementType<Scalars, \\"Int\\">,
+  green: $ElementType<Scalars, \\"Int\\">,
+  blue: $ElementType<Scalars, \\"Int\\">
+};
+
+/** An autonomous mechanical character in the Star Wars universe */
+export type Droid = Character & {
+  __typename?: \\"Droid\\",
+  /** The ID of the droid */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** What others call this droid */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** This droid's friends, or an empty list if they have none */
+  friends?: ?Array<?Character>,
+  /** The friends of the droid exposed as a connection with edges */
+  friendsConnection: FriendsConnection,
+  /** The movies this droid appears in */
+  appearsIn: Array<?Episode>,
+  /** This droid's primary function */
+  primaryFunction?: ?$ElementType<Scalars, \\"String\\">
+};
+
+/** An autonomous mechanical character in the Star Wars universe */
+export type DroidFriendsConnectionArgs = {
+  first?: ?$ElementType<Scalars, \\"Int\\">,
+  after?: ?$ElementType<Scalars, \\"ID\\">
+};
+
+export const EpisodeValues = Object.freeze({
+  /** Star Wars Episode IV: A New Hope, released in 1977. */
+  Newhope: \\"NEWHOPE\\",
+  /** Star Wars Episode V: The Empire Strikes Back, released in 1980. */
+  Empire: \\"EMPIRE\\",
+  /** Star Wars Episode VI: Return of the Jedi, released in 1983. */
+  Jedi: \\"JEDI\\"
+});
+
+/** The episodes in the Star Wars trilogy */
+export type Episode = $Values<typeof EpisodeValues>;
+
+/** A connection object for a character's friends */
+export type FriendsConnection = {
+  __typename?: \\"FriendsConnection\\",
+  /** The total number of friends */
+  totalCount?: ?$ElementType<Scalars, \\"Int\\">,
+  /** The edges for each of the character's friends. */
+  edges?: ?Array<?FriendsEdge>,
+  /** A list of the friends, as a convenience when edges are not needed. */
+  friends?: ?Array<?Character>,
+  /** Information for paginating this connection */
+  pageInfo: PageInfo
+};
+
+/** An edge object for a character's friends */
+export type FriendsEdge = {
+  __typename?: \\"FriendsEdge\\",
+  /** A cursor used for pagination */
+  cursor: $ElementType<Scalars, \\"ID\\">,
+  /** The character represented by this friendship edge */
+  node?: ?Character
+};
+
+/** A humanoid creature from the Star Wars universe */
+export type Human = Character & {
+  __typename?: \\"Human\\",
+  /** The ID of the human */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** What this human calls themselves */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** The home planet of the human, or null if unknown */
+  homePlanet?: ?$ElementType<Scalars, \\"String\\">,
+  /** Height in the preferred unit, default is meters */
+  height?: ?$ElementType<Scalars, \\"Float\\">,
+  /** Mass in kilograms, or null if unknown */
+  mass?: ?$ElementType<Scalars, \\"Float\\">,
+  /** This human's friends, or an empty list if they have none */
+  friends?: ?Array<?Character>,
+  /** The friends of the human exposed as a connection with edges */
+  friendsConnection: FriendsConnection,
+  /** The movies this human appears in */
+  appearsIn: Array<?Episode>,
+  /** A list of starships this person has piloted, or an empty list if none */
+  starships?: ?Array<?Starship>
+};
+
+/** A humanoid creature from the Star Wars universe */
+export type HumanHeightArgs = {
+  unit: LengthUnit
+};
+
+/** A humanoid creature from the Star Wars universe */
+export type HumanFriendsConnectionArgs = {
+  first?: ?$ElementType<Scalars, \\"Int\\">,
+  after?: ?$ElementType<Scalars, \\"ID\\">
+};
+
+export const LengthUnitValues = Object.freeze({
+  /** The standard unit around the world */
+  Meter: \\"METER\\",
+  /** Primarily used in the United States */
+  Foot: \\"FOOT\\"
+});
+
+/** Units of height */
+export type LengthUnit = $Values<typeof LengthUnitValues>;
+
+/** The mutation type, represents all updates we can make to our data */
+export type Mutation = {
+  __typename?: \\"Mutation\\",
+  createReview?: ?Review
+};
+
+/** The mutation type, represents all updates we can make to our data */
+export type MutationCreateReviewArgs = {
+  episode?: ?Episode,
+  review: ReviewInput
+};
+
+/** Information for paginating this connection */
+export type PageInfo = {
+  __typename?: \\"PageInfo\\",
+  startCursor?: ?$ElementType<Scalars, \\"ID\\">,
+  endCursor?: ?$ElementType<Scalars, \\"ID\\">,
+  hasNextPage: $ElementType<Scalars, \\"Boolean\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type Query = {
+  __typename?: \\"Query\\",
+  hero?: ?Character,
+  reviews?: ?Array<?Review>,
+  search?: ?Array<?SearchResult>,
+  character?: ?Character,
+  droid?: ?Droid,
+  human?: ?Human,
+  starship?: ?Starship
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryHeroArgs = {
+  episode?: ?Episode
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryReviewsArgs = {
+  episode: Episode
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QuerySearchArgs = {
+  text?: ?$ElementType<Scalars, \\"String\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryCharacterArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryDroidArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryHumanArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryStarshipArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** Represents a review for a movie */
+export type Review = {
+  __typename?: \\"Review\\",
+  /** The number of stars this review gave, 1-5 */
+  stars: $ElementType<Scalars, \\"Int\\">,
+  /** Comment about the movie */
+  commentary?: ?$ElementType<Scalars, \\"String\\">
+};
+
+/** The input object sent when someone is creating a new review */
+export type ReviewInput = {
+  /** 0-5 stars */
+  stars: $ElementType<Scalars, \\"Int\\">,
+  /** Comment about the movie, optional */
+  commentary?: ?$ElementType<Scalars, \\"String\\">,
+  /** Favorite color, optional */
+  favorite_color?: ?ColorInput
+};
+
+export type SearchResult = Human | Droid | Starship;
+
+export type Starship = {
+  __typename?: \\"Starship\\",
+  /** The ID of the starship */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** The name of the starship */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** Length of the starship, along the longest axis */
+  length?: ?$ElementType<Scalars, \\"Float\\">,
+  coordinates?: ?Array<Array<$ElementType<Scalars, \\"Float\\">>>
+};
+
+export type StarshipLengthArgs = {
+  unit: LengthUnit
+};
+type $Pick<Origin: Object, Keys: Object> = $ObjMapi<
+  Keys,
+  <Key>(k: Key) => $ElementType<Origin, Key>
+>;
+
+export type HeroDetailsFragment = { __typename: \\"Human\\" | \\"Droid\\" } & (
+  | ({ __typename?: \\"Droid\\" } & $Pick<Droid, { primaryFunction: * }>)
+  | ({ __typename?: \\"Human\\" } & $Pick<Human, { height: * }>)
+);
+
+export type HeroAndDetailsQueryVariables = {};
+
+export type HeroAndDetailsQuery = { __typename?: \\"Query\\" } & {
+  hero: ?({ __typename: \\"Human\\" | \\"Droid\\" } & $Pick<Character, { name: * }> &
+    HeroDetailsFragment)
+};
+"
 `;
 
 exports[`Flow code generation #generateSource() should generate simple nested query operations including input variables 1`] = `
-"/* @flow */
-/* eslint-disable */
+"// @flow
 //  This file was automatically generated and should not be edited.
+/* @flow */
 
-// The episodes in the Star Wars trilogy
-export type Episode =
-  \\"NEWHOPE\\" | // Star Wars Episode IV: A New Hope, released in 1977.
-  \\"EMPIRE\\" | // Star Wars Episode V: The Empire Strikes Back, released in 1980.
-  \\"JEDI\\"; // Star Wars Episode VI: Return of the Jedi, released in 1983.
+/** All built-in and custom scalars, mapped to their actual values */
+export type Scalars = {
+  ID: string,
+  String: string,
+  Boolean: boolean,
+  Int: number,
+  Float: number,
+  AWSTimestamp: number
+};
 
+/** A character from the Star Wars universe */
+export type Character = {
+  __typename?: \\"Character\\",
+  /** The ID of the character */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** The name of the character */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** The friends of the character, or an empty list if they have none */
+  friends?: ?Array<?Character>,
+  /** The friends of the character exposed as a connection with edges */
+  friendsConnection: FriendsConnection,
+  /** The movies this character appears in */
+  appearsIn: Array<?Episode>
+};
 
-export type HeroAndFriendsNamesQueryVariables = {|
+/** A character from the Star Wars universe */
+export type CharacterFriendsConnectionArgs = {
+  first?: ?$ElementType<Scalars, \\"Int\\">,
+  after?: ?$ElementType<Scalars, \\"ID\\">
+};
+
+/** The input object sent when passing in a color */
+export type ColorInput = {
+  red: $ElementType<Scalars, \\"Int\\">,
+  green: $ElementType<Scalars, \\"Int\\">,
+  blue: $ElementType<Scalars, \\"Int\\">
+};
+
+/** An autonomous mechanical character in the Star Wars universe */
+export type Droid = Character & {
+  __typename?: \\"Droid\\",
+  /** The ID of the droid */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** What others call this droid */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** This droid's friends, or an empty list if they have none */
+  friends?: ?Array<?Character>,
+  /** The friends of the droid exposed as a connection with edges */
+  friendsConnection: FriendsConnection,
+  /** The movies this droid appears in */
+  appearsIn: Array<?Episode>,
+  /** This droid's primary function */
+  primaryFunction?: ?$ElementType<Scalars, \\"String\\">
+};
+
+/** An autonomous mechanical character in the Star Wars universe */
+export type DroidFriendsConnectionArgs = {
+  first?: ?$ElementType<Scalars, \\"Int\\">,
+  after?: ?$ElementType<Scalars, \\"ID\\">
+};
+
+export const EpisodeValues = Object.freeze({
+  /** Star Wars Episode IV: A New Hope, released in 1977. */
+  Newhope: \\"NEWHOPE\\",
+  /** Star Wars Episode V: The Empire Strikes Back, released in 1980. */
+  Empire: \\"EMPIRE\\",
+  /** Star Wars Episode VI: Return of the Jedi, released in 1983. */
+  Jedi: \\"JEDI\\"
+});
+
+/** The episodes in the Star Wars trilogy */
+export type Episode = $Values<typeof EpisodeValues>;
+
+/** A connection object for a character's friends */
+export type FriendsConnection = {
+  __typename?: \\"FriendsConnection\\",
+  /** The total number of friends */
+  totalCount?: ?$ElementType<Scalars, \\"Int\\">,
+  /** The edges for each of the character's friends. */
+  edges?: ?Array<?FriendsEdge>,
+  /** A list of the friends, as a convenience when edges are not needed. */
+  friends?: ?Array<?Character>,
+  /** Information for paginating this connection */
+  pageInfo: PageInfo
+};
+
+/** An edge object for a character's friends */
+export type FriendsEdge = {
+  __typename?: \\"FriendsEdge\\",
+  /** A cursor used for pagination */
+  cursor: $ElementType<Scalars, \\"ID\\">,
+  /** The character represented by this friendship edge */
+  node?: ?Character
+};
+
+/** A humanoid creature from the Star Wars universe */
+export type Human = Character & {
+  __typename?: \\"Human\\",
+  /** The ID of the human */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** What this human calls themselves */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** The home planet of the human, or null if unknown */
+  homePlanet?: ?$ElementType<Scalars, \\"String\\">,
+  /** Height in the preferred unit, default is meters */
+  height?: ?$ElementType<Scalars, \\"Float\\">,
+  /** Mass in kilograms, or null if unknown */
+  mass?: ?$ElementType<Scalars, \\"Float\\">,
+  /** This human's friends, or an empty list if they have none */
+  friends?: ?Array<?Character>,
+  /** The friends of the human exposed as a connection with edges */
+  friendsConnection: FriendsConnection,
+  /** The movies this human appears in */
+  appearsIn: Array<?Episode>,
+  /** A list of starships this person has piloted, or an empty list if none */
+  starships?: ?Array<?Starship>
+};
+
+/** A humanoid creature from the Star Wars universe */
+export type HumanHeightArgs = {
+  unit: LengthUnit
+};
+
+/** A humanoid creature from the Star Wars universe */
+export type HumanFriendsConnectionArgs = {
+  first?: ?$ElementType<Scalars, \\"Int\\">,
+  after?: ?$ElementType<Scalars, \\"ID\\">
+};
+
+export const LengthUnitValues = Object.freeze({
+  /** The standard unit around the world */
+  Meter: \\"METER\\",
+  /** Primarily used in the United States */
+  Foot: \\"FOOT\\"
+});
+
+/** Units of height */
+export type LengthUnit = $Values<typeof LengthUnitValues>;
+
+/** The mutation type, represents all updates we can make to our data */
+export type Mutation = {
+  __typename?: \\"Mutation\\",
+  createReview?: ?Review
+};
+
+/** The mutation type, represents all updates we can make to our data */
+export type MutationCreateReviewArgs = {
   episode?: ?Episode,
-|};
+  review: ReviewInput
+};
 
-export type HeroAndFriendsNamesQuery = {|
-  hero: ?( {
-      __typename: \\"Human\\",
-      // The name of the character
-      name: string,
-      // The friends of the character, or an empty list if they have none
-      friends: ?Array< ?( {
-          __typename: \\"Human\\",
-          // The name of the character
-          name: string,
-        } | {
-          __typename: \\"Droid\\",
-          // The name of the character
-          name: string,
-        }
-      ) >,
-    } | {
-      __typename: \\"Droid\\",
-      // The name of the character
-      name: string,
-      // The friends of the character, or an empty list if they have none
-      friends: ?Array< ?( {
-          __typename: \\"Human\\",
-          // The name of the character
-          name: string,
-        } | {
-          __typename: \\"Droid\\",
-          // The name of the character
-          name: string,
-        }
-      ) >,
-    }
-  ),
-|};"
+/** Information for paginating this connection */
+export type PageInfo = {
+  __typename?: \\"PageInfo\\",
+  startCursor?: ?$ElementType<Scalars, \\"ID\\">,
+  endCursor?: ?$ElementType<Scalars, \\"ID\\">,
+  hasNextPage: $ElementType<Scalars, \\"Boolean\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type Query = {
+  __typename?: \\"Query\\",
+  hero?: ?Character,
+  reviews?: ?Array<?Review>,
+  search?: ?Array<?SearchResult>,
+  character?: ?Character,
+  droid?: ?Droid,
+  human?: ?Human,
+  starship?: ?Starship
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryHeroArgs = {
+  episode?: ?Episode
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryReviewsArgs = {
+  episode: Episode
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QuerySearchArgs = {
+  text?: ?$ElementType<Scalars, \\"String\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryCharacterArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryDroidArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryHumanArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryStarshipArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** Represents a review for a movie */
+export type Review = {
+  __typename?: \\"Review\\",
+  /** The number of stars this review gave, 1-5 */
+  stars: $ElementType<Scalars, \\"Int\\">,
+  /** Comment about the movie */
+  commentary?: ?$ElementType<Scalars, \\"String\\">
+};
+
+/** The input object sent when someone is creating a new review */
+export type ReviewInput = {
+  /** 0-5 stars */
+  stars: $ElementType<Scalars, \\"Int\\">,
+  /** Comment about the movie, optional */
+  commentary?: ?$ElementType<Scalars, \\"String\\">,
+  /** Favorite color, optional */
+  favorite_color?: ?ColorInput
+};
+
+export type SearchResult = Human | Droid | Starship;
+
+export type Starship = {
+  __typename?: \\"Starship\\",
+  /** The ID of the starship */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** The name of the starship */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** Length of the starship, along the longest axis */
+  length?: ?$ElementType<Scalars, \\"Float\\">,
+  coordinates?: ?Array<Array<$ElementType<Scalars, \\"Float\\">>>
+};
+
+export type StarshipLengthArgs = {
+  unit: LengthUnit
+};
+type $Pick<Origin: Object, Keys: Object> = $ObjMapi<
+  Keys,
+  <Key>(k: Key) => $ElementType<Origin, Key>
+>;
+
+export type HeroAndFriendsNamesQueryVariables = {
+  episode?: ?Episode
+};
+
+export type HeroAndFriendsNamesQuery = { __typename?: \\"Query\\" } & {
+  hero: ?({ __typename: \\"Human\\" | \\"Droid\\" } & $Pick<Character, { name: * }> & {
+      friends: ?Array<?({ __typename: \\"Human\\" | \\"Droid\\" } & $Pick<
+        Character,
+        { name: * }
+      >)>
+    })
+};
+"
 `;
 
 exports[`Flow code generation #generateSource() should generate simple nested with required elements in lists 1`] = `
-"/* @flow */
-/* eslint-disable */
+"// @flow
 //  This file was automatically generated and should not be edited.
+/* @flow */
 
-export type StarshipCoordsQuery = {|
-  starship: ? {|
-    __typename: \\"Starship\\",
-    coordinates: ?Array< Array< number > >,
-  |},
-|};"
+/** All built-in and custom scalars, mapped to their actual values */
+export type Scalars = {
+  ID: string,
+  String: string,
+  Boolean: boolean,
+  Int: number,
+  Float: number,
+  AWSTimestamp: number
+};
+
+/** A character from the Star Wars universe */
+export type Character = {
+  __typename?: \\"Character\\",
+  /** The ID of the character */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** The name of the character */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** The friends of the character, or an empty list if they have none */
+  friends?: ?Array<?Character>,
+  /** The friends of the character exposed as a connection with edges */
+  friendsConnection: FriendsConnection,
+  /** The movies this character appears in */
+  appearsIn: Array<?Episode>
+};
+
+/** A character from the Star Wars universe */
+export type CharacterFriendsConnectionArgs = {
+  first?: ?$ElementType<Scalars, \\"Int\\">,
+  after?: ?$ElementType<Scalars, \\"ID\\">
+};
+
+/** The input object sent when passing in a color */
+export type ColorInput = {
+  red: $ElementType<Scalars, \\"Int\\">,
+  green: $ElementType<Scalars, \\"Int\\">,
+  blue: $ElementType<Scalars, \\"Int\\">
+};
+
+/** An autonomous mechanical character in the Star Wars universe */
+export type Droid = Character & {
+  __typename?: \\"Droid\\",
+  /** The ID of the droid */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** What others call this droid */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** This droid's friends, or an empty list if they have none */
+  friends?: ?Array<?Character>,
+  /** The friends of the droid exposed as a connection with edges */
+  friendsConnection: FriendsConnection,
+  /** The movies this droid appears in */
+  appearsIn: Array<?Episode>,
+  /** This droid's primary function */
+  primaryFunction?: ?$ElementType<Scalars, \\"String\\">
+};
+
+/** An autonomous mechanical character in the Star Wars universe */
+export type DroidFriendsConnectionArgs = {
+  first?: ?$ElementType<Scalars, \\"Int\\">,
+  after?: ?$ElementType<Scalars, \\"ID\\">
+};
+
+export const EpisodeValues = Object.freeze({
+  /** Star Wars Episode IV: A New Hope, released in 1977. */
+  Newhope: \\"NEWHOPE\\",
+  /** Star Wars Episode V: The Empire Strikes Back, released in 1980. */
+  Empire: \\"EMPIRE\\",
+  /** Star Wars Episode VI: Return of the Jedi, released in 1983. */
+  Jedi: \\"JEDI\\"
+});
+
+/** The episodes in the Star Wars trilogy */
+export type Episode = $Values<typeof EpisodeValues>;
+
+/** A connection object for a character's friends */
+export type FriendsConnection = {
+  __typename?: \\"FriendsConnection\\",
+  /** The total number of friends */
+  totalCount?: ?$ElementType<Scalars, \\"Int\\">,
+  /** The edges for each of the character's friends. */
+  edges?: ?Array<?FriendsEdge>,
+  /** A list of the friends, as a convenience when edges are not needed. */
+  friends?: ?Array<?Character>,
+  /** Information for paginating this connection */
+  pageInfo: PageInfo
+};
+
+/** An edge object for a character's friends */
+export type FriendsEdge = {
+  __typename?: \\"FriendsEdge\\",
+  /** A cursor used for pagination */
+  cursor: $ElementType<Scalars, \\"ID\\">,
+  /** The character represented by this friendship edge */
+  node?: ?Character
+};
+
+/** A humanoid creature from the Star Wars universe */
+export type Human = Character & {
+  __typename?: \\"Human\\",
+  /** The ID of the human */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** What this human calls themselves */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** The home planet of the human, or null if unknown */
+  homePlanet?: ?$ElementType<Scalars, \\"String\\">,
+  /** Height in the preferred unit, default is meters */
+  height?: ?$ElementType<Scalars, \\"Float\\">,
+  /** Mass in kilograms, or null if unknown */
+  mass?: ?$ElementType<Scalars, \\"Float\\">,
+  /** This human's friends, or an empty list if they have none */
+  friends?: ?Array<?Character>,
+  /** The friends of the human exposed as a connection with edges */
+  friendsConnection: FriendsConnection,
+  /** The movies this human appears in */
+  appearsIn: Array<?Episode>,
+  /** A list of starships this person has piloted, or an empty list if none */
+  starships?: ?Array<?Starship>
+};
+
+/** A humanoid creature from the Star Wars universe */
+export type HumanHeightArgs = {
+  unit: LengthUnit
+};
+
+/** A humanoid creature from the Star Wars universe */
+export type HumanFriendsConnectionArgs = {
+  first?: ?$ElementType<Scalars, \\"Int\\">,
+  after?: ?$ElementType<Scalars, \\"ID\\">
+};
+
+export const LengthUnitValues = Object.freeze({
+  /** The standard unit around the world */
+  Meter: \\"METER\\",
+  /** Primarily used in the United States */
+  Foot: \\"FOOT\\"
+});
+
+/** Units of height */
+export type LengthUnit = $Values<typeof LengthUnitValues>;
+
+/** The mutation type, represents all updates we can make to our data */
+export type Mutation = {
+  __typename?: \\"Mutation\\",
+  createReview?: ?Review
+};
+
+/** The mutation type, represents all updates we can make to our data */
+export type MutationCreateReviewArgs = {
+  episode?: ?Episode,
+  review: ReviewInput
+};
+
+/** Information for paginating this connection */
+export type PageInfo = {
+  __typename?: \\"PageInfo\\",
+  startCursor?: ?$ElementType<Scalars, \\"ID\\">,
+  endCursor?: ?$ElementType<Scalars, \\"ID\\">,
+  hasNextPage: $ElementType<Scalars, \\"Boolean\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type Query = {
+  __typename?: \\"Query\\",
+  hero?: ?Character,
+  reviews?: ?Array<?Review>,
+  search?: ?Array<?SearchResult>,
+  character?: ?Character,
+  droid?: ?Droid,
+  human?: ?Human,
+  starship?: ?Starship
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryHeroArgs = {
+  episode?: ?Episode
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryReviewsArgs = {
+  episode: Episode
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QuerySearchArgs = {
+  text?: ?$ElementType<Scalars, \\"String\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryCharacterArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryDroidArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryHumanArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryStarshipArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** Represents a review for a movie */
+export type Review = {
+  __typename?: \\"Review\\",
+  /** The number of stars this review gave, 1-5 */
+  stars: $ElementType<Scalars, \\"Int\\">,
+  /** Comment about the movie */
+  commentary?: ?$ElementType<Scalars, \\"String\\">
+};
+
+/** The input object sent when someone is creating a new review */
+export type ReviewInput = {
+  /** 0-5 stars */
+  stars: $ElementType<Scalars, \\"Int\\">,
+  /** Comment about the movie, optional */
+  commentary?: ?$ElementType<Scalars, \\"String\\">,
+  /** Favorite color, optional */
+  favorite_color?: ?ColorInput
+};
+
+export type SearchResult = Human | Droid | Starship;
+
+export type Starship = {
+  __typename?: \\"Starship\\",
+  /** The ID of the starship */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** The name of the starship */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** Length of the starship, along the longest axis */
+  length?: ?$ElementType<Scalars, \\"Float\\">,
+  coordinates?: ?Array<Array<$ElementType<Scalars, \\"Float\\">>>
+};
+
+export type StarshipLengthArgs = {
+  unit: LengthUnit
+};
+type $Pick<Origin: Object, Keys: Object> = $ObjMapi<
+  Keys,
+  <Key>(k: Key) => $ElementType<Origin, Key>
+>;
+
+export type StarshipCoordsQueryVariables = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+export type StarshipCoordsQuery = { __typename?: \\"Query\\" } & {
+  starship: ?({ __typename: \\"Starship\\" } & $Pick<Starship, { coordinates: * }>)
+};
+"
 `;
 
-exports[`Flow code generation #generateSource() should generate simple query operations 1`] = `
-"/* @flow */
-/* eslint-disable */
-//  This file was automatically generated and should not be edited.
-
-export type HeroNameQuery = {|
-  hero: ?( {
-      __typename: \\"Human\\",
-      // The name of the character
-      name: string,
-    } | {
-      __typename: \\"Droid\\",
-      // The name of the character
-      name: string,
-    }
-  ),
-|};"
-`;
+exports[`Flow code generation #generateSource() should generate simple query operations 1`] = `Promise {}`;
 
 exports[`Flow code generation #generateSource() should generate simple query operations including input variables 1`] = `
-"/* @flow */
-/* eslint-disable */
+"// @flow
 //  This file was automatically generated and should not be edited.
+/* @flow */
 
-// The episodes in the Star Wars trilogy
-export type Episode =
-  \\"NEWHOPE\\" | // Star Wars Episode IV: A New Hope, released in 1977.
-  \\"EMPIRE\\" | // Star Wars Episode V: The Empire Strikes Back, released in 1980.
-  \\"JEDI\\"; // Star Wars Episode VI: Return of the Jedi, released in 1983.
+/** All built-in and custom scalars, mapped to their actual values */
+export type Scalars = {
+  ID: string,
+  String: string,
+  Boolean: boolean,
+  Int: number,
+  Float: number,
+  AWSTimestamp: number
+};
 
+/** A character from the Star Wars universe */
+export type Character = {
+  __typename?: \\"Character\\",
+  /** The ID of the character */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** The name of the character */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** The friends of the character, or an empty list if they have none */
+  friends?: ?Array<?Character>,
+  /** The friends of the character exposed as a connection with edges */
+  friendsConnection: FriendsConnection,
+  /** The movies this character appears in */
+  appearsIn: Array<?Episode>
+};
 
-export type HeroNameQueryVariables = {|
+/** A character from the Star Wars universe */
+export type CharacterFriendsConnectionArgs = {
+  first?: ?$ElementType<Scalars, \\"Int\\">,
+  after?: ?$ElementType<Scalars, \\"ID\\">
+};
+
+/** The input object sent when passing in a color */
+export type ColorInput = {
+  red: $ElementType<Scalars, \\"Int\\">,
+  green: $ElementType<Scalars, \\"Int\\">,
+  blue: $ElementType<Scalars, \\"Int\\">
+};
+
+/** An autonomous mechanical character in the Star Wars universe */
+export type Droid = Character & {
+  __typename?: \\"Droid\\",
+  /** The ID of the droid */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** What others call this droid */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** This droid's friends, or an empty list if they have none */
+  friends?: ?Array<?Character>,
+  /** The friends of the droid exposed as a connection with edges */
+  friendsConnection: FriendsConnection,
+  /** The movies this droid appears in */
+  appearsIn: Array<?Episode>,
+  /** This droid's primary function */
+  primaryFunction?: ?$ElementType<Scalars, \\"String\\">
+};
+
+/** An autonomous mechanical character in the Star Wars universe */
+export type DroidFriendsConnectionArgs = {
+  first?: ?$ElementType<Scalars, \\"Int\\">,
+  after?: ?$ElementType<Scalars, \\"ID\\">
+};
+
+export const EpisodeValues = Object.freeze({
+  /** Star Wars Episode IV: A New Hope, released in 1977. */
+  Newhope: \\"NEWHOPE\\",
+  /** Star Wars Episode V: The Empire Strikes Back, released in 1980. */
+  Empire: \\"EMPIRE\\",
+  /** Star Wars Episode VI: Return of the Jedi, released in 1983. */
+  Jedi: \\"JEDI\\"
+});
+
+/** The episodes in the Star Wars trilogy */
+export type Episode = $Values<typeof EpisodeValues>;
+
+/** A connection object for a character's friends */
+export type FriendsConnection = {
+  __typename?: \\"FriendsConnection\\",
+  /** The total number of friends */
+  totalCount?: ?$ElementType<Scalars, \\"Int\\">,
+  /** The edges for each of the character's friends. */
+  edges?: ?Array<?FriendsEdge>,
+  /** A list of the friends, as a convenience when edges are not needed. */
+  friends?: ?Array<?Character>,
+  /** Information for paginating this connection */
+  pageInfo: PageInfo
+};
+
+/** An edge object for a character's friends */
+export type FriendsEdge = {
+  __typename?: \\"FriendsEdge\\",
+  /** A cursor used for pagination */
+  cursor: $ElementType<Scalars, \\"ID\\">,
+  /** The character represented by this friendship edge */
+  node?: ?Character
+};
+
+/** A humanoid creature from the Star Wars universe */
+export type Human = Character & {
+  __typename?: \\"Human\\",
+  /** The ID of the human */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** What this human calls themselves */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** The home planet of the human, or null if unknown */
+  homePlanet?: ?$ElementType<Scalars, \\"String\\">,
+  /** Height in the preferred unit, default is meters */
+  height?: ?$ElementType<Scalars, \\"Float\\">,
+  /** Mass in kilograms, or null if unknown */
+  mass?: ?$ElementType<Scalars, \\"Float\\">,
+  /** This human's friends, or an empty list if they have none */
+  friends?: ?Array<?Character>,
+  /** The friends of the human exposed as a connection with edges */
+  friendsConnection: FriendsConnection,
+  /** The movies this human appears in */
+  appearsIn: Array<?Episode>,
+  /** A list of starships this person has piloted, or an empty list if none */
+  starships?: ?Array<?Starship>
+};
+
+/** A humanoid creature from the Star Wars universe */
+export type HumanHeightArgs = {
+  unit: LengthUnit
+};
+
+/** A humanoid creature from the Star Wars universe */
+export type HumanFriendsConnectionArgs = {
+  first?: ?$ElementType<Scalars, \\"Int\\">,
+  after?: ?$ElementType<Scalars, \\"ID\\">
+};
+
+export const LengthUnitValues = Object.freeze({
+  /** The standard unit around the world */
+  Meter: \\"METER\\",
+  /** Primarily used in the United States */
+  Foot: \\"FOOT\\"
+});
+
+/** Units of height */
+export type LengthUnit = $Values<typeof LengthUnitValues>;
+
+/** The mutation type, represents all updates we can make to our data */
+export type Mutation = {
+  __typename?: \\"Mutation\\",
+  createReview?: ?Review
+};
+
+/** The mutation type, represents all updates we can make to our data */
+export type MutationCreateReviewArgs = {
   episode?: ?Episode,
-|};
+  review: ReviewInput
+};
 
-export type HeroNameQuery = {|
-  hero: ?( {
-      __typename: \\"Human\\",
-      // The name of the character
-      name: string,
-    } | {
-      __typename: \\"Droid\\",
-      // The name of the character
-      name: string,
-    }
-  ),
-|};"
+/** Information for paginating this connection */
+export type PageInfo = {
+  __typename?: \\"PageInfo\\",
+  startCursor?: ?$ElementType<Scalars, \\"ID\\">,
+  endCursor?: ?$ElementType<Scalars, \\"ID\\">,
+  hasNextPage: $ElementType<Scalars, \\"Boolean\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type Query = {
+  __typename?: \\"Query\\",
+  hero?: ?Character,
+  reviews?: ?Array<?Review>,
+  search?: ?Array<?SearchResult>,
+  character?: ?Character,
+  droid?: ?Droid,
+  human?: ?Human,
+  starship?: ?Starship
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryHeroArgs = {
+  episode?: ?Episode
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryReviewsArgs = {
+  episode: Episode
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QuerySearchArgs = {
+  text?: ?$ElementType<Scalars, \\"String\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryCharacterArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryDroidArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryHumanArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryStarshipArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** Represents a review for a movie */
+export type Review = {
+  __typename?: \\"Review\\",
+  /** The number of stars this review gave, 1-5 */
+  stars: $ElementType<Scalars, \\"Int\\">,
+  /** Comment about the movie */
+  commentary?: ?$ElementType<Scalars, \\"String\\">
+};
+
+/** The input object sent when someone is creating a new review */
+export type ReviewInput = {
+  /** 0-5 stars */
+  stars: $ElementType<Scalars, \\"Int\\">,
+  /** Comment about the movie, optional */
+  commentary?: ?$ElementType<Scalars, \\"String\\">,
+  /** Favorite color, optional */
+  favorite_color?: ?ColorInput
+};
+
+export type SearchResult = Human | Droid | Starship;
+
+export type Starship = {
+  __typename?: \\"Starship\\",
+  /** The ID of the starship */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** The name of the starship */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** Length of the starship, along the longest axis */
+  length?: ?$ElementType<Scalars, \\"Float\\">,
+  coordinates?: ?Array<Array<$ElementType<Scalars, \\"Float\\">>>
+};
+
+export type StarshipLengthArgs = {
+  unit: LengthUnit
+};
+type $Pick<Origin: Object, Keys: Object> = $ObjMapi<
+  Keys,
+  <Key>(k: Key) => $ElementType<Origin, Key>
+>;
+
+export type HeroNameQueryVariables = {
+  episode?: ?Episode
+};
+
+export type HeroNameQuery = { __typename?: \\"Query\\" } & {
+  hero: ?({ __typename: \\"Human\\" | \\"Droid\\" } & $Pick<Character, { name: * }>)
+};
+"
 `;
 
 exports[`Flow code generation #generateSource() should handle comments in enums 1`] = `
-"/* @flow */
-/* eslint-disable */
+"// @flow
 //  This file was automatically generated and should not be edited.
+/* @flow */
 
-export type EnumCommentTestCase =
-  \\"first\\" | // This is a single-line comment
-  // This is a multi-line
-  // comment.
-  \\"second\\";
+/** All built-in and custom scalars, mapped to their actual values */
+export type Scalars = {
+  ID: string,
+  String: string,
+  Boolean: boolean,
+  Int: number,
+  Float: number,
+  Date: any,
+  AWSTimestamp: number
+};
 
+/** This is a type to test comments */
+export type CommentTest = {
+  __typename?: \\"CommentTest\\",
+  /** This is a single-line comment */
+  singleLine?: ?$ElementType<Scalars, \\"String\\">,
+  /** This is a multi-line
+   * comment.
+   */
+  multiLine?: ?$ElementType<Scalars, \\"String\\">,
+  enumCommentTest?: ?EnumCommentTestCase
+};
 
-export type CustomScalarQuery = {|
-  commentTest: ? {|
-    __typename: \\"CommentTest\\",
-    enumCommentTest: ?EnumCommentTestCase,
-  |},
-|};"
+export type DoubleHump = {
+  __typename?: \\"doubleHump\\",
+  humpOne?: ?$ElementType<Scalars, \\"String\\">,
+  humpTwo?: ?$ElementType<Scalars, \\"String\\">
+};
+
+export const EnumCommentTestCaseValues = Object.freeze({
+  /** This is a single-line comment */
+  First: \\"first\\",
+  /** This is a multi-line
+   * comment.
+   */
+  Second: \\"second\\"
+});
+
+export type EnumCommentTestCase = $Values<typeof EnumCommentTestCaseValues>;
+
+export type ImplA = InterfaceTestCase & {
+  __typename?: \\"ImplA\\",
+  prop: $ElementType<Scalars, \\"String\\">,
+  propA: $ElementType<Scalars, \\"String\\">
+};
+
+export type ImplB = InterfaceTestCase & {
+  __typename?: \\"ImplB\\",
+  prop: $ElementType<Scalars, \\"String\\">,
+  propB?: ?$ElementType<Scalars, \\"Int\\">
+};
+
+export type InterfaceTestCase = {
+  __typename?: \\"InterfaceTestCase\\",
+  prop: $ElementType<Scalars, \\"String\\">
+};
+
+export type OddType = {
+  __typename?: \\"OddType\\",
+  date?: ?$ElementType<Scalars, \\"Date\\">,
+  camel?: ?DoubleHump
+};
+
+export type PartialA = {
+  __typename?: \\"PartialA\\",
+  prop: $ElementType<Scalars, \\"String\\">
+};
+
+export type PartialB = {
+  __typename?: \\"PartialB\\",
+  prop: $ElementType<Scalars, \\"String\\">
+};
+
+export type Query = {
+  __typename?: \\"Query\\",
+  misc?: ?OddType,
+  commentTest?: ?CommentTest,
+  interfaceTest?: ?InterfaceTestCase,
+  unionTest?: ?UnionTestCase,
+  scalarTest: $ElementType<Scalars, \\"Boolean\\">
+};
+
+export type UnionTestCase = PartialA | PartialB;
+type $Pick<Origin: Object, Keys: Object> = $ObjMapi<
+  Keys,
+  <Key>(k: Key) => $ElementType<Origin, Key>
+>;
+
+export type CustomScalarQueryVariables = {};
+
+export type CustomScalarQuery = { __typename?: \\"Query\\" } & {
+  commentTest: ?({ __typename: \\"CommentTest\\" } & $Pick<
+    CommentTest,
+    { enumCommentTest: * }
+  >)
+};
+"
 `;
 
 exports[`Flow code generation #generateSource() should handle interfaces at root 1`] = `
-"/* @flow */
-/* eslint-disable */
+"// @flow
 //  This file was automatically generated and should not be edited.
+/* @flow */
 
-export type CustomScalarQuery = {|
-  interfaceTest: ?( {
-      __typename: \\"ImplA\\",
-      prop: string,
-      propA: string,
-    } | {
-      __typename: \\"ImplB\\",
-      prop: string,
-      propB: ?number,
-    }
-  ),
-|};"
+/** All built-in and custom scalars, mapped to their actual values */
+export type Scalars = {
+  ID: string,
+  String: string,
+  Boolean: boolean,
+  Int: number,
+  Float: number,
+  Date: any,
+  AWSTimestamp: number
+};
+
+/** This is a type to test comments */
+export type CommentTest = {
+  __typename?: \\"CommentTest\\",
+  /** This is a single-line comment */
+  singleLine?: ?$ElementType<Scalars, \\"String\\">,
+  /** This is a multi-line
+   * comment.
+   */
+  multiLine?: ?$ElementType<Scalars, \\"String\\">,
+  enumCommentTest?: ?EnumCommentTestCase
+};
+
+export type DoubleHump = {
+  __typename?: \\"doubleHump\\",
+  humpOne?: ?$ElementType<Scalars, \\"String\\">,
+  humpTwo?: ?$ElementType<Scalars, \\"String\\">
+};
+
+export const EnumCommentTestCaseValues = Object.freeze({
+  /** This is a single-line comment */
+  First: \\"first\\",
+  /** This is a multi-line
+   * comment.
+   */
+  Second: \\"second\\"
+});
+
+export type EnumCommentTestCase = $Values<typeof EnumCommentTestCaseValues>;
+
+export type ImplA = InterfaceTestCase & {
+  __typename?: \\"ImplA\\",
+  prop: $ElementType<Scalars, \\"String\\">,
+  propA: $ElementType<Scalars, \\"String\\">
+};
+
+export type ImplB = InterfaceTestCase & {
+  __typename?: \\"ImplB\\",
+  prop: $ElementType<Scalars, \\"String\\">,
+  propB?: ?$ElementType<Scalars, \\"Int\\">
+};
+
+export type InterfaceTestCase = {
+  __typename?: \\"InterfaceTestCase\\",
+  prop: $ElementType<Scalars, \\"String\\">
+};
+
+export type OddType = {
+  __typename?: \\"OddType\\",
+  date?: ?$ElementType<Scalars, \\"Date\\">,
+  camel?: ?DoubleHump
+};
+
+export type PartialA = {
+  __typename?: \\"PartialA\\",
+  prop: $ElementType<Scalars, \\"String\\">
+};
+
+export type PartialB = {
+  __typename?: \\"PartialB\\",
+  prop: $ElementType<Scalars, \\"String\\">
+};
+
+export type Query = {
+  __typename?: \\"Query\\",
+  misc?: ?OddType,
+  commentTest?: ?CommentTest,
+  interfaceTest?: ?InterfaceTestCase,
+  unionTest?: ?UnionTestCase,
+  scalarTest: $ElementType<Scalars, \\"Boolean\\">
+};
+
+export type UnionTestCase = PartialA | PartialB;
+type $Pick<Origin: Object, Keys: Object> = $ObjMapi<
+  Keys,
+  <Key>(k: Key) => $ElementType<Origin, Key>
+>;
+
+export type CustomScalarQueryVariables = {};
+
+export type CustomScalarQuery = { __typename?: \\"Query\\" } & {
+  interfaceTest: ?({ __typename: \\"ImplA\\" | \\"ImplB\\" } & $Pick<
+    InterfaceTestCase,
+    { prop: * }
+  > &
+    (
+      | ({ __typename?: \\"ImplA\\" } & $Pick<ImplA, { propA: * }>)
+      | ({ __typename?: \\"ImplB\\" } & $Pick<ImplB, { propB: * }>)
+    ))
+};
+"
 `;
 
 exports[`Flow code generation #generateSource() should handle multi-line comments 1`] = `
-"/* @flow */
-/* eslint-disable */
+"// @flow
 //  This file was automatically generated and should not be edited.
+/* @flow */
 
-export type CustomScalarQuery = {|
-  commentTest: ? {|
-    __typename: \\"CommentTest\\",
-    // This is a multi-line
-    // comment.
-    multiLine: ?string,
-  |},
-|};"
+/** All built-in and custom scalars, mapped to their actual values */
+export type Scalars = {
+  ID: string,
+  String: string,
+  Boolean: boolean,
+  Int: number,
+  Float: number,
+  Date: any,
+  AWSTimestamp: number
+};
+
+/** This is a type to test comments */
+export type CommentTest = {
+  __typename?: \\"CommentTest\\",
+  /** This is a single-line comment */
+  singleLine?: ?$ElementType<Scalars, \\"String\\">,
+  /** This is a multi-line
+   * comment.
+   */
+  multiLine?: ?$ElementType<Scalars, \\"String\\">,
+  enumCommentTest?: ?EnumCommentTestCase
+};
+
+export type DoubleHump = {
+  __typename?: \\"doubleHump\\",
+  humpOne?: ?$ElementType<Scalars, \\"String\\">,
+  humpTwo?: ?$ElementType<Scalars, \\"String\\">
+};
+
+export const EnumCommentTestCaseValues = Object.freeze({
+  /** This is a single-line comment */
+  First: \\"first\\",
+  /** This is a multi-line
+   * comment.
+   */
+  Second: \\"second\\"
+});
+
+export type EnumCommentTestCase = $Values<typeof EnumCommentTestCaseValues>;
+
+export type ImplA = InterfaceTestCase & {
+  __typename?: \\"ImplA\\",
+  prop: $ElementType<Scalars, \\"String\\">,
+  propA: $ElementType<Scalars, \\"String\\">
+};
+
+export type ImplB = InterfaceTestCase & {
+  __typename?: \\"ImplB\\",
+  prop: $ElementType<Scalars, \\"String\\">,
+  propB?: ?$ElementType<Scalars, \\"Int\\">
+};
+
+export type InterfaceTestCase = {
+  __typename?: \\"InterfaceTestCase\\",
+  prop: $ElementType<Scalars, \\"String\\">
+};
+
+export type OddType = {
+  __typename?: \\"OddType\\",
+  date?: ?$ElementType<Scalars, \\"Date\\">,
+  camel?: ?DoubleHump
+};
+
+export type PartialA = {
+  __typename?: \\"PartialA\\",
+  prop: $ElementType<Scalars, \\"String\\">
+};
+
+export type PartialB = {
+  __typename?: \\"PartialB\\",
+  prop: $ElementType<Scalars, \\"String\\">
+};
+
+export type Query = {
+  __typename?: \\"Query\\",
+  misc?: ?OddType,
+  commentTest?: ?CommentTest,
+  interfaceTest?: ?InterfaceTestCase,
+  unionTest?: ?UnionTestCase,
+  scalarTest: $ElementType<Scalars, \\"Boolean\\">
+};
+
+export type UnionTestCase = PartialA | PartialB;
+type $Pick<Origin: Object, Keys: Object> = $ObjMapi<
+  Keys,
+  <Key>(k: Key) => $ElementType<Origin, Key>
+>;
+
+export type CustomScalarQueryVariables = {};
+
+export type CustomScalarQuery = { __typename?: \\"Query\\" } & {
+  commentTest: ?({ __typename: \\"CommentTest\\" } & $Pick<
+    CommentTest,
+    { multiLine: * }
+  >)
+};
+"
 `;
 
 exports[`Flow code generation #generateSource() should handle scalars at root 1`] = `
-"/* @flow */
-/* eslint-disable */
+"// @flow
 //  This file was automatically generated and should not be edited.
+/* @flow */
 
-export type RootScalarQuery = {|
-  scalarTest: boolean,
-|};"
+/** All built-in and custom scalars, mapped to their actual values */
+export type Scalars = {
+  ID: string,
+  String: string,
+  Boolean: boolean,
+  Int: number,
+  Float: number,
+  Date: any,
+  AWSTimestamp: number
+};
+
+/** This is a type to test comments */
+export type CommentTest = {
+  __typename?: \\"CommentTest\\",
+  /** This is a single-line comment */
+  singleLine?: ?$ElementType<Scalars, \\"String\\">,
+  /** This is a multi-line
+   * comment.
+   */
+  multiLine?: ?$ElementType<Scalars, \\"String\\">,
+  enumCommentTest?: ?EnumCommentTestCase
+};
+
+export type DoubleHump = {
+  __typename?: \\"doubleHump\\",
+  humpOne?: ?$ElementType<Scalars, \\"String\\">,
+  humpTwo?: ?$ElementType<Scalars, \\"String\\">
+};
+
+export const EnumCommentTestCaseValues = Object.freeze({
+  /** This is a single-line comment */
+  First: \\"first\\",
+  /** This is a multi-line
+   * comment.
+   */
+  Second: \\"second\\"
+});
+
+export type EnumCommentTestCase = $Values<typeof EnumCommentTestCaseValues>;
+
+export type ImplA = InterfaceTestCase & {
+  __typename?: \\"ImplA\\",
+  prop: $ElementType<Scalars, \\"String\\">,
+  propA: $ElementType<Scalars, \\"String\\">
+};
+
+export type ImplB = InterfaceTestCase & {
+  __typename?: \\"ImplB\\",
+  prop: $ElementType<Scalars, \\"String\\">,
+  propB?: ?$ElementType<Scalars, \\"Int\\">
+};
+
+export type InterfaceTestCase = {
+  __typename?: \\"InterfaceTestCase\\",
+  prop: $ElementType<Scalars, \\"String\\">
+};
+
+export type OddType = {
+  __typename?: \\"OddType\\",
+  date?: ?$ElementType<Scalars, \\"Date\\">,
+  camel?: ?DoubleHump
+};
+
+export type PartialA = {
+  __typename?: \\"PartialA\\",
+  prop: $ElementType<Scalars, \\"String\\">
+};
+
+export type PartialB = {
+  __typename?: \\"PartialB\\",
+  prop: $ElementType<Scalars, \\"String\\">
+};
+
+export type Query = {
+  __typename?: \\"Query\\",
+  misc?: ?OddType,
+  commentTest?: ?CommentTest,
+  interfaceTest?: ?InterfaceTestCase,
+  unionTest?: ?UnionTestCase,
+  scalarTest: $ElementType<Scalars, \\"Boolean\\">
+};
+
+export type UnionTestCase = PartialA | PartialB;
+type $Pick<Origin: Object, Keys: Object> = $ObjMapi<
+  Keys,
+  <Key>(k: Key) => $ElementType<Origin, Key>
+>;
+
+export type RootScalarQueryVariables = {};
+
+export type RootScalarQuery = { __typename?: \\"Query\\" } & $Pick<
+  Query,
+  { scalarTest: * }
+>;
+"
 `;
 
-exports[`Flow code generation #generateSource() should handle single line comments 1`] = `
-"/* @flow */
-/* eslint-disable */
-//  This file was automatically generated and should not be edited.
-
-export type CustomScalarQuery = {|
-  commentTest: ? {|
-    __typename: \\"CommentTest\\",
-    // This is a single-line comment
-    singleLine: ?string,
-  |},
-|};"
-`;
+exports[`Flow code generation #generateSource() should handle single line comments 1`] = `Promise {}`;
 
 exports[`Flow code generation #generateSource() should handle unions at root 1`] = `
-"/* @flow */
-/* eslint-disable */
+"// @flow
 //  This file was automatically generated and should not be edited.
+/* @flow */
 
-export type CustomScalarQuery = {|
-  unionTest: ?( {
-      __typename: \\"PartialA\\",
-      prop: string,
-    } | {
-      __typename: \\"PartialB\\",
-      prop: string,
-    }
-  ),
-|};"
+/** All built-in and custom scalars, mapped to their actual values */
+export type Scalars = {
+  ID: string,
+  String: string,
+  Boolean: boolean,
+  Int: number,
+  Float: number,
+  Date: any,
+  AWSTimestamp: number
+};
+
+/** This is a type to test comments */
+export type CommentTest = {
+  __typename?: \\"CommentTest\\",
+  /** This is a single-line comment */
+  singleLine?: ?$ElementType<Scalars, \\"String\\">,
+  /** This is a multi-line
+   * comment.
+   */
+  multiLine?: ?$ElementType<Scalars, \\"String\\">,
+  enumCommentTest?: ?EnumCommentTestCase
+};
+
+export type DoubleHump = {
+  __typename?: \\"doubleHump\\",
+  humpOne?: ?$ElementType<Scalars, \\"String\\">,
+  humpTwo?: ?$ElementType<Scalars, \\"String\\">
+};
+
+export const EnumCommentTestCaseValues = Object.freeze({
+  /** This is a single-line comment */
+  First: \\"first\\",
+  /** This is a multi-line
+   * comment.
+   */
+  Second: \\"second\\"
+});
+
+export type EnumCommentTestCase = $Values<typeof EnumCommentTestCaseValues>;
+
+export type ImplA = InterfaceTestCase & {
+  __typename?: \\"ImplA\\",
+  prop: $ElementType<Scalars, \\"String\\">,
+  propA: $ElementType<Scalars, \\"String\\">
+};
+
+export type ImplB = InterfaceTestCase & {
+  __typename?: \\"ImplB\\",
+  prop: $ElementType<Scalars, \\"String\\">,
+  propB?: ?$ElementType<Scalars, \\"Int\\">
+};
+
+export type InterfaceTestCase = {
+  __typename?: \\"InterfaceTestCase\\",
+  prop: $ElementType<Scalars, \\"String\\">
+};
+
+export type OddType = {
+  __typename?: \\"OddType\\",
+  date?: ?$ElementType<Scalars, \\"Date\\">,
+  camel?: ?DoubleHump
+};
+
+export type PartialA = {
+  __typename?: \\"PartialA\\",
+  prop: $ElementType<Scalars, \\"String\\">
+};
+
+export type PartialB = {
+  __typename?: \\"PartialB\\",
+  prop: $ElementType<Scalars, \\"String\\">
+};
+
+export type Query = {
+  __typename?: \\"Query\\",
+  misc?: ?OddType,
+  commentTest?: ?CommentTest,
+  interfaceTest?: ?InterfaceTestCase,
+  unionTest?: ?UnionTestCase,
+  scalarTest: $ElementType<Scalars, \\"Boolean\\">
+};
+
+export type UnionTestCase = PartialA | PartialB;
+type $Pick<Origin: Object, Keys: Object> = $ObjMapi<
+  Keys,
+  <Key>(k: Key) => $ElementType<Origin, Key>
+>;
+
+export type CustomScalarQueryVariables = {};
+
+export type CustomScalarQuery = { __typename?: \\"Query\\" } & {
+  unionTest: ?(
+    | ({ __typename?: \\"PartialA\\" } & $Pick<PartialA, { prop: * }>)
+    | ({ __typename?: \\"PartialB\\" } & $Pick<PartialB, { prop: * }>)
+  )
+};
+"
 `;
 
 exports[`Flow code generation #generateSource() should have __typename value matching fragment type on generic type 1`] = `
-"/* @flow */
-/* eslint-disable */
+"// @flow
 //  This file was automatically generated and should not be edited.
+/* @flow */
 
-export type HeroNameQuery = {|
-  hero: ?( {
-      __typename: \\"Human\\",
-      // The name of the character
-      name: string,
-    } | {
-      __typename: \\"Droid\\",
-      // The name of the character
-      name: string,
-    }
-  ),
-|};
+/** All built-in and custom scalars, mapped to their actual values */
+export type Scalars = {
+  ID: string,
+  String: string,
+  Boolean: boolean,
+  Int: number,
+  Float: number,
+  AWSTimestamp: number
+};
 
-export type HeroWithNameFragment = ( {
-      __typename: \\"Human\\",
-      // The name of the character
-      name: string,
-    } | {
-      __typename: \\"Droid\\",
-      // The name of the character
-      name: string,
-    }
-  );"
+/** A character from the Star Wars universe */
+export type Character = {
+  __typename?: \\"Character\\",
+  /** The ID of the character */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** The name of the character */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** The friends of the character, or an empty list if they have none */
+  friends?: ?Array<?Character>,
+  /** The friends of the character exposed as a connection with edges */
+  friendsConnection: FriendsConnection,
+  /** The movies this character appears in */
+  appearsIn: Array<?Episode>
+};
+
+/** A character from the Star Wars universe */
+export type CharacterFriendsConnectionArgs = {
+  first?: ?$ElementType<Scalars, \\"Int\\">,
+  after?: ?$ElementType<Scalars, \\"ID\\">
+};
+
+/** The input object sent when passing in a color */
+export type ColorInput = {
+  red: $ElementType<Scalars, \\"Int\\">,
+  green: $ElementType<Scalars, \\"Int\\">,
+  blue: $ElementType<Scalars, \\"Int\\">
+};
+
+/** An autonomous mechanical character in the Star Wars universe */
+export type Droid = Character & {
+  __typename?: \\"Droid\\",
+  /** The ID of the droid */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** What others call this droid */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** This droid's friends, or an empty list if they have none */
+  friends?: ?Array<?Character>,
+  /** The friends of the droid exposed as a connection with edges */
+  friendsConnection: FriendsConnection,
+  /** The movies this droid appears in */
+  appearsIn: Array<?Episode>,
+  /** This droid's primary function */
+  primaryFunction?: ?$ElementType<Scalars, \\"String\\">
+};
+
+/** An autonomous mechanical character in the Star Wars universe */
+export type DroidFriendsConnectionArgs = {
+  first?: ?$ElementType<Scalars, \\"Int\\">,
+  after?: ?$ElementType<Scalars, \\"ID\\">
+};
+
+export const EpisodeValues = Object.freeze({
+  /** Star Wars Episode IV: A New Hope, released in 1977. */
+  Newhope: \\"NEWHOPE\\",
+  /** Star Wars Episode V: The Empire Strikes Back, released in 1980. */
+  Empire: \\"EMPIRE\\",
+  /** Star Wars Episode VI: Return of the Jedi, released in 1983. */
+  Jedi: \\"JEDI\\"
+});
+
+/** The episodes in the Star Wars trilogy */
+export type Episode = $Values<typeof EpisodeValues>;
+
+/** A connection object for a character's friends */
+export type FriendsConnection = {
+  __typename?: \\"FriendsConnection\\",
+  /** The total number of friends */
+  totalCount?: ?$ElementType<Scalars, \\"Int\\">,
+  /** The edges for each of the character's friends. */
+  edges?: ?Array<?FriendsEdge>,
+  /** A list of the friends, as a convenience when edges are not needed. */
+  friends?: ?Array<?Character>,
+  /** Information for paginating this connection */
+  pageInfo: PageInfo
+};
+
+/** An edge object for a character's friends */
+export type FriendsEdge = {
+  __typename?: \\"FriendsEdge\\",
+  /** A cursor used for pagination */
+  cursor: $ElementType<Scalars, \\"ID\\">,
+  /** The character represented by this friendship edge */
+  node?: ?Character
+};
+
+/** A humanoid creature from the Star Wars universe */
+export type Human = Character & {
+  __typename?: \\"Human\\",
+  /** The ID of the human */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** What this human calls themselves */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** The home planet of the human, or null if unknown */
+  homePlanet?: ?$ElementType<Scalars, \\"String\\">,
+  /** Height in the preferred unit, default is meters */
+  height?: ?$ElementType<Scalars, \\"Float\\">,
+  /** Mass in kilograms, or null if unknown */
+  mass?: ?$ElementType<Scalars, \\"Float\\">,
+  /** This human's friends, or an empty list if they have none */
+  friends?: ?Array<?Character>,
+  /** The friends of the human exposed as a connection with edges */
+  friendsConnection: FriendsConnection,
+  /** The movies this human appears in */
+  appearsIn: Array<?Episode>,
+  /** A list of starships this person has piloted, or an empty list if none */
+  starships?: ?Array<?Starship>
+};
+
+/** A humanoid creature from the Star Wars universe */
+export type HumanHeightArgs = {
+  unit: LengthUnit
+};
+
+/** A humanoid creature from the Star Wars universe */
+export type HumanFriendsConnectionArgs = {
+  first?: ?$ElementType<Scalars, \\"Int\\">,
+  after?: ?$ElementType<Scalars, \\"ID\\">
+};
+
+export const LengthUnitValues = Object.freeze({
+  /** The standard unit around the world */
+  Meter: \\"METER\\",
+  /** Primarily used in the United States */
+  Foot: \\"FOOT\\"
+});
+
+/** Units of height */
+export type LengthUnit = $Values<typeof LengthUnitValues>;
+
+/** The mutation type, represents all updates we can make to our data */
+export type Mutation = {
+  __typename?: \\"Mutation\\",
+  createReview?: ?Review
+};
+
+/** The mutation type, represents all updates we can make to our data */
+export type MutationCreateReviewArgs = {
+  episode?: ?Episode,
+  review: ReviewInput
+};
+
+/** Information for paginating this connection */
+export type PageInfo = {
+  __typename?: \\"PageInfo\\",
+  startCursor?: ?$ElementType<Scalars, \\"ID\\">,
+  endCursor?: ?$ElementType<Scalars, \\"ID\\">,
+  hasNextPage: $ElementType<Scalars, \\"Boolean\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type Query = {
+  __typename?: \\"Query\\",
+  hero?: ?Character,
+  reviews?: ?Array<?Review>,
+  search?: ?Array<?SearchResult>,
+  character?: ?Character,
+  droid?: ?Droid,
+  human?: ?Human,
+  starship?: ?Starship
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryHeroArgs = {
+  episode?: ?Episode
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryReviewsArgs = {
+  episode: Episode
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QuerySearchArgs = {
+  text?: ?$ElementType<Scalars, \\"String\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryCharacterArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryDroidArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryHumanArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryStarshipArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** Represents a review for a movie */
+export type Review = {
+  __typename?: \\"Review\\",
+  /** The number of stars this review gave, 1-5 */
+  stars: $ElementType<Scalars, \\"Int\\">,
+  /** Comment about the movie */
+  commentary?: ?$ElementType<Scalars, \\"String\\">
+};
+
+/** The input object sent when someone is creating a new review */
+export type ReviewInput = {
+  /** 0-5 stars */
+  stars: $ElementType<Scalars, \\"Int\\">,
+  /** Comment about the movie, optional */
+  commentary?: ?$ElementType<Scalars, \\"String\\">,
+  /** Favorite color, optional */
+  favorite_color?: ?ColorInput
+};
+
+export type SearchResult = Human | Droid | Starship;
+
+export type Starship = {
+  __typename?: \\"Starship\\",
+  /** The ID of the starship */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** The name of the starship */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** Length of the starship, along the longest axis */
+  length?: ?$ElementType<Scalars, \\"Float\\">,
+  coordinates?: ?Array<Array<$ElementType<Scalars, \\"Float\\">>>
+};
+
+export type StarshipLengthArgs = {
+  unit: LengthUnit
+};
+type $Pick<Origin: Object, Keys: Object> = $ObjMapi<
+  Keys,
+  <Key>(k: Key) => $ElementType<Origin, Key>
+>;
+
+export type HeroWithNameFragment = { __typename: \\"Human\\" | \\"Droid\\" } & $Pick<
+  Character,
+  { name: * }
+>;
+
+export type HeroNameQueryVariables = {};
+
+export type HeroNameQuery = { __typename?: \\"Query\\" } & {
+  hero: ?({ __typename: \\"Human\\" | \\"Droid\\" } & HeroWithNameFragment)
+};
+"
 `;
 
 exports[`Flow code generation #generateSource() should have __typename value matching fragment type on specific type 1`] = `
-"/* @flow */
-/* eslint-disable */
+"// @flow
 //  This file was automatically generated and should not be edited.
+/* @flow */
 
-export type DroidNameQuery = {|
-  droid: ? {|
-    __typename: \\"Droid\\",
-    // What others call this droid
-    name: string,
-  |},
-|};
+/** All built-in and custom scalars, mapped to their actual values */
+export type Scalars = {
+  ID: string,
+  String: string,
+  Boolean: boolean,
+  Int: number,
+  Float: number,
+  AWSTimestamp: number
+};
 
-export type DroidWithNameFragment = {|
-  __typename: \\"Droid\\",
-  // What others call this droid
-  name: string,
-|};"
+/** A character from the Star Wars universe */
+export type Character = {
+  __typename?: \\"Character\\",
+  /** The ID of the character */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** The name of the character */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** The friends of the character, or an empty list if they have none */
+  friends?: ?Array<?Character>,
+  /** The friends of the character exposed as a connection with edges */
+  friendsConnection: FriendsConnection,
+  /** The movies this character appears in */
+  appearsIn: Array<?Episode>
+};
+
+/** A character from the Star Wars universe */
+export type CharacterFriendsConnectionArgs = {
+  first?: ?$ElementType<Scalars, \\"Int\\">,
+  after?: ?$ElementType<Scalars, \\"ID\\">
+};
+
+/** The input object sent when passing in a color */
+export type ColorInput = {
+  red: $ElementType<Scalars, \\"Int\\">,
+  green: $ElementType<Scalars, \\"Int\\">,
+  blue: $ElementType<Scalars, \\"Int\\">
+};
+
+/** An autonomous mechanical character in the Star Wars universe */
+export type Droid = Character & {
+  __typename?: \\"Droid\\",
+  /** The ID of the droid */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** What others call this droid */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** This droid's friends, or an empty list if they have none */
+  friends?: ?Array<?Character>,
+  /** The friends of the droid exposed as a connection with edges */
+  friendsConnection: FriendsConnection,
+  /** The movies this droid appears in */
+  appearsIn: Array<?Episode>,
+  /** This droid's primary function */
+  primaryFunction?: ?$ElementType<Scalars, \\"String\\">
+};
+
+/** An autonomous mechanical character in the Star Wars universe */
+export type DroidFriendsConnectionArgs = {
+  first?: ?$ElementType<Scalars, \\"Int\\">,
+  after?: ?$ElementType<Scalars, \\"ID\\">
+};
+
+export const EpisodeValues = Object.freeze({
+  /** Star Wars Episode IV: A New Hope, released in 1977. */
+  Newhope: \\"NEWHOPE\\",
+  /** Star Wars Episode V: The Empire Strikes Back, released in 1980. */
+  Empire: \\"EMPIRE\\",
+  /** Star Wars Episode VI: Return of the Jedi, released in 1983. */
+  Jedi: \\"JEDI\\"
+});
+
+/** The episodes in the Star Wars trilogy */
+export type Episode = $Values<typeof EpisodeValues>;
+
+/** A connection object for a character's friends */
+export type FriendsConnection = {
+  __typename?: \\"FriendsConnection\\",
+  /** The total number of friends */
+  totalCount?: ?$ElementType<Scalars, \\"Int\\">,
+  /** The edges for each of the character's friends. */
+  edges?: ?Array<?FriendsEdge>,
+  /** A list of the friends, as a convenience when edges are not needed. */
+  friends?: ?Array<?Character>,
+  /** Information for paginating this connection */
+  pageInfo: PageInfo
+};
+
+/** An edge object for a character's friends */
+export type FriendsEdge = {
+  __typename?: \\"FriendsEdge\\",
+  /** A cursor used for pagination */
+  cursor: $ElementType<Scalars, \\"ID\\">,
+  /** The character represented by this friendship edge */
+  node?: ?Character
+};
+
+/** A humanoid creature from the Star Wars universe */
+export type Human = Character & {
+  __typename?: \\"Human\\",
+  /** The ID of the human */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** What this human calls themselves */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** The home planet of the human, or null if unknown */
+  homePlanet?: ?$ElementType<Scalars, \\"String\\">,
+  /** Height in the preferred unit, default is meters */
+  height?: ?$ElementType<Scalars, \\"Float\\">,
+  /** Mass in kilograms, or null if unknown */
+  mass?: ?$ElementType<Scalars, \\"Float\\">,
+  /** This human's friends, or an empty list if they have none */
+  friends?: ?Array<?Character>,
+  /** The friends of the human exposed as a connection with edges */
+  friendsConnection: FriendsConnection,
+  /** The movies this human appears in */
+  appearsIn: Array<?Episode>,
+  /** A list of starships this person has piloted, or an empty list if none */
+  starships?: ?Array<?Starship>
+};
+
+/** A humanoid creature from the Star Wars universe */
+export type HumanHeightArgs = {
+  unit: LengthUnit
+};
+
+/** A humanoid creature from the Star Wars universe */
+export type HumanFriendsConnectionArgs = {
+  first?: ?$ElementType<Scalars, \\"Int\\">,
+  after?: ?$ElementType<Scalars, \\"ID\\">
+};
+
+export const LengthUnitValues = Object.freeze({
+  /** The standard unit around the world */
+  Meter: \\"METER\\",
+  /** Primarily used in the United States */
+  Foot: \\"FOOT\\"
+});
+
+/** Units of height */
+export type LengthUnit = $Values<typeof LengthUnitValues>;
+
+/** The mutation type, represents all updates we can make to our data */
+export type Mutation = {
+  __typename?: \\"Mutation\\",
+  createReview?: ?Review
+};
+
+/** The mutation type, represents all updates we can make to our data */
+export type MutationCreateReviewArgs = {
+  episode?: ?Episode,
+  review: ReviewInput
+};
+
+/** Information for paginating this connection */
+export type PageInfo = {
+  __typename?: \\"PageInfo\\",
+  startCursor?: ?$ElementType<Scalars, \\"ID\\">,
+  endCursor?: ?$ElementType<Scalars, \\"ID\\">,
+  hasNextPage: $ElementType<Scalars, \\"Boolean\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type Query = {
+  __typename?: \\"Query\\",
+  hero?: ?Character,
+  reviews?: ?Array<?Review>,
+  search?: ?Array<?SearchResult>,
+  character?: ?Character,
+  droid?: ?Droid,
+  human?: ?Human,
+  starship?: ?Starship
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryHeroArgs = {
+  episode?: ?Episode
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryReviewsArgs = {
+  episode: Episode
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QuerySearchArgs = {
+  text?: ?$ElementType<Scalars, \\"String\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryCharacterArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryDroidArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryHumanArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryStarshipArgs = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+/** Represents a review for a movie */
+export type Review = {
+  __typename?: \\"Review\\",
+  /** The number of stars this review gave, 1-5 */
+  stars: $ElementType<Scalars, \\"Int\\">,
+  /** Comment about the movie */
+  commentary?: ?$ElementType<Scalars, \\"String\\">
+};
+
+/** The input object sent when someone is creating a new review */
+export type ReviewInput = {
+  /** 0-5 stars */
+  stars: $ElementType<Scalars, \\"Int\\">,
+  /** Comment about the movie, optional */
+  commentary?: ?$ElementType<Scalars, \\"String\\">,
+  /** Favorite color, optional */
+  favorite_color?: ?ColorInput
+};
+
+export type SearchResult = Human | Droid | Starship;
+
+export type Starship = {
+  __typename?: \\"Starship\\",
+  /** The ID of the starship */
+  id: $ElementType<Scalars, \\"ID\\">,
+  /** The name of the starship */
+  name: $ElementType<Scalars, \\"String\\">,
+  /** Length of the starship, along the longest axis */
+  length?: ?$ElementType<Scalars, \\"Float\\">,
+  coordinates?: ?Array<Array<$ElementType<Scalars, \\"Float\\">>>
+};
+
+export type StarshipLengthArgs = {
+  unit: LengthUnit
+};
+type $Pick<Origin: Object, Keys: Object> = $ObjMapi<
+  Keys,
+  <Key>(k: Key) => $ElementType<Origin, Key>
+>;
+
+export type DroidWithNameFragment = { __typename: \\"Droid\\" } & $Pick<
+  Droid,
+  { name: * }
+>;
+
+export type DroidNameQueryVariables = {
+  id: $ElementType<Scalars, \\"ID\\">
+};
+
+export type DroidNameQuery = { __typename?: \\"Query\\" } & {
+  droid: ?({ __typename: \\"Droid\\" } & DroidWithNameFragment)
+};
+"
 `;

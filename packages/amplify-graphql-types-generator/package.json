@@ -30,7 +30,7 @@
   "devDependencies": {
     "@types/common-tags": "^1.2.5",
     "@types/glob": "^5.0.30",
-    "@types/graphql": "^14.0.3",
+    "@types/graphql": "^14.2.0",
     "@types/inflected": "^1.1.29",
     "@types/jest": "20.0.6",
     "@types/mkdirp": "0.5.0",
@@ -39,30 +39,30 @@
     "@types/yargs": "12.0.1",
     "jest": "^23.1.0",
     "jest-matcher-utils": "^23.6.0",
-    "ts-jest": "^22.4.6",
+    "ts-jest": "^24.0.2",
     "tslint": "^5.10.0",
     "typescript": "^3.5.1"
   },
   "dependencies": {
-    "@babel/generator": "7.0.0-beta.4",
-    "@babel/types": "7.0.0-beta.4",
-    "@types/babel-generator": "^6.25.0",
-    "@types/babylon": "^6.16.3",
     "@types/prettier": "^1.13.2",
     "@types/rimraf": "^2.0.2",
-    "babel-generator": "^6.26.1",
-    "babylon": "^6.18.0",
     "change-case": "^3.0.1",
     "common-tags": "^1.4.0",
     "core-js": "^2.5.0",
     "glob": "^7.1.2",
-    "graphql": "^14.0.2",
     "inflected": "^2.0.2",
     "mkdirp": "^0.5.1",
     "prettier": "^1.14.3",
     "rimraf": "^2.6.2",
     "source-map-support": "^0.5.9",
-    "yargs": "^12.0.2"
+    "yargs": "^12.0.2",
+    "@graphql-codegen/core": "^1.1.1",
+    "@graphql-codegen/add": "^1.1.1",
+    "@graphql-codegen/typescript": "^1.1.1",
+    "@graphql-codegen/typescript-operations": "^1.1.1",
+    "@graphql-codegen/flow": "^1.1.1",
+    "@graphql-codegen/flow-operations": "1.2.1",
+    "amplify-codegen-plugin-angular": "1.0.0"
   },
   "jest": {
     "setupFiles": [
@@ -83,6 +83,11 @@
     ],
     "transform": {
       "^.+\\.(ts|js)x?$": "ts-jest"
+    },
+    "globals": {
+      "ts-jest": {
+        "diagnostics": false
+      }
     },
     "moduleFileExtensions": [
       "ts",
