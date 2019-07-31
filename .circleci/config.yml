@@ -193,6 +193,7 @@ workflows:
               only:
                 - master
                 - graphql_e2e_testing
+                - predictions
           requires:
             - build
       - integration_test:
@@ -201,6 +202,7 @@ workflows:
               only:
                 - master
                 - beta
+                - predictions
           requires:
             - build
       - amplify_e2e_tests:
@@ -208,6 +210,7 @@ workflows:
             branches:
               only:
                 - master
+                - predictions
           requires:
             - build
 
