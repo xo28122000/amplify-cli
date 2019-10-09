@@ -72,7 +72,11 @@ export function runCypressTest(
         nexpect
             .spawn('yarn', options, {cwd, stripColors: true, verbose})
             .run(function(err: Error, outputs: string[], exitCode: string|number) {
-                if (err || exitCode) {
+
+                console.log("\n\n\n\n\n Cypress test done.");
+                console.log(`err => ${err}`)
+                console.log(`exitCode => ${exitCode}`);
+                if (err || (exitCode !== '' && exitCode != 0)) {
                     isPassed = false;
                 }
                 resolve(isPassed);

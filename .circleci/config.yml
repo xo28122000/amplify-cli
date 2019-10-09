@@ -438,10 +438,10 @@ workflows:
               only:
                 - master
                 - graphql_e2e_testing
+                - run-tests
           requires:
             - build
             - integration_test_ios
-            - integration_test_js
             - mock_e2e_tests
       - mock_e2e_tests:
           requires:
@@ -452,20 +452,20 @@ workflows:
               only:
                 - master
                 - beta
+                - run-tests
           requires:
             - build
             - integration_test_ios
-            - integration_test_js
             - mock_e2e_tests
       - amplify_e2e_tests:
           filters:
             branches:
               only:
                 - master
+                - run-tests
           requires:
             - build
             - integration_test_ios
-            - integration_test_js
             - mock_e2e_tests
       - deploy:
           requires:
@@ -486,6 +486,7 @@ workflows:
             branches:
               only:
                 - master
+                - run-tests
           requires:
             - build
             - test
@@ -495,6 +496,7 @@ workflows:
             branches:
               only:
                 - master
+                - run-tests
           requires:
             - build
             - test
