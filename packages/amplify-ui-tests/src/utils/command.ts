@@ -56,7 +56,7 @@ export function runCypressTest(cwd: string, settings?: any, verbose: boolean = t
   }
   return new Promise(resolve => {
     nexpect
-      .spawn('DEBUG=cypress:* yarn', options, { cwd, stripColors: true, verbose })
+      .spawn('yarn', options, { cwd, stripColors: true, verbose, env: { DEBUG: 'cypress:*' } })
       .run(function(err: Error, outputs: string[], exitCode: string | number) {
         console.log('\n\n\n\n\n Cypress test done.');
         console.log(`err => ${err}`);
