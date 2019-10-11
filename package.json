@@ -20,6 +20,7 @@
     "publish:beta": "lerna publish prerelease --exact  --dist-tag=beta --preid=beta --message 'chore(release): Publish [ci skip]' --yes",
     "publish:release": "lerna publish  minor --exact  --yes --message 'chore(release): Publish [ci skip]'",
     "postpublish:release": "git fetch . release:master && git push origin master",
+    "publish:permfix": "lerna publish prerelease --exact  --dist-tag=permfix --preid=permfix --message 'chore(release): Publish [ci skip]' --yes",
     "commit": "git-cz",
     "coverage": "codecov || exit 0"
   },
