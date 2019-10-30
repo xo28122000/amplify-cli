@@ -1,10 +1,10 @@
-import { isCI } from '../utils';
+import { isCI, getUniqueId } from '../utils';
 import * as nexpect from 'nexpect';
 import { getCLIPath } from '../utils/index';
 
 // add convert resource
 export function addConvert(cwd: string, settings: any, verbose: boolean = !isCI()) {
-  const resourceName = 'convertTest1';
+  const resourceName = `convertTest${getUniqueId()}`;
   return new Promise((resolve, reject) => {
     nexpect
       .spawn(getCLIPath(), ['predictions', 'add'], { cwd, stripColors: true, verbose })
@@ -37,7 +37,7 @@ export function addConvert(cwd: string, settings: any, verbose: boolean = !isCI(
 
 // add identify test
 export function addIdentifyCollection(cwd: string, settings: any, verbose: boolean = !isCI()) {
-  const resourceName = 'identifyCollectionTest1';
+  const resourceName = `identifyCollectionTest${getUniqueId()}`;
   return new Promise((resolve, reject) => {
     nexpect
       .spawn(getCLIPath(), ['predictions', 'add'], { cwd, stripColors: true, verbose })

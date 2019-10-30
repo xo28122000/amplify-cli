@@ -437,6 +437,7 @@ workflows:
               only:
                 - master
                 - graphql_e2e_testing
+                - test_name_collision
           requires:
             - build
             - mock_e2e_tests
@@ -449,6 +450,7 @@ workflows:
               only:
                 - master
                 - beta
+                - test_name_collision
           requires:
             - build
             - mock_e2e_tests
@@ -457,6 +459,7 @@ workflows:
             branches:
               only:
                 - master
+                - test_name_collision
           requires:
             - build
             - mock_e2e_tests
@@ -474,11 +477,13 @@ workflows:
                 - release
                 - master
                 - beta
+                - test_name_collision
       - integration_test_js:
           filters:
             branches:
               only:
                 - master
+                - test_name_collision
           requires:
             - build
             - test
@@ -488,6 +493,7 @@ workflows:
             branches:
               only:
                 - master
+                - test_name_collision
           requires:
             - build
             - test
