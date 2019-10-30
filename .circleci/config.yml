@@ -477,7 +477,6 @@ workflows:
                 - release
                 - master
                 - beta
-                - test_name_collision
       - integration_test_js:
           filters:
             branches:
