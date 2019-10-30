@@ -2,7 +2,7 @@ import { join } from 'path';
 import { mkdirSync, readFileSync } from 'fs';
 import * as rimraf from 'rimraf';
 import { config } from 'dotenv';
-import { default as generate } from 'nanoid/generate';
+import * as generate from 'nanoid/generate';
 import { writeFile } from 'fs';
 export { default as getProjectMeta } from './projectMeta';
 
