@@ -2,6 +2,7 @@ import { join } from 'path';
 import { mkdirSync, readFileSync } from 'fs';
 import * as rimraf from 'rimraf';
 import { config } from 'dotenv';
+import { default as generate } from 'nanoid/generate';
 import { writeFile } from 'fs';
 export { default as getProjectMeta } from './projectMeta';
 
@@ -71,4 +72,10 @@ export function createTestMetaFile(destRoot: string, settings: any) {
       console.log(err);
     }
   });
+}
+
+export function getUniqueId(): string {
+  const charset = '1234567890abcdefghijklmnopqrstuvwxyz';
+
+  return generate(charset, 10);
 }

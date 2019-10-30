@@ -2,6 +2,8 @@ import { join } from 'path';
 import { mkdirSync } from 'fs';
 import * as rimraf from 'rimraf';
 import { config } from 'dotenv';
+import { default as generate } from 'nanoid/generate';
+
 export { default as getProjectMeta } from './projectMeta';
 export { default as getAWSExports } from './awsExports';
 export * from './sdk-calls';
@@ -16,7 +18,7 @@ export function getCLIPath() {
 
 export function createNewProjectDir(root?: string): string {
   if (!root) {
-    root = join(__dirname, '../../../..', `amplify-integ-${Math.round(Math.random() * 100)}-test-${Math.round(Math.random() * 1000)}`);
+    root = join(__dirname, '../../../..', `amplify-integ-${getUniqueId()}`);
   }
   mkdirSync(root);
   return root;
@@ -32,4 +34,10 @@ export function isCI(): Boolean {
 
 export function getEnvVars(): {} {
   return { ...process.env };
+}
+
+export function getUniqueId(): string {
+  const charset = '1234567890abcdefghijklmnopqrstuvwxyz';
+
+  return generate(charset, 10);
 }

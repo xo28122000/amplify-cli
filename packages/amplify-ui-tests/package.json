@@ -23,6 +23,7 @@
     "dotenv": "6.2.0",
     "jest": "23.1.0",
     "jest-junit": "^8.0.0",
+    "nanoid": "2.1.0",
     "nexpect": "0.6.0",
     "node-fetch": "2.2.0",
     "rimraf": "2.6.2",
@@ -40,6 +41,7 @@
       "/node_modules/",
       "src"
     ],
+    "collectCoverage": false,
     "reporters": [
       "default",
       "jest-junit"
@@ -51,8 +53,11 @@
       "jsx",
       "json",
       "node"
+    ],
+    "modulePathIgnorePatterns": [
+        ".*\\.d\\.ts"
     ]
-  },
+},
   "jest-junit": {
     "outputDirectory": "reports/junit/",
     "outputName": "js-test-results.xml",

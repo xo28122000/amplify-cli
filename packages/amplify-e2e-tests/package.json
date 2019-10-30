@@ -20,6 +20,7 @@
     "dotenv": "6.2.0",
     "jest": "23.1.0",
     "jest-junit": "^8.0.0",
+    "nanoid": "2.1.0",
     "nexpect": "file:./src/utils/nexpect-modified",
     "node-fetch": "^2.6.0",
     "rimraf": "^3.0.0",
@@ -54,8 +55,14 @@
       "jsx",
       "json",
       "node"
+    ],
+    "coveragePathIgnorePatterns": [
+        ".*\\.d\\.ts"
+    ],
+    "modulePathIgnorePatterns": [
+        ".*\\.d\\.ts"
     ]
-  },
+},
   "dependencies": {
     "aws-sdk": "^2.510.0",
     "esm": "^3.2.25",

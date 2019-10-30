@@ -1,6 +1,6 @@
 import * as nexpect from 'nexpect';
+import { getCLIPath, isCI, getUniqueId } from '../utils';
 
-import { getCLIPath, isCI } from '../utils';
 const defaultSettings = {
   name: '\r',
   envName: 'integtest',
@@ -17,6 +17,12 @@ const defaultSettings = {
 
 export default function initProjectWithProfile(cwd: string, settings: any = {}, verbose: Boolean = isCI() ? false : true) {
   const s = { ...defaultSettings, ...settings };
+
+  // Add unique id to project name
+  if (s.name && s.name !== defaultSettings.name) {
+    s.name = `${s.name}${getUniqueId()}`;
+  }
+
   return new Promise((resolve, reject) => {
     nexpect
       .spawn(getCLIPath(), ['init'], { cwd, stripColors: true, verbose })
