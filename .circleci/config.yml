@@ -55,7 +55,7 @@ jobs:
           key: amplify-cli-yarn-deps-{{ .Branch }}-{{ checksum "yarn.lock" }}
       - run:
           name: Run GraphQL end-to-end tests
-          command: cd packages/graphql-transformers-e2e-tests/ && yarn e2e --maxWorkers=3
+          command: cd packages/graphql-transformers-e2e-tests/ && yarn e2e --runInBand
           no_output_timeout: 90m
       - store_test_results:
           path: packages/graphql-transformers-e2e-tests/
@@ -84,10 +84,10 @@ jobs:
       - attach_workspace:
           at: ./
       - restore_cache:
-          key: 'amplify-cli-yarn-deps-{{ .Branch }}-{{ checksum "yarn.lock" }}'
+          key: amplify-cli-yarn-deps-{{ .Branch }}-{{ checksum "yarn.lock" }}
       - run:
-          command: 'cd packages/amplify-e2e-tests && yarn run e2e --maxWorkers=3'
-          name: 'Run Amplify end-to-end tests'
+          command: cd packages/amplify-e2e-tests && yarn run e2e --runInBand
+          name: Run Amplify end-to-end tests
           no_output_timeout: 90m
       - store_test_results:
           path: packages/amplify-e2e-tests/
@@ -243,7 +243,7 @@ jobs:
             aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY --profile default
             aws configure set region $CLI_REGION --profile default
       - run:
-          command: 'cd packages/amplify-ui-tests && npm run ui'
+          command: cd packages/amplify-ui-tests && npm run ui
           name: 'Run ui tests in JS SDK'
           no_output_timeout: 45m
       - store_artifacts:
