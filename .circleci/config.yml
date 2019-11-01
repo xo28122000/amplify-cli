@@ -428,9 +428,9 @@ workflows:
   build_test_deploy:
     jobs:
       - build
-      - test:
-          requires:
-            - build
+      # - test:
+      #     requires:
+      #       - build
       # - mock_e2e_tests:
       #     requires:
       #       - test
