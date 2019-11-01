@@ -431,43 +431,43 @@ workflows:
       - test:
           requires:
             - build
-      - mock_e2e_tests:
-          requires:
-            - test
-      - integration_test:
-          filters:
-            branches:
-              only:
-                - master
-                - beta
-                - test_name_collision
-          requires:
-            - mock_e2e_tests
-      - integration_test_js:
-          filters:
-            branches:
-              only:
-                - master
-                - test_name_collision
-          requires:
-            - integration_test
-      - integration_test_ios:
-          filters:
-            branches:
-              only:
-                - master
-                - test_name_collision
-          requires:
-            - integration_test_js
-      - graphql_e2e_tests:
-          filters:
-            branches:
-              only:
-                - master
-                - graphql_e2e_testing
-                - test_name_collision
-          requires:
-            - integration_test_ios
+      # - mock_e2e_tests:
+      #     requires:
+      #       - test
+      # - integration_test:
+      #     filters:
+      #       branches:
+      #         only:
+      #           - master
+      #           - beta
+      #           - test_name_collision
+      #     requires:
+      #       - mock_e2e_tests
+      # - integration_test_js:
+      #     filters:
+      #       branches:
+      #         only:
+      #           - master
+      #           - test_name_collision
+      #     requires:
+      #       - integration_test
+      # - integration_test_ios:
+      #     filters:
+      #       branches:
+      #         only:
+      #           - master
+      #           - test_name_collision
+      #     requires:
+      #       - integration_test_js
+      # - graphql_e2e_tests:
+      #     filters:
+      #       branches:
+      #         only:
+      #           - master
+      #           - graphql_e2e_testing
+      #           - test_name_collision
+      #     requires:
+      #       - integration_test_ios
       - amplify_e2e_tests:
           filters:
             branches:
@@ -475,7 +475,7 @@ workflows:
                 - master
                 - test_name_collision
           requires:
-            - graphql_e2e_tests
+            - build
       - deploy:
           requires:
             - amplify_e2e_tests
