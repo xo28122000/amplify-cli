@@ -78,6 +78,21 @@ jobs:
       - store_test_results:
           path: packages/amplify-util-mock/
 
+  e2e_log_tests:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ./
+      - restore_cache:
+          key: 'amplify-cli-yarn-deps-{{ .Branch }}-{{ checksum "yarn.lock" }}'
+      - run:
+          command: 'cd packages/amplify-e2e-tests && yarn run e2e --no-coverage --maxWorkers=4'
+          name: 'Run Amplify end-to-end tests'
+          no_output_timeout: 90m
+      - store_test_results:
+          path: packages/amplify-e2e-tests/
+    working_directory: ~/repo
+
   amplify_e2e_tests:
     <<: *defaults
     steps:
@@ -425,70 +440,80 @@ jobs:
           path: ../uitest_android_results
 workflows:
   version: 2
-  build_test_deploy:
+  log_test:
     jobs:
       - build
-      - test:
-          requires:
-            - build
-      - graphql_e2e_tests:
+      - e2e_log_tests:
           filters:
             branches:
               only:
-                - master
-                - graphql_e2e_testing
+                - e2elog
           requires:
             - build
-            - mock_e2e_tests
-      - mock_e2e_tests:
-          requires:
-            - build
-      - integration_test:
-          filters:
-            branches:
-              only:
-                - master
-                - beta
-          requires:
-            - build
-            - mock_e2e_tests
-      - amplify_e2e_tests:
-          filters:
-            branches:
-              only:
-                - master
-          requires:
-            - build
-            - mock_e2e_tests
-      - deploy:
-          requires:
-            - build
-            - test
-            - integration_test
-            - graphql_e2e_tests
-            - amplify_e2e_tests
-            - mock_e2e_tests
-          filters:
-            branches:
-              only:
-                - release
-                - master
-                - beta
-      # - integration_test_js:
-      #     filters:
-      #       branches:
-      #         only:
-      #           - master
-      #     requires:
-      #       - build
-      #       - test
-      #       - mock_e2e_tests
-      # - integration_test_ios:
-      #     filters:
-      #       branches:
-      #         only:
-      #           - master
-      #     requires:
-      #       - build
-      #       - test
-      #       - mock_e2e_tests
+#  build_test_deploy:
+#    jobs:
+#      - build
+#      - test:
+#          requires:
+#            - build
+#      - graphql_e2e_tests:
+#          filters:
+#            branches:
+#              only:
+#                - master
+#                - graphql_e2e_testing
+#          requires:
+#            - build
+#            - mock_e2e_tests
+#      - mock_e2e_tests:
+#          requires:
+#            - build
+#      - integration_test:
+#          filters:
+#            branches:
+#              only:
+#                - master
+#                - beta
+#          requires:
+#            - build
+#            - mock_e2e_tests
+#      - amplify_e2e_tests:
+#          filters:
+#            branches:
+#              only:
+#                - master
+#          requires:
+#            - build
+#            - mock_e2e_tests
+#      - deploy:
+#          requires:
+#            - build
+#            - test
+#            - integration_test
+#            - graphql_e2e_tests
+#            - amplify_e2e_tests
+#            - mock_e2e_tests
+#          filters:
+#            branches:
+#              only:
+#                - release
+#                - master
+#                - beta
+# - integration_test_js:
+#     filters:
+#       branches:
+#         only:
+#           - master
+#     requires:
+#       - build
+#       - test
+#       - mock_e2e_tests
+# - integration_test_ios:
+#     filters:
+#       branches:
+#         only:
+#           - master
+#     requires:
+#       - build
+#       - test
+#       - mock_e2e_tests
