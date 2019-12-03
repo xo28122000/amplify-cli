@@ -457,6 +457,7 @@ workflows:
             branches:
               only:
                 - master
+                - ci_api_e2e
           requires:
             - build
             - mock_e2e_tests
