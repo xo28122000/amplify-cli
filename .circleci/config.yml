@@ -78,7 +78,7 @@ jobs:
       - store_test_results:
           path: packages/amplify-util-mock/
 
-  amplify_e2e_tests:
+  amplify_e2e_tests: &amplify_e2e_tests
     <<: *defaults
     steps:
       - attach_workspace:
