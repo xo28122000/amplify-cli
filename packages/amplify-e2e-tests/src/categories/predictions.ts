@@ -1,4 +1,4 @@
-import * as nexpect from 'nexpect';
+import * as nexpect from 'nexpect';;
 import { isCI } from '../utils';
 import { getCLIPath } from '../utils/index';
 

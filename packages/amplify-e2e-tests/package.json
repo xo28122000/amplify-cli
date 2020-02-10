@@ -47,7 +47,7 @@
       "^.+\\.tsx?$": "ts-jest"
     },
     "testURL": "http://localhost",
-    "testRegex": "(src/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "testRegex": "(src/__tests__/(storage|predictions)).test.(ts|tsx|js)$",
     "testPathIgnorePatterns": [
       "/node_modules/",
       "lib"

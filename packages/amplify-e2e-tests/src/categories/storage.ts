@@ -1,4 +1,4 @@
-import * as nexpect from '../utils/nexpect-modified';
+import * as nexpect from 'nexpect';;
 import { getCLIPath, isCI } from '../utils';
 
 export function addSimpleDDB(cwd: string, settings: any, verbose: boolean = !isCI()) {

@@ -1,4 +1,4 @@
-import * as nexpect from 'nexpect';
+import * as nexpect from 'nexpect';;
 import { getCLIPath, isCI } from '../utils';
 
 export function addHosting(cwd: string, verbose: boolean = !isCI()) {

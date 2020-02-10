@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "jest": "^25.1.0",
-    "nexpect": "^0.6.0"
+    "nexpect": "file:../amplify-e2e-tests/src/utils/nexpect-modified"
   },
   "jest": {
     "testPathIgnorePatterns": [

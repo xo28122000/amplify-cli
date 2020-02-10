@@ -1,4 +1,4 @@
-import * as nexpect from 'nexpect';
+import * as nexpect from 'nexpect';;
 import { getCLIPath, isCI } from '../utils';
 
 export function addEnvironment(cwd: string, settings: Object, verbose: Boolean = isCI() ? false : true) {
