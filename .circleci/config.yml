@@ -93,6 +93,18 @@ jobs:
           path: packages/amplify-e2e-tests/
     working_directory: ~/repo
 
+  amplify_e2e_tests_1:
+    <<: *amplify_e2e_tests
+
+  amplify_e2e_tests_2:
+    <<: *amplify_e2e_tests
+
+  amplify_e2e_tests_3:
+    <<: *amplify_e2e_tests
+
+  amplify_e2e_tests_4:
+    <<: *amplify_e2e_tests
+
   integration_test:
     working_directory: ~/repo
     docker:
