@@ -5,87 +5,6 @@ const primitiveTypes = ['String', 'Int', 'Double', 'Bool', 'Date'];
 function isStringValueNode(node: any): node is StringValueNode {
   return node && typeof node === 'object' && node.kind === 'StringValue';
 }
-const reservedKeywords = [
-  '_COLUMN_',
-  '_FILE_',
-  '_FUNCTION_',
-  '_LINE_',
-  'as',
-  'associativity',
-  'break',
-  'case',
-  'Class',
-  'continue',
-  'convenience',
-  'default',
-  'deinit',
-  'didSet',
-  'do',
-  'dynamic',
-  'dynamicType',
-  'else',
-  'Enum',
-  'extension',
-  'fallthrough',
-  'false',
-  'final',
-  'for',
-  'Func',
-  'get',
-  'if',
-  'import',
-  'in',
-  'infix',
-  'Init',
-  'inout',
-  'internal',
-  'is',
-  'lazy',
-  'left',
-  'Let',
-  'mutating',
-  'nil',
-  'none',
-  'nonmutating',
-  'operator',
-  'optional',
-  'override',
-  'postfix',
-  'precedence',
-  'prefix',
-  'private',
-  'protocol',
-  'Protocol',
-  'public',
-  'required',
-  'return',
-  'right',
-  'self',
-  'Self',
-  'set',
-  'static',
-  'struct',
-  'subscript',
-  'super',
-  'switch',
-  'Type',
-  'typealias',
-  'true',
-  'unknown',
-  'unowned',
-  'var',
-  'weak',
-  'where',
-  'while',
-  'willSet',
-];
-
-export function escapeKeywords(keyword: string): string {
-  if (reservedKeywords.includes(keyword)) {
-    return `\`${keyword}\``;
-  }
-  return keyword;
-}
 
 function transformComment(comment: string | StringValueNode, indentLevel = 0): string {
   if (isStringValueNode(comment)) {
@@ -274,16 +193,14 @@ export class SwiftDeclarationBlock {
         this._comment,
         this.getAccessStr(),
         this._kind,
-        `${escapeKeywords(this._name)}${this._protocols.length ? `: ${this._protocols.join(', ')}` : ''}`,
+        `${this._name}${this._protocols.length ? `: ${this._protocols.join(', ')}` : ''}`,
         '{',
       ],
       false,
       ' ',
     );
     const enumValues = this.mergeSections(
-      Object.entries(this._enumValues).map(([name, val]) =>
-        ['case', escapeKeywords(name), ...(name !== val ? ['=', `"${val}"`] : [])].join(' '),
-      ),
+      Object.entries(this._enumValues).map(([name, val]) => ['case', name, ...(name !== val ? ['=', `"${val}"`] : [])].join(' ')),
       false,
     );
     const declarationFoot = '}';
@@ -302,7 +219,7 @@ export class SwiftDeclarationBlock {
             method.access === 'DEFAULT' ? '' : method.access,
             method.flags.static ? 'static' : '',
             ['init', 'deinit'].includes(method.name) ? '' : 'func',
-            `${escapeKeywords(method.name)}${argWithParenthesis}`,
+            `${method.name}${argWithParenthesis}`,
             method.returnType ? `-> ${method.returnType}` : '',
             '{',
           ],
@@ -320,7 +237,7 @@ export class SwiftDeclarationBlock {
         this._flags.final ? 'final' : '',
         this.getAccessStr(),
         this._kind,
-        `${escapeKeywords(this._name)}${this._protocols.length ? `: ${this._protocols.join(', ')}` : ''}`,
+        `${this._name}${this._protocols.length ? `: ${this._protocols.join(', ')}` : ''}`,
         '{',
       ],
       false,
@@ -334,8 +251,8 @@ export class SwiftDeclarationBlock {
   private generateArgsStr(args: MethodArgument[]): string {
     const res: string[] = args.reduce((acc: string[], arg) => {
       const val: string | null = arg.value ? arg.value : arg.flags.isList ? '[]' : arg.flags.optional ? 'nil' : null;
-      const type = arg.flags.isList ? this.getListType(arg) : escapeKeywords(arg.type);
-      acc.push([escapeKeywords(arg.name), ': ', type, arg.flags.optional ? '?' : '', val ? ` = ${val}` : ''].join(''));
+      const type = arg.flags.isList ? this.getListType(arg) : arg.type;
+      acc.push([arg.name, ': ', type, arg.flags.optional ? '?' : '', val ? ` = ${val}` : ''].join(''));
       return acc;
     }, []);
 
@@ -349,7 +266,7 @@ export class SwiftDeclarationBlock {
       prop.access,
       prop.flags.static ? 'static' : '',
       prop.flags.variable ? 'var' : 'let',
-      `${escapeKeywords(prop.name)}${propertyType}`,
+      `${prop.name}${propertyType}`,
     ];
 
     const getterStr = prop.getter ? `{\n${indentMultiline(prop.getter)} \n}` : null;
@@ -386,8 +303,8 @@ export class SwiftDeclarationBlock {
 
   private getListType(typeDeclaration: VariableDeclaration): string {
     if (primitiveTypes.includes(typeDeclaration.type) || typeDeclaration.flags.isEnum) {
-      return `[${escapeKeywords(typeDeclaration.type)}]`;
+      return `[${typeDeclaration.type}]`;
     }
-    return `List<${escapeKeywords(typeDeclaration.type)}>`;
+    return `List<${typeDeclaration.type}>`;
   }
 }
