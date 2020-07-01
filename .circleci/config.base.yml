@@ -663,6 +663,7 @@ workflows:
           filters:
             branches:
               only:
+                - headless-staging
                 - master
                 - graphqlschemae2e
                 - graphql_e2e_testing
@@ -673,6 +674,7 @@ workflows:
           filters:
             branches:
               only:
+                - headless-staging
                 - master
                 - graphqlschemae2e
                 - beta
@@ -683,6 +685,7 @@ workflows:
           filters:
             branches:
               only:
+                - headless-staging
                 - master
                 - graphqlschemae2e
                 - beta
@@ -692,6 +695,7 @@ workflows:
           filters:
             branches:
               only:
+                - headless-staging
                 - master
                 - graphqlschemae2e
           requires:
@@ -700,6 +704,7 @@ workflows:
           filters:
             branches:
               only:
+                - headless-staging
                 - master
                 - graphqlschemae2e
           requires:
@@ -708,6 +713,7 @@ workflows:
           filters:
             branches:
               only:
+                - headless-staging
                 - master
                 - graphqlschemae2e
           requires:
@@ -734,6 +740,7 @@ workflows:
           filters:
             branches:
               only:
+                - headless-staging
                 - release
                 - master
                 - beta
