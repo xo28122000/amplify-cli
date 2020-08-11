@@ -10,8 +10,8 @@ describe('api directives @function', () => {
   });
 
   afterEach(async () => {
-    await deleteProject(projectDir);
-    deleteProjectDir(projectDir);
+    // await deleteProject(projectDir);
+    // deleteProjectDir(projectDir);
   });
 
   it('function usage', async () => {

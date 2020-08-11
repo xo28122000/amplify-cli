@@ -10,8 +10,8 @@ describe('api data access patterns', () => {
   });
 
   afterEach(async () => {
-    await deleteProject(projectDir);
-    deleteProjectDir(projectDir);
+    // await deleteProject(projectDir);
+    // deleteProjectDir(projectDir);
   });
 
   it('data-access patterns', async () => {

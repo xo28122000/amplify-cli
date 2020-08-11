@@ -3,7 +3,6 @@ import { isCI } from 'amplify-e2e-core';
 
 async function setupAmplify() {
   if (isCI()) {
-    setTestAccountCredentials();
 
     const AWS_ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY_ID;
     const AWS_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY;
@@ -36,6 +35,7 @@ function setTestAccountCredentials(){
 
 process.nextTick(async () => {
   try {
+    setTestAccountCredentials();
     await setupAmplify();
   } catch (e) {
     console.log(e.stack);
