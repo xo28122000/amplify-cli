@@ -17,13 +17,13 @@ export * from './selectors';
 export * from './sleep';
 export * from './transformConfig';
 export * from './envVars';
+export * from './profile-helper';
 
 // run dotenv config to update env variable
 config();
 setTestAccountCredentials();
 
-
-function setTestAccountCredentials(){
+export function setTestAccountCredentials(){
   if(process.env.TEST_ACCOUNT &&
     process.env[`AWS_ACCESS_KEY_ID_${process.env.TEST_ACCOUNT}`] &&
     process.env[`AWS_SECRET_ACCESS_KEY_${process.env.TEST_ACCOUNT}`]){

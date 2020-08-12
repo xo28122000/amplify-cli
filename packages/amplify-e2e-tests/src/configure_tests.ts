@@ -1,5 +1,5 @@
 import { amplifyConfigure as configure } from 'amplify-e2e-core';
-import { isCI } from 'amplify-e2e-core';
+import { isCI, setTestAccountCredentials } from 'amplify-e2e-core';
 
 async function setupAmplify() {
   if (isCI()) {
@@ -24,6 +24,7 @@ async function setupAmplify() {
 
 process.nextTick(async () => {
   try {
+    setTestAccountCredentials();
     await setupAmplify();
   } catch (e) {
     console.log(e.stack);
