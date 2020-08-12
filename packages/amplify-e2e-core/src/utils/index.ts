@@ -24,8 +24,8 @@ setTestAccountCredentials();
 
 
 function setTestAccountCredentials(){
-  if(process.env.TEST_ACCOUNT && 
-    process.env[`AWS_ACCESS_KEY_ID_${process.env.TEST_ACCOUNT}`] && 
+  if(process.env.TEST_ACCOUNT &&
+    process.env[`AWS_ACCESS_KEY_ID_${process.env.TEST_ACCOUNT}`] &&
     process.env[`AWS_SECRET_ACCESS_KEY_${process.env.TEST_ACCOUNT}`]){
 
     process.env.AWS_ACCESS_KEY_ID = process.env[`AWS_ACCESS_KEY_ID_${process.env.TEST_ACCOUNT}`];
