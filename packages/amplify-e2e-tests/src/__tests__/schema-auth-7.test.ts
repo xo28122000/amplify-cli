@@ -10,8 +10,8 @@ describe('api directives @auth batch 7', () => {
   });
 
   afterEach(async () => {
-    // await deleteProject(projectDir);
-    // deleteProjectDir(projectDir);
+    await deleteProject(projectDir);
+    deleteProjectDir(projectDir);
   });
 
   it('auth fieldLevelAuth1', async () => {

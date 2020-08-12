@@ -10,8 +10,8 @@ describe('api directives @model', () => {
   });
 
   afterEach(async () => {
-    // await deleteProject(projectDir);
-    // deleteProjectDir(projectDir);
+    await deleteProject(projectDir);
+    deleteProjectDir(projectDir);
   });
 
   it('model usage1', async () => {
