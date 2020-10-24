@@ -134,10 +134,10 @@ jobs:
     docker: *ref_0
     resource_class: large
     steps:
-      - attach_workspace: null
-        at: ./
+      - attach_workspace:
+          at: ./
       - restore_cache:
-          key: 'amplify-cli-yarn-deps-{{ .Branch }}-{{ .Revision }}'
+          key: 'amplify-verdaccio-cache-{{ .Branch }}-{{ .Revision }}'
       - run:
           name: Update OS Packages
           command: sudo apt-get update
@@ -1271,6 +1271,7 @@ workflows:
           filters:
             branches:
               only:
+                - post-install-fix
                 - master
                 - graphqlschemae2e
                 - beta
@@ -1283,6 +1284,7 @@ workflows:
           filters:
             branches:
               only:
+                - post-install-fix
                 - master
                 - graphqlschemae2e
                 - feat-import

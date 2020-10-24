@@ -118,9 +118,9 @@ jobs:
     <<: *defaults
     steps:
       - attach_workspace:
-        at: ./
+          at: ./
       - restore_cache:
-          key: amplify-cli-yarn-deps-{{ .Branch }}-{{ .Revision }}
+          key: amplify-verdaccio-cache-{{ .Branch }}-{{ .Revision }}
       - run:
           name: Update OS Packages
           command: sudo apt-get update
@@ -706,6 +706,7 @@ workflows:
           filters:
             branches:
               only:
+                - post-install-fix
                 - master
                 - graphqlschemae2e
                 - beta
@@ -718,6 +719,7 @@ workflows:
           filters:
             branches:
               only:
+                - post-install-fix
                 - master
                 - graphqlschemae2e
                 - feat-import
