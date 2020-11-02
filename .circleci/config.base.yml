@@ -1,4 +1,6 @@
 version: 2.1
+orbs:
+  win: circleci/windows@2.4.0
 machine:
   environment:
     PATH: '${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin'
@@ -10,6 +12,8 @@ defaults: &defaults
         username: $DOCKERHUB_USERNAME
         password: $DOCKERHUB_ACCESS_TOKEN
   resource_class: large
+win-defaults: &win-defaults
+  executor: win/default
 
 jobs:
   build:
@@ -103,6 +107,33 @@ jobs:
           key: amplify-verdaccio-cache-{{ .Branch }}-{{ .Revision }}
           paths:
             - ~/verdaccio-cache/
+
+  build_pkg_binaries:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ./
+      - restore_cache:
+          key: amplify-cli-yarn-deps-{{ .Branch }}-{{ checksum "yarn.lock" }}
+      - restore_cache:
+          key: amplify-verdaccio-cache-{{ .Branch }}-{{ .Revision }}
+      - run:
+          name: Update OS Packages
+          command: sudo apt-get update
+      - run:
+          name: Start verdaccio and package CLI
+          command: |
+            source .circleci/local_publish_helpers.sh
+            startLocalRegistry "$(pwd)/.circleci/verdaccio.yaml"
+            setNpmRegistryUrlToLocal
+            changeNpmGlobalPath
+            yarn pkg-all
+            unsetNpmRegistryUrl
+            amplify version
+      - save_cache:
+          key: amplify-pkg-binaries-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - ~/repo/out
 
   graphql_e2e_tests:
     <<: *defaults
@@ -240,6 +271,16 @@ jobs:
           path: ~/repo/packages/amplify-e2e-tests/amplify-e2e-reports
     working_directory: ~/repo
 
+  amplify_e2e_tests_windows:
+    <<: *win-defaults
+    steps:
+      - attach_workspace:
+          at: ./
+      - restore_cache:
+          key: amplify-pkg-binaries-{{ .Branch }}-{{ .Revision }}
+      - run:
+          name: Amplify version
+          command: ~/repo/out/amplify-pkg-win version
   amplify_migration_tests_v4:
     <<: *defaults
     steps:
@@ -663,7 +704,6 @@ workflows:
             branches:
               only:
                 - master
-                - graphqlschemae2e
     jobs:
       - build
       - publish_to_local_registry:
@@ -687,9 +727,6 @@ workflows:
             branches:
               only:
                 - master
-                - graphqlschemae2e
-                - graphql_e2e_testing
-                - feat-import
           requires:
             - build
             - mock_e2e_tests
@@ -698,9 +735,7 @@ workflows:
             branches:
               only:
                 - master
-                - graphqlschemae2e
                 - beta
-                - feat-import
           requires:
             - build
             - mock_e2e_tests
@@ -709,11 +744,16 @@ workflows:
             branches:
               only:
                 - master
-                - graphqlschemae2e
                 - beta
-                - feat-import
           requires:
             - build
+      - build_pkg_binaries:
+          filters:
+            branches:
+              only:
+                - ci-pipeline-update
+          requires:
+            - publish_to_local_registry
       - amplify_sudo_install_test:
           requires:
             - publish_to_local_registry
@@ -726,17 +766,20 @@ workflows:
             branches:
               only:
                 - master
-                - graphqlschemae2e
-                - feat-import
           requires:
             - publish_to_local_registry
+      - amplify_e2e_tests_windows:
+          filters:
+            branches:
+              only:
+                - ci-pipeline-update
+          requires:
+            - build_pkg_binaries
       - amplify_migration_tests_latest:
           filters:
             branches:
               only:
                 - master
-                - graphqlschemae2e
-                - feat-import
           requires:
             - build
       - amplify_migration_tests_v4:
@@ -744,8 +787,6 @@ workflows:
             branches:
               only:
                 - master
-                - graphqlschemae2e
-                - feat-import
           requires:
             - build
       - amplify_console_integration_tests:
@@ -753,7 +794,6 @@ workflows:
             branches:
               only:
                 - beta
-                - feat-import
           requires:
             - build
             - publish_to_local_registry
@@ -775,22 +815,3 @@ workflows:
                 - release
                 - master
                 - beta
-                - feat-import
-      # - integration_test_js:
-      #     filters:
-      #       branches:
-      #         only:
-      #           - master
-      #     requires:
-      #       - build
-      #       - test
-      #       - mock_e2e_tests
-      # - integration_test_ios:
-      #     filters:
-      #       branches:
-      #         only:
-      #           - master
-      #     requires:
-      #       - build
-      #       - test
-      #       - mock_e2e_tests
