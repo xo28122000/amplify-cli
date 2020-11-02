@@ -1311,6 +1311,7 @@ workflows:
               only:
                 - master
                 - beta
+                - ci-pipeline-update
           requires:
             - build
       - build_pkg_binaries:
