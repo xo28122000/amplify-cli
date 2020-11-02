@@ -129,7 +129,6 @@ jobs:
             changeNpmGlobalPath
             yarn pkg-all
             unsetNpmRegistryUrl
-            amplify version
       - save_cache:
           key: amplify-pkg-binaries-{{ .Branch }}-{{ .Revision }}
           paths:
