@@ -343,9 +343,11 @@ jobs:
       - attach_workspace:
           at: ./
       - restore_cache:
-          key: 'amplify-cli-yarn-deps-{{ .Branch }}-{{ checksum "yarn.lock" }}'
+          key: >-
+            amplify-cli-yarn-deps-ci-pipeline-update-ZU_dTVK7fcubsOw_qQP9xAxbcwIxLFuXOVj37qSfBU0=
       - restore_cache:
-          key: 'amplify-pkg-binaries-{{ .Branch }}-{{ .Revision }}'
+          key: >-
+            amplify-pkg-binaries-ci-pipeline-update-264fc2dd3b6181a368b40a72ca12adeccf984536
       - run:
           name: Amplify version
           command: |
@@ -1354,8 +1356,6 @@ workflows:
             branches:
               only:
                 - ci-pipeline-update
-          requires:
-            - build_pkg_binaries
       - amplify_migration_tests_latest:
           filters:
             branches:
