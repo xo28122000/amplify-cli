@@ -294,10 +294,8 @@ jobs:
       - run:
           name: Run Amplify end-to-end tests
           command: |
-            dir
-            pwd
-            cd packages/amplify-e2e-tests
-            pwd
+            dir &&
+            cd packages/amplify-e2e-tests &&
             yarn run e2e --maxWorkers=3 %TEST_SUITE%
           no_output_timeout: 90m
       - store_test_results:
