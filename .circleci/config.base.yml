@@ -284,6 +284,8 @@ jobs:
       - attach_workspace:
           at: ./
       - restore_cache:
+          key: amplify-cli-yarn-deps-{{ .Branch }}-{{ checksum "yarn.lock" }}
+      - restore_cache:
           key: amplify-pkg-binaries-{{ .Branch }}-{{ .Revision }}
       - run:
           name: Amplify version
@@ -293,6 +295,7 @@ jobs:
           name: Run Amplify end-to-end tests
           command: |
             cd packages/amplify-e2e-tests
+            pwd
             yarn run e2e --maxWorkers=3 %TEST_SUITE%
           no_output_timeout: 90m
       - store_test_results:
