@@ -38,6 +38,17 @@ jobs:
       - persist_to_workspace:
           root: .
           paths: .
+  build_windows:
+    <<: *win-defaults
+    steps:
+      - checkout
+      - run: yarn config set workspaces-experimental true
+      - run: yarn cache clean --force
+      - run: yarn --frozen-lockfile
+      - save_cache:
+          key: amplify-cli-yarn-build-win-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - C:\home\circleci\repo
 
   test:
     <<: *defaults
@@ -285,7 +296,7 @@ jobs:
       - attach_workspace:
           at: ./
       - restore_cache:
-          key: amplify-cli-yarn-deps-ci-pipeline-update-ZU_dTVK7fcubsOw_qQP9xAxbcwIxLFuXOVj37qSfBU0=
+          key: amplify-cli-yarn-build-win-{{ .Branch }}-{{ .Revision }}
       - restore_cache:
           key: amplify-pkg-binaries-ci-pipeline-update-264fc2dd3b6181a368b40a72ca12adeccf984536
       # - run: yarn config set workspaces-experimental true
@@ -737,6 +748,7 @@ workflows:
   build_test_deploy:
     jobs:
       - build
+      - build_windows
       - test:
           requires:
             - build
@@ -792,7 +804,7 @@ workflows:
             - publish_to_local_registry
       - amplify_e2e_tests_windows:
           requires:
-            - build
+            - build_windows
           filters:
             branches:
               only:
