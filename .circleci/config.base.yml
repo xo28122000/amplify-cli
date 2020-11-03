@@ -12,6 +12,7 @@ defaults: &defaults
         username: $DOCKERHUB_USERNAME
         password: $DOCKERHUB_ACCESS_TOKEN
   resource_class: large
+
 win-defaults: &win-defaults
   working_directory: C:\Users\circleci\repo
   executor: win/default
