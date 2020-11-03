@@ -14,7 +14,7 @@ defaults: &defaults
   resource_class: large
 
 win-defaults: &win-defaults
-  working_directory: C:\Users\circleci\repo
+  working_directory: C:\home\circleci\repo
   executor:
     name: win/default
     shell: cmd.exe

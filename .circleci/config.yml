@@ -14,7 +14,7 @@ defaults:
         password: $DOCKERHUB_ACCESS_TOKEN
   resource_class: large
 win-defaults:
-  working_directory: 'C:\Users\circleci\repo'
+  working_directory: 'C:\home\circleci\repo'
   executor: &ref_1
     name: win/default
     shell: cmd.exe
@@ -333,7 +333,7 @@ jobs:
       - store_artifacts:
           path: ~/repo/packages/amplify-e2e-tests/amplify-e2e-reports
   amplify_e2e_tests_windows:
-    working_directory: 'C:\Users\circleci\repo'
+    working_directory: 'C:\home\circleci\repo'
     executor: *ref_1
     environment:
       AMPLIFY_PATH: 'C:\home\circleci\repo\out\amplify-pkg-win.exe'
