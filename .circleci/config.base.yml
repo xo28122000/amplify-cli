@@ -793,6 +793,8 @@ workflows:
           requires:
             - publish_to_local_registry
       - amplify_e2e_tests_windows:
+          requires:
+            - build
           filters:
             branches:
               only:
