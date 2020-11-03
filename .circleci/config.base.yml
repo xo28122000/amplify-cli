@@ -13,7 +13,9 @@ defaults: &defaults
         password: $DOCKERHUB_ACCESS_TOKEN
   resource_class: large
 win-defaults: &win-defaults
+  working_directory: C:\Users\circleci\repo
   executor: win/default
+  shell: cmd.exe
 
 jobs:
   build:
@@ -272,6 +274,10 @@ jobs:
 
   amplify_e2e_tests_windows:
     <<: *win-defaults
+    environment:
+      AMPLIFY_PATH: C:\home\circleci\repo\out\amplify-pkg-win.exe
+      TEST_SUITE: src/__tests__/init.test.ts
+      CLI_REGION: ap-northeast-1
     steps:
       - attach_workspace:
           at: ./
@@ -279,7 +285,18 @@ jobs:
           key: amplify-pkg-binaries-{{ .Branch }}-{{ .Revision }}
       - run:
           name: Amplify version
-          command: ~/repo/out/amplify-pkg-win version
+          command: |
+            %AMPLIFY_PATH% version
+      - run:
+          name: Run Amplify end-to-end tests
+          command: |
+            cd packages/amplify-e2e-tests
+            yarn run e2e --maxWorkers=3 $TEST_SUITE
+          no_output_timeout: 90m
+      - store_test_results:
+          path: packages/amplify-e2e-tests/
+      - store_artifacts:
+          path: packages/amplify-e2e-tests/amplify-e2e-reports
   amplify_migration_tests_v4:
     <<: *defaults
     steps:
