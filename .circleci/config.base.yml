@@ -44,7 +44,7 @@ jobs:
       - checkout
       - run: yarn config set workspaces-experimental true
       - run: yarn cache clean --force
-      - run: yarn --frozen-lockfile
+      - run: yarn run production-build
       - save_cache:
           key: amplify-cli-yarn-build-win-{{ .Branch }}-{{ .Revision }}
           paths:
