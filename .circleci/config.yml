@@ -340,13 +340,13 @@ jobs:
       TEST_SUITE: src/__tests__/init.test.ts
       CLI_REGION: ap-northeast-1
     steps:
+      - checkout
       - restore_cache:
           key: >-
             amplify-cli-yarn-deps-ci-pipeline-update-ZU_dTVK7fcubsOw_qQP9xAxbcwIxLFuXOVj37qSfBU0=
       - restore_cache:
           key: >-
             amplify-pkg-binaries-ci-pipeline-update-264fc2dd3b6181a368b40a72ca12adeccf984536
-      - checkout
       - run: yarn config set workspaces-experimental true
       - run: yarn run production-build
       - run:
