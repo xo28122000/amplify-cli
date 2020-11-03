@@ -284,9 +284,9 @@ jobs:
       - attach_workspace:
           at: ./
       - restore_cache:
-          key: amplify-cli-yarn-deps-ci-pipeline-update-ZU_dTVK7fcubsOw_qQP9xAxbcwIxLFuXOVj37qSfBU0=
-      - restore_cache:
-          key: amplify-pkg-binaries-ci-pipeline-update-264fc2dd3b6181a368b40a72ca12adeccf984536
+          keys:
+            - amplify-cli-yarn-deps-ci-pipeline-update-ZU_dTVK7fcubsOw_qQP9xAxbcwIxLFuXOVj37qSfBU0=
+            - amplify-pkg-binaries-ci-pipeline-update-264fc2dd3b6181a368b40a72ca12adeccf984536
       - run:
           name: Amplify version
           command: |
@@ -295,6 +295,7 @@ jobs:
           name: Run Amplify end-to-end tests
           command: |
             pwd
+            dir
             cd packages/amplify-e2e-tests
             pwd
             yarn run e2e --maxWorkers=3 %TEST_SUITE%
