@@ -15,8 +15,9 @@ defaults: &defaults
 
 win-defaults: &win-defaults
   working_directory: C:\Users\circleci\repo
-  executor: win/default
-  shell: cmd.exe
+  executor:
+    name: win/default
+    shell: cmd.exe
 
 jobs:
   build:
