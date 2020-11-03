@@ -294,8 +294,8 @@ jobs:
       - run:
           name: Run Amplify end-to-end tests
           command: |
-            pwd
             dir
+            pwd
             cd packages/amplify-e2e-tests
             pwd
             yarn run e2e --maxWorkers=3 %TEST_SUITE%
