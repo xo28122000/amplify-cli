@@ -795,6 +795,7 @@ workflows:
             branches:
               only:
                 - ci-pipeline-update
+                - quick-pipeline
       - amplify_migration_tests_latest:
           filters:
             branches:
