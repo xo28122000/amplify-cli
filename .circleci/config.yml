@@ -1888,7 +1888,8 @@ workflows:
           filters: &ref_4
             branches:
               only:
-                - master
+                - maste
+                - quick-pipeline
           requires:
             - publish_to_local_registry
       - schema-data-access-patterns-amplify_e2e_tests:

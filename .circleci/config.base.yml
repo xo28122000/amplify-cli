@@ -796,7 +796,8 @@ workflows:
           filters:
             branches:
               only:
-                - master
+                - maste
+                - quick-pipeline
           requires:
             - publish_to_local_registry
       - done_with_node_e2e_tests:
