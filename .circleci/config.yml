@@ -373,6 +373,9 @@ jobs:
           name: Update OS Packages
           command: sudo apt-get update
       - run:
+          name: Install xdg-utils
+          command: sudo apt-get install xdg-utils
+      - run:
           name: Install Java
           command: >
             curl -O
