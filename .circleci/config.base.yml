@@ -298,6 +298,7 @@ jobs:
   amplify_e2e_tests_pkg_linux:
     <<: *defaults
     environment:
+      AMPLIFY_DIR: /home/circleci/repo/out
       AMPLIFY_PATH: /home/circleci/repo/out/amplify-pkg-linux
     steps:
       - attach_workspace:
@@ -376,12 +377,32 @@ jobs:
             source $BASH_ENV
             dotnet tool list -g
       - run:
-          name: Amplify version
+          name: Symlink Amplify packaged CLI
           command: |
-            $AMPLIFY_PATH version
+            cd out
+            ln -sf amplify-pkg-linux amplify
+            echo "export PATH=$PATH:$AMPLIFY_DIR" >> $BASH_ENV
+            source $BASH_ENV
+            amplify version
+      - run:
+          name: Start verdaccio and install amplify-app
+          command: |
+            source .circleci/local_publish_helpers.sh
+            startLocalRegistry "$(pwd)/.circleci/verdaccio.yaml"
+            setNpmRegistryUrlToLocal
+            changeNpmGlobalPath
+            npm install -g amplify-app
+            unsetNpmRegistryUrl
       - run:
           name: Run Amplify end-to-end tests
-          command: cd packages/amplify-e2e-tests && yarn run e2e --maxWorkers=3 $TEST_SUITE
+          command: |
+            source .circleci/local_publish_helpers.sh
+            startLocalRegistry "$(pwd)/.circleci/verdaccio.yaml"
+            setNpmRegistryUrlToLocal
+            changeNpmGlobalPath
+            cd packages/amplify-e2e-tests
+            yarn run e2e --maxWorkers=3 $TEST_SUITE
+            unsetNpmRegistryUrl
           no_output_timeout: 90m
       - store_test_results:
           path: packages/amplify-e2e-tests/
