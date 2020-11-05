@@ -480,7 +480,7 @@ jobs:
       - run:
           name: Amplify version
           command: |
-            $TEST_SUITE version
+            $AMPLIFY_PATH version
       - run:
           name: Run Amplify end-to-end tests
           command: >-
