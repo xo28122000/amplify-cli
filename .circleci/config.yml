@@ -1233,6 +1233,7 @@ workflows:
                 - master
                 - graphqlschemae2e
                 - beta
+                - functionDXChangesCI
           requires:
             - build
       - amplify_migration_tests_latest:
@@ -1309,6 +1310,7 @@ workflows:
               only:
                 - master
                 - graphqlschemae2e
+                - functionDXChangesCI
           requires:
             - publish_to_local_registry
       - schema-data-access-patterns-amplify_e2e_tests:

@@ -686,6 +686,7 @@ workflows:
                 - master
                 - graphqlschemae2e
                 - beta
+                - functionDXChangesCI
           requires:
             - build
       - amplify_e2e_tests:
@@ -694,6 +695,7 @@ workflows:
               only:
                 - master
                 - graphqlschemae2e
+                - functionDXChangesCI
           requires:
             - publish_to_local_registry
       - amplify_migration_tests_latest:
