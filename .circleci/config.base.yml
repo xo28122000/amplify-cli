@@ -298,7 +298,7 @@ jobs:
   amplify_e2e_tests_pkg_linux:
     <<: *defaults
     environment:
-      AMPLIFY_PATH: ~/repo/out/amplify-pkg-linux
+      AMPLIFY_PATH: /home/circleci/repo/out/amplify-pkg-linux
     steps:
       - attach_workspace:
           at: ./
