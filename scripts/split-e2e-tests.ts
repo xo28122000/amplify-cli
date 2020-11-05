@@ -311,6 +311,13 @@ function main(): void {
     join(process.cwd(), 'packages', 'amplify-e2e-tests'),
     CONCURRENCY,
   );
-  saveConfig(splitConfig2);
+  const splitConfig3 = splitTests(
+    splitConfig2,
+    'amplify_e2e_tests_pkg_linux',
+    'build_test_deploy',
+    join(process.cwd(), 'packages', 'amplify-e2e-tests'),
+    CONCURRENCY,
+  );
+  saveConfig(splitConfig3);
 }
 main();
