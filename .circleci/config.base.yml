@@ -799,6 +799,9 @@ workflows:
           requires:
             - done_with_node_e2e_tests
             - build_pkg_binaries
+      - done_with_pkg_linux_e2e_tests:
+          requires:
+            - amplify_e2e_tests_pkg_linux
       - amplify_migration_tests_latest:
           filters:
             branches:
@@ -828,7 +831,7 @@ workflows:
             - mock_e2e_tests
             - graphql_e2e_tests
             - integration_test
-            - amplify_e2e_tests
+            - done_with_pkg_linux_e2e_tests
             - amplify_sudo_install_test
             - amplify_console_integration_tests
             - amplify_migration_tests_latest
@@ -839,3 +842,4 @@ workflows:
                 - release
                 - master
                 - beta
+                - quick-pipeline
