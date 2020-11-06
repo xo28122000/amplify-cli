@@ -317,6 +317,12 @@ jobs:
     resource_class: large
     steps:
       - run: echo 'Done with Node CLI E2E Tests'
+  done_with_pkg_linux_e2e_tests:
+    working_directory: ~/repo
+    docker: *ref_0
+    resource_class: large
+    steps:
+      - run: echo 'Done with pkg CLI E2E Tests'
   amplify_e2e_tests_pkg_linux:
     working_directory: ~/repo
     docker: *ref_0
