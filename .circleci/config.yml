@@ -1,7 +1,5 @@
 # auto generated file. Edit config.base.yaml if you want to change
 version: 2.1
-orbs:
-  win: circleci/windows@2.4.0
 machine:
   environment:
     PATH: '${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin'
@@ -226,9 +224,7 @@ jobs:
           key: 'amplify-cli-yarn-deps-{{ .Branch }}-{{ checksum "yarn.lock" }}'
       - restore_cache:
           key: 'amplify-verdaccio-cache-{{ .Branch }}-{{ .Revision }}'
-      - run:
-          name: Update OS Packages
-          command: sudo apt-get update
+      - run: *ref_2
       - run:
           name: Start verdaccio and package CLI
           command: |
@@ -1959,7 +1955,6 @@ workflows:
             - publish_to_local_registry
       - deploy:
           requires:
-            - build
             - test
             - mock_e2e_tests
             - graphql_e2e_tests
