@@ -297,27 +297,20 @@ function saveConfig(config: CircleCIConfig): void {
 }
 function main(): void {
   const config = loadConfig();
-  const splitConfig = splitTests(
+  const splitNodeTests = splitTests(
     config,
     'amplify_e2e_tests',
     'build_test_deploy',
     join(process.cwd(), 'packages', 'amplify-e2e-tests'),
     CONCURRENCY,
   );
-  const splitConfig2 = splitTests(
-    splitConfig,
-    'amplify_e2e_tests_pkg_win',
-    'build_test_deploy',
-    join(process.cwd(), 'packages', 'amplify-e2e-tests'),
-    CONCURRENCY,
-  );
-  const splitConfig3 = splitTests(
-    splitConfig2,
+  const splitPkgTests = splitTests(
+    splitNodeTests,
     'amplify_e2e_tests_pkg_linux',
     'build_test_deploy',
     join(process.cwd(), 'packages', 'amplify-e2e-tests'),
     CONCURRENCY,
   );
-  saveConfig(splitConfig3);
+  saveConfig(splitPkgTests);
 }
 main();
