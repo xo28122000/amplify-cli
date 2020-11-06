@@ -12,7 +12,11 @@ defaults: &defaults
         username: $DOCKERHUB_USERNAME
         password: $DOCKERHUB_ACCESS_TOKEN
   resource_class: large
-
+update_os_packages: &update_os_packages
+  name: Update OS Packages
+  command: |
+    sudo apt-get update
+    sudo apt-get install xdg-utils
 install_java: &install_java
   name: Install Java
   command: |
@@ -89,6 +93,13 @@ run_e2e_tests: &run_e2e_tests
     yarn run e2e --maxWorkers=3 $TEST_SUITE
     unsetNpmRegistryUrl
   no_output_timeout: 90m
+pre_e2e_test_setup: &pre_e2e_test_setup
+  - run: *update_os_packages
+  - run: *install_java
+  - run: *install_gradle
+  - run: *install_go
+  - run: *install_python
+  - run: *install_dotnet
 jobs:
   build:
     <<: *defaults
@@ -119,16 +130,7 @@ jobs:
       - run:
           name: Update OS Packages
           command: sudo apt-get update
-      - run:
-          name: Install Java
-          command: |
-            curl -O https://download.java.net/java/GA/jdk11/9/GPL/openjdk-11.0.2_linux-x64_bin.tar.gz
-            tar zxvf openjdk-11.0.2_linux-x64_bin.tar.gz
-            sudo mv jdk-11* /usr/local/
-            echo "export JAVA_HOME=/usr/local/jdk-11.0.2" >> $BASH_ENV
-            echo "export PATH=$PATH:/usr/local/jdk-11.0.2/bin" >> $BASH_ENV
-            source $BASH_ENV
-            java -version
+      - run: *install_java
       - run:
           name: Lint
           command: yarn lint
@@ -146,9 +148,7 @@ jobs:
           at: ./
       - restore_cache:
           key: amplify-cli-yarn-deps-{{ .Branch }}-{{ checksum "yarn.lock" }}
-      - run:
-          name: Update OS Packages
-          command: sudo apt-get update
+      - run: *update_os_packages
       - run:
           name: Install Java
           command: sudo apt-get install default-jdk
@@ -249,14 +249,7 @@ jobs:
           at: ./
       - restore_cache:
           key: amplify-verdaccio-cache-{{ .Branch }}-{{ .Revision }}
-      - run:
-          name: Update OS Packages
-          command: sudo apt-get update
-      - run: *install_java
-      - run: *install_gradle
-      - run: *install_go
-      - run: *install_python
-      - run: *install_dotnet
+      - *pre_e2e_test_setup
       - run:
           name: Start verdaccio and Install Amplify CLI
           command: |
@@ -272,7 +265,6 @@ jobs:
           path: packages/amplify-e2e-tests/
       - store_artifacts:
           path: ~/repo/packages/amplify-e2e-tests/amplify-e2e-reports
-    working_directory: ~/repo
 
   done_with_node_e2e_tests:
     <<: *defaults
