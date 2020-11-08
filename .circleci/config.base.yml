@@ -169,10 +169,18 @@ jobs:
             loginToLocalRegistry
             yarn publish-to-verdaccio
             unsetNpmRegistryUrl
+      - run:
+          name: Generate unified changelog
+          command: |
+            yarn ts-node scripts/unified-changelog.ts
       - save_cache:
           key: amplify-verdaccio-cache-{{ .Branch }}-{{ .Revision }}
           paths:
             - ~/verdaccio-cache/
+      - save_cache:
+          key: amplify-unified-changelog-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - ~/repo/UNIFIED_CHANGELOG.md
 
   build_pkg_binaries:
     <<: *defaults
@@ -489,7 +497,6 @@ jobs:
       - restore_cache:
           keys:
             - amplify-cli-ssh-deps-{{ .Branch }}
-            - amplify-cli-yarn-deps-{{ .Branch }}-{{ checksum "yarn.lock" }}
       - run:
           name: Authenticate with npm
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
@@ -503,7 +510,48 @@ jobs:
             else
               echo "Skipping deploy."
             fi
+  github_prerelease:
+    <<: *defaults
+    environment:
+      AMPLIFY_PATH: /home/circleci/repo/out/amplify-pkg-linux
+    steps:
+      - attach_workspace:
+          at: ./
+      - restore_cache:
+          key: amplify-unified-changelog-{{ .Branch }}-{{ .Revision }}
+      - restore_cache:
+          key: amplify-pkg-binaries-{{ .Branch }}-{{ .Revision }}
+      - run:
+          name: Publish Amplify CLI GitHub prerelease
+          command: |
+            $AMPLIFY_PATH version
+            version=$($AMPLIFY_PATH version)
+            yarn ts-node scripts/github-prerelease.ts $version
 
+  github_prerelease_install_sanity_check:
+    <<: *defaults
+    environment:
+      AMPLIFY_PATH: /home/circleci/repo/out/amplify-pkg-linux
+    steps:
+      - run:
+          name: Install packaged Amplify CLI
+          command: curl -sL https://aws-amplify.github.io/amplify-cli/install | bash
+      - run:
+          name: Sanity check install
+          command: amplify version
+  github_release:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ./
+      - restore_cache:
+          key: amplify-pkg-binaries-{{ .Branch }}-{{ .Revision }}
+      - run:
+          name: Publish Amplify CLI GitHub release
+          command: |
+            $AMPLIFY_PATH version
+            version=$($AMPLIFY_PATH version)
+            yarn ts-node scripts/github-release.ts $version
   integration_test_js:
     working_directory: ~/repo
     docker:
@@ -772,6 +820,7 @@ workflows:
               only:
                 - master
                 - beta
+                - release
           requires:
             - build
       - build_pkg_binaries:
@@ -823,6 +872,19 @@ workflows:
           requires:
             - build
             - publish_to_local_registry
+      - github_prerelease:
+          requires:
+            - build_pkg_binaries
+          filters:
+            branches:
+              only:
+                - release
+      - github_prerelease_install_sanity_check:
+          requires:
+            - github_prerelease
+          filters:
+            branches:
+              only: -release
       - deploy:
           requires:
             - test
@@ -834,9 +896,17 @@ workflows:
             - amplify_console_integration_tests
             - amplify_migration_tests_latest
             - amplify_migration_tests_v4
+            - github_prerelease_install_sanity_check
           filters:
             branches:
               only:
                 - release
                 - master
                 - beta
+      - github_release:
+          requires:
+            - deploy
+          filters:
+            branches:
+              only:
+                - release
