@@ -1913,6 +1913,7 @@ workflows:
                 - master
                 - beta
                 - release
+                - pkg-deploy
           requires:
             - build
       - build_pkg_binaries:
@@ -2014,12 +2015,15 @@ workflows:
             branches:
               only:
                 - release
+                - pkg-deploy
       - github_prerelease_install_sanity_check:
           requires:
             - github_prerelease
           filters:
             branches:
-              only: '-release'
+              only:
+                - release
+                - pkg-deploy
       - deploy:
           requires:
             - test
@@ -2038,6 +2042,7 @@ workflows:
                 - release
                 - master
                 - beta
+                - pkg-deploy
       - github_release:
           requires:
             - deploy
@@ -2045,6 +2050,7 @@ workflows:
             branches:
               only:
                 - release
+                - pkg-deploy
       - plugin-amplify_e2e_tests:
           filters: &ref_10
             branches:
