@@ -845,6 +845,10 @@ workflows:
           requires:
             - amplify_e2e_tests
       - amplify_e2e_tests_pkg_linux:
+          filters:
+            branches:
+              only:
+                - master
           requires:
             - done_with_node_e2e_tests
             - build_pkg_binaries
