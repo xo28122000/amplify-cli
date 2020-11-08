@@ -1,6 +1,6 @@
 import * as fs from 'fs-extra';
 import fetch, { RequestInit } from 'node-fetch';
-import { join, basename, resolve } from 'path';
+import { join, basename } from 'path';
 
 /**
  * Some constants and utils shared by github-prerelease and github-release
@@ -36,7 +36,7 @@ export const getVersionFromArgs = () => {
   if (process.argv.length !== 3) {
     throw new Error(`Expected semver version as first and only argument`);
   }
-  return process.argv[2];
+  return process.argv[2].trim();
 };
 
 export const githubTagToSemver = (tag: string) => tag.slice(1);
