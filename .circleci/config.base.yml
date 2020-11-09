@@ -543,7 +543,7 @@ jobs:
           # replace command with curl -sL https://aws-amplify.github.io/amplify-cli/install | version=v$version bash before pushing
           command: |
             version=$(cat .amplify-pkg-version)
-            curl -sL https://aws-amplify.github.io/amplify-cli/install bash
+            curl -sL https://aws-amplify.github.io/amplify-cli/install | bash
       - run:
           name: Sanity check install
           command: amplify version
