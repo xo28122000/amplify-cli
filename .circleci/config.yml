@@ -1867,6 +1867,7 @@ workflows:
             branches:
               only:
                 - master
+                - fix-teamprv
           requires:
             - build
             - mock_e2e_tests
@@ -1876,6 +1877,7 @@ workflows:
               only:
                 - master
                 - beta
+                - fix-teamprv
           requires:
             - build
             - mock_e2e_tests
@@ -1885,6 +1887,7 @@ workflows:
               only:
                 - master
                 - beta
+                - fix-teamprv
           requires:
             - build
       - build_pkg_binaries:
@@ -1962,6 +1965,7 @@ workflows:
             branches:
               only:
                 - master
+                - fix-teamprv
           requires:
             - build
       - amplify_migration_tests_v4:
@@ -1969,6 +1973,7 @@ workflows:
             branches:
               only:
                 - master
+                - fix-teamprv
           requires:
             - build
       - amplify_migration_tests_v4_30_0:
@@ -1978,6 +1983,7 @@ workflows:
                 - master
                 - graphqlschemae2e
                 - feat-import
+                - fix-teamprv
           requires:
             - build
       - amplify_console_integration_tests:
@@ -1985,6 +1991,7 @@ workflows:
             branches:
               only:
                 - beta
+                - fix-teamprv
           requires:
             - build
             - publish_to_local_registry
@@ -2005,6 +2012,7 @@ workflows:
                 - release
                 - master
                 - beta
+                - fix-teamprv
       - plugin-amplify_e2e_tests:
           filters: &ref_10
             branches:
