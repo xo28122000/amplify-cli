@@ -611,9 +611,6 @@ jobs:
           command: |
             version=$(cat .amplify-pkg-version)
             curl -sL https://aws-amplify.github.io/amplify-cli/install | bash
-      - run:
-          name: Sanity check install
-          command: amplify version
   github_release:
     working_directory: ~/repo
     docker: *ref_0

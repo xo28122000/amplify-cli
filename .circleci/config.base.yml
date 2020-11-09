@@ -544,9 +544,10 @@ jobs:
           command: |
             version=$(cat .amplify-pkg-version)
             curl -sL https://aws-amplify.github.io/amplify-cli/install | bash
-      - run:
-          name: Sanity check install
-          command: amplify version
+      # TODO enable this check once the packaged CLI is renamed to amplify from amp
+      # - run:
+      #     name: Sanity check install
+      #     command: amplify version
   github_release:
     <<: *defaults
     steps:
