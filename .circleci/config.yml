@@ -226,7 +226,7 @@ jobs:
       - save_cache:
           key: 'amplfiy-pkg-tag-{{ .Branch }}-{{ .Revision }}'
           paths:
-            - ~/repo/.amplify-pkg-tag
+            - ~/repo/.amplify-pkg-version
   build_pkg_binaries:
     working_directory: ~/repo
     docker: *ref_0
@@ -597,7 +597,7 @@ jobs:
       - run:
           name: Publish Amplify CLI GitHub prerelease
           command: |
-            version=$(cat .amplify-pkg-tag)
+            version=$(cat .amplify-pkg-version)
             yarn ts-node scripts/github-prerelease.ts $version
   github_prerelease_install_sanity_check:
     working_directory: ~/repo
@@ -609,7 +609,7 @@ jobs:
       - run:
           name: Install packaged Amplify CLI
           command: |
-            version=$(cat .amplify-pkg-tag)
+            version=$(cat .amplify-pkg-version)
             curl -sL https://aws-amplify.github.io/amplify-cli/install bash
       - run:
           name: Sanity check install
@@ -628,7 +628,7 @@ jobs:
       - run:
           name: Publish Amplify CLI GitHub release
           command: |
-            version=$(cat .amplify-pkg-tag)
+            version=$(cat .amplify-pkg-version)
             yarn ts-node scripts/github-release.ts $version
   integration_test_js:
     working_directory: ~/repo
