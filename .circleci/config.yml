@@ -214,7 +214,7 @@ jobs:
           command: yarn ts-node scripts/unified-changelog.ts
       - run:
           name: Save new amplify GitHub tag
-          command: node scripts/echo-current-cli-gh-tag.js > .amplify-pkg-tag
+          command: node scripts/echo-current-cli-version.js > .amplify-pkg-version
       - save_cache:
           key: 'amplify-verdaccio-cache-{{ .Branch }}-{{ .Revision }}'
           paths:
@@ -612,7 +612,7 @@ jobs:
             version=$(cat .amplify-pkg-tag)
 
             curl -sL https://aws-amplify.github.io/amplify-cli/install |
-            version=$version bash
+            version=v$version bash
       - run:
           name: Sanity check install
           command: amplify version
