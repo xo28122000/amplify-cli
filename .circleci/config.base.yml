@@ -171,8 +171,10 @@ jobs:
             unsetNpmRegistryUrl
       - run:
           name: Generate unified changelog
-          command: |
-            yarn ts-node scripts/unified-changelog.ts
+          command: yarn ts-node scripts/unified-changelog.ts
+      - run:
+          name: Save new amplify GitHub tag
+          command: node scripts/echo-current-cli-gh-tag.js > .amplify-pkg-tag
       - save_cache:
           key: amplify-verdaccio-cache-{{ .Branch }}-{{ .Revision }}
           paths:
@@ -181,6 +183,10 @@ jobs:
           key: amplify-unified-changelog-{{ .Branch }}-{{ .Revision }}
           paths:
             - ~/repo/UNIFIED_CHANGELOG.md
+      - save_cache:
+          key: amplfiy-pkg-tag-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - ~/repo/.amplify-pkg-tag
 
   build_pkg_binaries:
     <<: *defaults
@@ -512,8 +518,6 @@ jobs:
             fi
   github_prerelease:
     <<: *defaults
-    environment:
-      AMPLIFY_PATH: /home/circleci/repo/out/amplify-pkg-linux
     steps:
       - attach_workspace:
           at: ./
@@ -521,21 +525,24 @@ jobs:
           key: amplify-unified-changelog-{{ .Branch }}-{{ .Revision }}
       - restore_cache:
           key: amplify-pkg-binaries-{{ .Branch }}-{{ .Revision }}
+      - restore_cache:
+          key: amplfiy-pkg-tag-{{ .Branch }}-{{ .Revision }}
       - run:
           name: Publish Amplify CLI GitHub prerelease
           command: |
-            $AMPLIFY_PATH version
-            version=$($AMPLIFY_PATH version)
+            version=$(cat .amplify-pkg-tag)
             yarn ts-node scripts/github-prerelease.ts $version
 
   github_prerelease_install_sanity_check:
     <<: *defaults
-    environment:
-      AMPLIFY_PATH: /home/circleci/repo/out/amplify-pkg-linux
     steps:
+      - restore_cache:
+          key: amplfiy-pkg-tag-{{ .Branch }}-{{ .Revision }}
       - run:
           name: Install packaged Amplify CLI
-          command: curl -sL https://aws-amplify.github.io/amplify-cli/install | bash
+          command: |
+            version=$(cat .amplify-pkg-tag)
+            curl -sL https://aws-amplify.github.io/amplify-cli/install | version=$version bash
       - run:
           name: Sanity check install
           command: amplify version
@@ -546,11 +553,12 @@ jobs:
           at: ./
       - restore_cache:
           key: amplify-pkg-binaries-{{ .Branch }}-{{ .Revision }}
+      - restore_cache:
+          key: amplfiy-pkg-tag-{{ .Branch }}-{{ .Revision }}
       - run:
           name: Publish Amplify CLI GitHub release
           command: |
-            $AMPLIFY_PATH version
-            version=$($AMPLIFY_PATH version)
+            version=$(cat .amplify-pkg-tag)
             yarn ts-node scripts/github-release.ts $version
   integration_test_js:
     working_directory: ~/repo
