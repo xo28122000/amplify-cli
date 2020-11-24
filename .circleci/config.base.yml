@@ -851,6 +851,7 @@ workflows:
             branches:
               only:
                 - master
+                - backendManager-e2e
           requires:
             - build
             - mock_e2e_tests
@@ -859,6 +860,7 @@ workflows:
             branches:
               only:
                 - master
+                - backendManager-e2e
                 - beta
           requires:
             - build
@@ -870,6 +872,7 @@ workflows:
                 - master
                 - beta
                 - backendManager
+                - backendManager-e2e
           requires:
             - build
       - build_pkg_binaries:
@@ -887,6 +890,7 @@ workflows:
             branches:
               only:
                 - master
+                - backendManager-e2e
           requires:
             - publish_to_local_registry
       - done_with_node_e2e_tests:
@@ -897,6 +901,7 @@ workflows:
             branches:
               only:
                 - master
+                - backendManager-e2e
           requires:
             - done_with_node_e2e_tests
             - build_pkg_binaries
@@ -908,6 +913,7 @@ workflows:
             branches:
               only:
                 - master
+                - backendManager-e2e
           requires:
             - build
       - amplify_migration_tests_v4:
@@ -915,6 +921,7 @@ workflows:
             branches:
               only:
                 - master
+                - backendManager-e2e
           requires:
             - build
       - amplify_migration_tests_v4_30_0:
@@ -922,6 +929,7 @@ workflows:
             branches:
               only:
                 - master
+                - backendManager-e2e
                 - graphqlschemae2e
                 - feat-import
                 - test-fix-status
