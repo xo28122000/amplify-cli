@@ -1,4 +1,6 @@
 version: 2.1
+orbs:
+  win: circleci/windows@2.2.0
 machine:
   environment:
     PATH: '${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin'
@@ -10,6 +12,15 @@ defaults: &defaults
         username: $DOCKERHUB_USERNAME
         password: $DOCKERHUB_ACCESS_TOKEN
   resource_class: large
+win_defaults: &win_defaults
+  working_directory: C:\home\circleci\repo
+  executor:
+    name: win/default
+    shell: cmd.exe
+mac_defaults: &mac_defaults
+  working_directory: ~/repo
+  macos:
+    xcode: 11.3.0
 update_os_packages: &update_os_packages
   name: Update OS Packages
   command: |
@@ -572,7 +583,7 @@ jobs:
             version=$(cat .amplify-pkg-version)
             yarn ts-node scripts/github-prerelease.ts $version
 
-  github_prerelease_install_sanity_check:
+  linux_github_prerelease_install_sanity_check:
     <<: *defaults
     steps:
       - restore_cache:
@@ -580,13 +591,38 @@ jobs:
       - run:
           name: Install packaged Amplify CLI
           command: |
-            version=$(cat .amplify-pkg-version)
+            version=4.37.0
             curl -sL https://aws-amplify.github.io/amplify-cli/install | version=v$version bash
             echo "export PATH=$PATH:$HOME/.amplify/bin" >> $BASH_ENV
       - run:
           name: Sanity check install
+          command: amplify version
+  mac_github_prerelease_install_sanity_check:
+    <<: *mac_defaults
+    steps:
+      - restore_cache:
+          key: amplfiy-pkg-tag-{{ .Branch }}-{{ .Revision }}
+      - run:
+          name: Install packaged Amplify CLI
+          # $(cat .amplify-pkg-version)
           command: |
-            amplify version
+            version=4.37.0
+            curl -sL https://aws-amplify.github.io/amplify-cli/install | version=v$version bash
+            echo "export PATH=$PATH:$HOME/.amplify/bin" >> $BASH_ENV
+      - run:
+          name: Sanity check install
+          command: amplify version
+  windows_github_prerelease_install_sanity_check:
+    <<: *win_defaults
+    steps:
+      - restore_cache:
+          key: amplfiy-pkg-tag-{{ .Branch }}-{{ .Revision }}
+      - run:
+          name: Install packaged Amplify CLI
+          command: set /p version=4.37.0 && curl -sL https://aws-amplify.github.io/amplify-cli/install-win tmp.cmd && tmp.cmd
+      - run:
+          name: Sanity check install
+          command: "%userprofile%\\.amplify\\bin\\amplify version"
   github_release:
     <<: *defaults
     steps:
@@ -946,13 +982,33 @@ workflows:
             branches:
               only:
                 - release
-      - github_prerelease_install_sanity_check:
-          requires:
-            - github_prerelease
+      - linux_github_prerelease_install_sanity_check:
+          # add this back before merging
+          # requires:
+          #   - github_prerelease
           filters:
             branches:
               only:
                 - release
+                - pkg-sanity
+      - windows_github_prerelease_install_sanity_check:
+          # add this back before merging
+          # requires:
+          #   - github_prerelease
+          filters:
+            branches:
+              only:
+                - release
+                - pkg-sanity
+      - mac_github_prerelease_install_sanity_check:
+          # add this back before merging
+          # requires:
+          #   - github_prerelease
+          filters:
+            branches:
+              only:
+                - release
+                - pkg-sanity
       - deploy:
           requires:
             - test
@@ -965,7 +1021,9 @@ workflows:
             - amplify_migration_tests_latest
             - amplify_migration_tests_v4
             - amplify_migration_tests_v4_30_0
-            - github_prerelease_install_sanity_check
+            - linux_github_prerelease_install_sanity_check
+            - windows_github_prerelease_install_sanity_check
+            - mac_github_prerelease_install_sanity_check
           filters:
             branches:
               only:
