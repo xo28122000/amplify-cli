@@ -2108,6 +2108,7 @@ workflows:
               only:
                 - master
                 - iterative-update
+                - foyleef-merge-fixes
           requires:
             - build
             - mock_e2e_tests
@@ -2116,6 +2117,7 @@ workflows:
             branches:
               only:
                 - master
+                - foyleef-merge-fixes
                 - beta
           requires:
             - build
@@ -2131,6 +2133,7 @@ workflows:
                 - release
                 - compute-functions
                 - ci-build-tag-update
+                - foyleef-merge-fixes
           requires:
             - build
       - build_pkg_binaries:
@@ -2283,6 +2286,7 @@ workflows:
                 - compute-functions
                 - iterative-update
                 - ci-build-tag-update
+                - foyleef-merge-fixes
           requires:
             - publish_to_local_registry
       - tags-amplify_e2e_tests:
