@@ -27,10 +27,10 @@ export async function analyzeProjectHeadless(context: $TSContext) {
 }
 
 export function displayConfigurationDefaults(context, defaultProjectName, defaultEnv, defaultEditorName) {
-  print.info('Project information');
-  print.info(`| Name: ${defaultProjectName}`);
-  print.info(`| Environment: ${defaultEnv}`);
-  print.info(`| Default editor: ${defaultEditorName}`);
+  context.print.info('Project information');
+  context.print.info(`| Name: ${defaultProjectName}`);
+  context.print.info(`| Environment: ${defaultEnv}`);
+  context.print.info(`| Default editor: ${defaultEditorName}`);
 }
 
 function setConfigurationDefaults(context, projectPath, defaultProjectName, defaultEnv, defaultEditor) {
@@ -54,8 +54,8 @@ async function displayAndSetDefaults(context, projectPath, projectName) {
   const editorIndex = editors.findIndex(editorEntry => editorEntry.value === defaultEditor);
   const defaultEditorName = editorIndex > -1 ? editors[editorIndex].name : 'Visual Studio Code';
 
-  print.success('The following configuration will be applied:');
-  print.info('');
+  context.print.success('The following configuration will be applied:');
+  context.print.info('');
 
   await displayConfigurationDefaults(context, defaultProjectName, defaultEnv, defaultEditorName);
 
@@ -64,7 +64,7 @@ async function displayAndSetDefaults(context, projectPath, projectName) {
   const frontendModule = require(frontendPlugins[defaultFrontend]);
 
   await frontendModule.displayFrontendDefaults(context, projectPath);
-  print.info('');
+  context.print.info('');
 
   if (context.exeInfo.inputParams.yes || (await context.amplify.confirmPrompt('Initialize the project with the above configuration?'))) {
     await setConfigurationDefaults(context, projectPath, defaultProjectName, defaultEnv, defaultEditorName);
@@ -79,7 +79,8 @@ export async function analyzeProject(context): Promise<$TSContext> {
   const projectPath = process.cwd();
   context.exeInfo.isNewProject = isNewProject(context);
   const projectName = await getProjectName(context);
-  if (context.parameters.command !== 'env') {
+
+  if (context.exeInfo.isNewProject && context.parameters.command !== 'env') {
     await displayAndSetDefaults(context, projectPath, projectName);
   }
 
