@@ -1909,6 +1909,7 @@ workflows:
               only:
                 - master
                 - iterative-update
+                - defer-init
           requires:
             - build
             - mock_e2e_tests
@@ -1934,6 +1935,7 @@ workflows:
                 - iterative-update
                 - release
                 - compute-functions
+                - defer-init
           requires:
             - build
       - build_pkg_binaries:
@@ -2131,6 +2133,7 @@ workflows:
                 - master
                 - compute-functions
                 - iterative-update
+                - defer-init
           requires:
             - publish_to_local_registry
       - schema-auth-6-amplify_e2e_tests:
