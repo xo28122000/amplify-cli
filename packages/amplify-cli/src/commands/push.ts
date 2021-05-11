@@ -49,6 +49,7 @@ export const run = async (context: $TSContext) => {
     await syncCurrentCloudBackend(context);
     return await context.amplify.pushResources(context);
   } catch (e) {
+    console.log(e);
     if (e.name !== 'InvalidDirectiveError') {
       const message = e.name === 'GraphQLError' ? e.toString() : e.message;
       context.print.error(`An error occurred during the push operation: ${message}`);
