@@ -627,6 +627,7 @@ workflows:
               only:
                 - master
                 - iterative-update
+                - perm-bound
           requires:
             - build
             - mock_e2e_tests
@@ -652,6 +653,7 @@ workflows:
                 - iterative-update
                 - release
                 - compute-functions
+                - perm-bound
           requires:
             - build
       - build_pkg_binaries:
@@ -679,6 +681,7 @@ workflows:
                 - master
                 - compute-functions
                 - iterative-update
+                - perm-bound
           requires:
             - publish_to_local_registry
       - done_with_node_e2e_tests:
