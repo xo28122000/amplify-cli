@@ -22,7 +22,7 @@ export * from './utils';
 export * from './banner-message';
 export * from './cliGetCategories';
 export * from './cliRemoveResourcePrompt';
-export * from "./cliViewAPI";
+export * from './hooksExecutioner';
 
 // Temporary types until we can finish full type definition across the whole CLI
 
