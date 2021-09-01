@@ -10,6 +10,7 @@ const spinner = ora('');
 // to push his local developments
 async function syncCurrentCloudBackend(context: $TSContext) {
   context.exeInfo.restoreBackend = false;
+  context.exeInfo.spinner = spinner;
 
   const currentEnv = context.exeInfo.localEnvInfo.envName;
 
@@ -38,6 +39,17 @@ async function syncCurrentCloudBackend(context: $TSContext) {
   }
 }
 
+async function pushHooks(context: $TSContext) {
+  context.exeInfo.pushHooks = true;
+  const providerPlugins = getProviderPlugins(context);
+  const pushHooksTasks: (() => Promise<$TSAny>)[] = [];
+  context.exeInfo.projectConfig.providers.forEach(provider => {
+    const providerModule = require(providerPlugins[provider]);
+    pushHooksTasks.push(() => providerModule.uploadHooksDirectory(context));
+  });
+  await sequential(pushHooksTasks);
+}
+
 export const run = async (context: $TSContext) => {
   try {
     context.amplify.constructExeInfo(context);
@@ -47,6 +59,7 @@ export const run = async (context: $TSContext) => {
     if (context.parameters.options.force) {
       context.exeInfo.forcePush = true;
     }
+    await pushHooks(context);
     await syncCurrentCloudBackend(context);
     return await context.amplify.pushResources(context);
   } catch (e) {
